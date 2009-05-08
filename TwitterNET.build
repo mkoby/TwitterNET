@@ -57,8 +57,8 @@
   <target name="testing" depends="init, compile">
 	<if test="${property::exists('teamcity.dotnet.nunitaddin')}">
 		<mkdir dir="${dir.nunit.addins}" />
-		<copy file="${teamcity.dotnet.nunitaddin}-2.4.7.dll" todir="${dir.nunit.addins}" />
-		<copy file="${teamcity.dotnet.nunitaddin}-2.4.7.pdb" todir="${dir.nunit.addins}" />
+		<copy file="${teamcity.dotnet.nunitaddin}-2.4.8.dll" todir="${dir.nunit.addins}" />
+		<copy file="${teamcity.dotnet.nunitaddin}-2.4.8.pdb" todir="${dir.nunit.addins}" />
 	</if>
 
 	<exec program="${partcover.exe}" failonerror="false">
