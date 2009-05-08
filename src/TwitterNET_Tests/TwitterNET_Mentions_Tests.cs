@@ -60,5 +60,28 @@ namespace TwitterNET_Tests
 
             Assert.AreEqual(20, mentions.Count);
         }
+
+        [Test]
+        public void Get_Mentions_WithCount()
+        {
+            int mentionsCount = 10;
+            IList<IStatus> mentions = twitter.GetMetions(mentionsCount);
+
+            Assert.AreEqual(10, mentions.Count);
+        }
+
+        [Test]
+        public void Get_Mentions_WithPageNumber()
+        {
+            int pageNumber = 2;
+            IList<IStatus> mentions = twitter.GetMetions(pageNumber, 20);
+
+            Assert.AreEqual(20, mentions.Count);
+
+            var statusCount = from m in mentions
+                              where m.StatusText.Contains("kindle")
+                              select m;
+        }
+
     }
 }
