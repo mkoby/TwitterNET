@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project name="TwitterNET" xmlns="http://nant.sf.net/release/0.85/nant.xsd" default="build">
+  <!-- Properties -->
+  <property name="project.config" value="release"/>
+  <loadtasks assembly="${directory::get-current-directory()}\lib\nantcontrib\bin\NAnt.Contrib.Tasks.dll"  />
+
+  <!-- Folders & Files -->
+  <property name="dir.solution" value="${directory::get-current-directory()}\src"/>
+  <property name="dir.build" value="${directory::get-current-directory()}\build"/>
+  <property name="dir.buildreports" value="${dir.build}\reports"/>
+  <property name="dir.xslt" value="${directory::get-current-directory()}\lib\xslt" />
+  
+  <!--Compilation Properties-->
+  <property name="nant.settings.currentframework" value="net-3.5"/>
+  <property name="file.solution" value="${dir.solution}\${project::get-name()}.sln"/>
+  <property name="framework.path" value="${framework::get-framework-directory(framework::get-target-framework())}" />
+  <property name="msbuild.exe" value="${framework.path}\msbuild.exe"/>
+  
+  <!-- Testing Properties -->
+  <property name="dir.nunit" value="${directory::get-current-directory()}\lib\nunit\bin" />
+  <property name="dir.nunit.addins" value="${dir.nunit}\addins" />
+  <property name="nunitconsole" value="${dir.nunit}\nunit-console.exe" />
+  <property name="assembly.unittests" value="${project::get-name()}_Tests.dll" />
+  <property name="partcover.exe" value="${directory::get-current-directory()}\lib\partcover\partcover.exe" />
+
+  <target name="build" depends="init, compile, testing" description="The main build target that builds TwitterNet"/>
+  
+  <target name="clean" depends="init" description="Cleans up from a previous build">
+	<exec program="${msbuild.exe}" 
+          commandline="${file.solution} /t:Clean /p:Configuration=${project.config};outdir=${dir.build}\  /v:q" verbose="true" />
+	
+	<delete dir="${dir.build}" if="${directory::exists(dir.build)}" />	
+  </target>
+
+  <target name="init" depends="" description="Sets up the files, optizons, and folders for the build">
+    <delete dir="${dir.build}" if="${directory::exists(dir.build)}" />
+    <mkdir dir="${dir.build}" />
+	<mkdir dir="${dir.buildreports}" />
+    
+    <!--Settings Output-->
+    <echo message="Solution Folder: ${dir.solution}"/>
+    <echo message="Solution File: ${file.solution}"/>
+    <echo message="Build Folder: ${dir.build}"/>
+    <echo message="msbuild: ${msbuild.exe}"/>    
+  </target>
+
+  <target name="compile" depends="init" >
+    <echo message="Build Directory is ${dir.build}"/>
+    <echo message="Building solution: ${file.solution}" />
+	
+	<exec program="${msbuild.exe}" 
+          commandline="${file.solution} /t:Clean /p:Configuration=${project.config};outdir=${dir.build}\  /v:q" verbose="true" />
+	<exec program="${msbuild.exe}" 
+          commandline="${file.solution} /t:Build /p:Configuration=${project.config};outdir=${dir.build}\  /v:q" verbose="true" />
+  </target>
+
+  <target name="testing" depends="init, compile">
+	<if test="${property::exists('teamcity.dotnet.nunitaddin')}">
+		<mkdir dir="${dir.nunit.addins}" />
+		<copy file="${teamcity.dotnet.nunitaddin}-2.4.7.dll" todir="${dir.nunit.addins}" />
+		<copy file="${teamcity.dotnet.nunitaddin}-2.4.7.pdb" todir="${dir.nunit.addins}" />
+	</if>
+
+	<exec program="${partcover.exe}" failonerror="false">
+		<arg line="--target ${nunitconsole}" />
+		<arg line="--target-work-dir ${dir.build}" />
+		<arg line="--target-args ${assembly.unittests}" />
+		<arg line="--output ${dir.build}\CodeCoverage.xml" />
+		<arg line="--include [TwitterNET]* " />
+	</exec>
+		
+	<style style="${dir.xslt}\class.report.xslt" in="${dir.build}\CodeCoverage.xml" out="${dir.buildreports}\CodeCoverageReport.html" />	
+	
+	<nunit2report todir="${dir.buildreports}">
+		<fileset>
+			<includes name="${dir.build}\TestResult.xml" />
+		</fileset>
+	</nunit2report>
+	
+	<delete dir="${dir.nunit.addins}" if="${directory::exists(dir.nunit.addins)}" />
+	<delete>
+		<fileset>
+			<include name="${dir.build}\*.xml" />
+			<include name="*.log" />
+		</fileset>
+	</delete>
+  </target>
+</project>

@@ -1,0 +1,6 @@
+<PartCoverSettings>
+  <Target>c:\Nunit\bin\nunit-console.exe</Target>
+  <TargetWorkDir>c:\svn\mkoby-TwitterNET\trunk\build\</TargetWorkDir>
+  <TargetArgs>c:\svn\mkoby-TwitterNET\trunk\build\TwitterNET_Tests.dll</TargetArgs>
+  <Rule>+[TwitterNET]*</Rule>
+</PartCoverSettings>

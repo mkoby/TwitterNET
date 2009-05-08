@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterNET", "TwitterNET\TwitterNET.csproj", "{8C9D3EFF-0076-4EA9-B5E1-95C6F3664711}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterNET_Tests", "TwitterNET_Tests\TwitterNET_Tests.csproj", "{D0B43926-655B-4C0F-A5F3-06DA421C1442}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F9024830-2D30-4C7D-8DCA-999956C10A69}"
+	ProjectSection(SolutionItems) = preProject
+		TwitterNET.build = TwitterNET.build
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C9D3EFF-0076-4EA9-B5E1-95C6F3664711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C9D3EFF-0076-4EA9-B5E1-95C6F3664711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C9D3EFF-0076-4EA9-B5E1-95C6F3664711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C9D3EFF-0076-4EA9-B5E1-95C6F3664711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0B43926-655B-4C0F-A5F3-06DA421C1442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B43926-655B-4C0F-A5F3-06DA421C1442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B43926-655B-4C0F-A5F3-06DA421C1442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B43926-655B-4C0F-A5F3-06DA421C1442}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
