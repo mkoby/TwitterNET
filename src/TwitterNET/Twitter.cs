@@ -59,12 +59,83 @@ namespace TwitterNET
 
             return null; //Return a NULL IStatus because we didn't get anything back
         }
+		
+		/// <summary>
+		/// Deletes a single status owned by the user. 
+		/// </summary>
+		/// <param name="StatusID">
+		/// A <see cref="System.Int64"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IStatus"/>
+		/// </returns>
+		public IStatus DeleteStatus(long StatusID)
+		{
+			if(StatusID <= 0)
+                throw new ArgumentNullException("StatusID", "StatusID can not be NULL or less than zero when requesting a single twitter status");
 
+			IStatus statusToDestory = null;
+				
+			try
+			{
+				statusToDestory = GetSingleStatus(StatusID);
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+			
+			if(statusToDestory != null)
+			{
+				if(statusToDestory.User.ScreenName.ToLowerInvariant() != requestHandler.Login.ToLowerInvariant())
+				{
+					throw new TwitterNetException("User cannot delete a status that is not their own");
+				}
+				
+	            IList<IStatus> Output = null;
+	            string apiURL = "http://twitter.com/statuses/destroy/";
+	            string requestOptions = String.Format("{0}.xml", StatusID);
+	            string responseText = requestHandler.MakeAPIRequest(requestHandler, apiURL, requestOptions);
+	
+	            if (!string.IsNullOrEmpty(responseText))
+	            {
+	                //We have some XML to mess with
+	                Output = requestHandler.RepsonseHandler(responseText);
+	
+	                if (Output != null && Output.Count > 0)
+	                    return Output[0];
+	            }
+			}
+
+            return null; //Return a NULL IStatus because we didn't get anything back
+		}
+
+		/// <summary>
+		/// Updates the authenticated user's status 
+		/// </summary>
+		/// <param name="StatusText">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IStatus"/>
+		/// </returns>
         public IStatus UpdateStatus(string StatusText)
         {
             return UpdateStatus(StatusText, long.MinValue);
         }
 
+		/// <summary>
+		/// Posts an updated status that is in reply to the specified status id 
+		/// </summary>
+		/// <param name="StatusText">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <param name="InReplyStatusID">
+		/// A <see cref="System.Int64"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IStatus"/>
+		/// </returns>
         public IStatus UpdateStatus(string StatusText, long InReplyStatusID)
         {
             if (String.IsNullOrEmpty(StatusText))
@@ -95,6 +166,15 @@ namespace TwitterNET
 
         }
 
+		/// <summary>
+		/// Retreives the authenticated user's friends timeline 
+		/// </summary>
+		/// <param name="requestOptions">
+		/// A <see cref="RequestOptions"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IList"/>
+		/// </returns>
 		public IList<IStatus> GetFriendsTimeline(RequestOptions requestOptions)
 		{
 			IList<IStatus> Output = new List<IStatus>();
@@ -106,14 +186,22 @@ namespace TwitterNET
                 //We have some XML to mess with
                 Output = requestHandler.RepsonseHandler(responseText);
             }
+			
+			//Clean up our objects
+			requestOptions = null;
 
             return Output;
 		}
-		        
-        /*******************************************************
-         * BEGIN User Timline Calls
-         * *****************************************************/
-		
+		   
+		/// <summary>
+		/// Gets a specific user's timeline 
+		/// </summary>
+		/// <param name="requestOptions">
+		/// A <see cref="RequestOptions"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IList"/>
+		/// </returns>
 		public IList<IStatus> GetUserTimeline(RequestOptions requestOptions)
 		{
 			IList<IStatus> Output = new List<IStatus>();
@@ -126,13 +214,21 @@ namespace TwitterNET
                 Output = requestHandler.RepsonseHandler(responseText);
             }
 
+			//Clean up our objects
+			requestOptions = null;
+			
             return Output;
 		}
 
-        /*******************************************************
-         * BEGIN "Mentions" Calls
-         * *****************************************************/
-
+		/// <summary>
+		/// Gets mentions of the authenticated user 
+		/// </summary>
+		/// <param name="requestOptions">
+		/// A <see cref="RequestOptions"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IList"/>
+		/// </returns>
         public IList<IStatus> GetMetions(RequestOptions requestOptions)
         {
             IList<IStatus> Output = new List<IStatus>();
@@ -145,6 +241,9 @@ namespace TwitterNET
                 Output = requestHandler.RepsonseHandler(responseText);
             }
 
+			//Clean up our objects
+			requestOptions = null;
+			
             return Output;
         }
     }

@@ -71,7 +71,8 @@ namespace TwitterNET
             
             StringBuilder requestURL = new StringBuilder(String.Format("{0}{1}", strURL, strOptions));
 
-            if (requestURL.ToString().Contains("statuses/update"))
+            if (requestURL.ToString().Contains("statuses/update") || 
+			    requestURL.ToString().Contains("statuses/destroy"))
                 methodType = "POST";
 
             WebRequest Output = WebRequest.Create(requestURL.ToString());
@@ -100,21 +101,36 @@ namespace TwitterNET
             StringBuilder Output = new StringBuilder(String.Empty);
 
             //Handle response
-            WebResponse twitterResponse = twitterRequest.GetResponse();
-            StreamReader r = new StreamReader(twitterResponse.GetResponseStream(), Encoding.UTF8);
+            WebResponse twitterResponse = null;
+			StreamReader r = null;
+			
+			try
+			{
+				twitterResponse = twitterRequest.GetResponse();
+			}
+			catch(WebException webex)
+			{
+				throw new TwitterNetException(webex.Message, webex);
+			}
+			
+			if(twitterResponse != null)
+            	r = new StreamReader(twitterResponse.GetResponseStream(), Encoding.UTF8);
             
-            try
-            {
-                Output.Append(r.ReadToEnd());
-            }
-            catch(IOException ioException)
-            {
-                throw new TwitterNetException("Error reading response from Twitter", ioException);
-            }
-            catch(Exception ex)
-            {
-                throw new TwitterNetException("Error reading response from Twitter", ex);
-            }
+			if(r != null)
+			{
+	            try
+	            {
+	                Output.Append(r.ReadToEnd());
+	            }
+	            catch(IOException ioException)
+	            {
+	                throw new TwitterNetException("Error reading response from Twitter", ioException);
+	            }
+	            catch(Exception ex)
+	            {
+	                throw new TwitterNetException("Error reading response from Twitter", ex);
+	            }
+			}
 
             return Output.ToString();
         }
