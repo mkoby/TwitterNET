@@ -21,7 +21,7 @@ namespace TwitterNET_Tests
             try
             {
                 twitter = new Twitter("apitest4769", "testaccount");
-                IList<IStatus> friendsTimeline = twitter.GetFriendsTimeline();
+                IList<IStatus> friendsTimeline = twitter.GetFriendsTimeline(new RequestOptions());
 
                 if (friendsTimeline != null && friendsTimeline.Count > 0)
                 {

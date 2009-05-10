@@ -12,13 +12,10 @@ namespace TwitterNET_Tests
     {
         private Twitter twitter = null;
         private long TestStatusID = long.MinValue;
-        private DateTime TestDateTime = DateTime.MinValue;
 
         [TestFixtureSetUp]
         public void TwitterNET_Tests_Setup()
         {
-            TestDateTime = DateTime.Now.AddMinutes(-30);
-
             //Grab recent status ID
             twitter = new Twitter(String.Empty, String.Empty);
 
@@ -65,27 +62,10 @@ namespace TwitterNET_Tests
         [Test]
         public void GetFriendsTimeline_NoArgs_Test()
         {
-            IList<IStatus> statusList = twitter.GetFriendsTimeline();
+			RequestOptions myOptions = new RequestOptions();
+			
+            IList<IStatus> statusList = twitter.GetFriendsTimeline(myOptions);
             Console.WriteLine("Status Count: {0}", statusList.Count);
-
-            Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
-        }
-
-        [Test]
-        public void GetFriendsTimeline_SinceStatusDate_Test()
-        {
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(TestDateTime, 100);
-
-            #region Console
-
-            Console.WriteLine("Statuses since Date/Time: {0}", TestDateTime.ToString("yyyy/MM/dd hh:mm:ss"));
-
-            foreach (IStatus status in statusList)
-            {
-                Console.WriteLine("{0}: {1}", status.User.ScreenName, status.StatusText);
-            }
-
-            #endregion
 
             Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
         }
@@ -93,7 +73,10 @@ namespace TwitterNET_Tests
         [Test]
         public void GetFriendsTimeline_SinceStatusID_Test()
         {
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(TestStatusID, false, int.MinValue);
+			RequestOptions requestOptions = new RequestOptions();
+			requestOptions.Add(RequestOptionNames.SinceID, TestStatusID);
+			
+            IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
@@ -108,7 +91,10 @@ namespace TwitterNET_Tests
         [Test]
         public void GetFriendsTimeline_MaxStatusID_Test()
         {
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(TestStatusID, true, int.MinValue);
+            RequestOptions requestOptions = new RequestOptions();
+			requestOptions.Add(RequestOptionNames.MaxID, TestStatusID);
+			
+            IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
@@ -124,7 +110,11 @@ namespace TwitterNET_Tests
         public void GetFriendsTimeline_Page_Test()
         {
             //TODO: Find better method to test than just pull page 2 of tweets
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(2, 20);
+            RequestOptions requestOptions = new RequestOptions();
+			requestOptions.Add(RequestOptionNames.Page, 2);
+			requestOptions.Add(RequestOptionNames.Count, 10);
+			
+            IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             #region Console
 
@@ -143,7 +133,10 @@ namespace TwitterNET_Tests
         [Test]
         public void GetFriendsTimeline_ReturnCountOnly_Test()
         {
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(int.MinValue, 40);
+            RequestOptions requestOptions = new RequestOptions();
+			requestOptions.Add(RequestOptionNames.Count, 40);
+			
+            IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");

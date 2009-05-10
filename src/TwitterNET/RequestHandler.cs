@@ -56,7 +56,7 @@ namespace TwitterNET
             get { return _HasLogin; }
         }
 
-        /// <summary>
+		/// <summary>
         /// Creates a new Web Request to the Twitter API using the API Url specified.
         /// When passing options, you'll need to pass the ? for starting the parameters list.
         /// </summary>
