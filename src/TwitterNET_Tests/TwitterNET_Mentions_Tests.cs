@@ -43,8 +43,7 @@ namespace TwitterNET_Tests
         [SetUp]
         public void Test_Setup()
         {
-            //twitter = new Twitter("apitest4769", "testaccount");
-            twitter = new Twitter("mkoby", "iworld");
+            twitter = new Twitter("apitest4769", "testaccount");
         }
 
         [TearDown]
@@ -56,32 +55,20 @@ namespace TwitterNET_Tests
         [Test]
         public void Get_Metions_NoArgs_Test()
         {
-            IList<IStatus> mentions = twitter.GetMetions();
+            IList<IStatus> mentions = twitter.GetMetions(new RequestOptions());
 
-            Assert.AreEqual(20, mentions.Count);
+            Assert.IsNotEmpty((ICollection)mentions);
         }
 
         [Test]
         public void Get_Mentions_WithCount()
         {
-            int mentionsCount = 10;
-            IList<IStatus> mentions = twitter.GetMetions(mentionsCount);
+            RequestOptions requestOptions = new RequestOptions();
+			requestOptions.Add(RequestOptionNames.Count, 1);
+			
+            IList<IStatus> mentions = twitter.GetMetions(requestOptions);
 
-            Assert.AreEqual(10, mentions.Count);
+            Assert.AreEqual(1, mentions.Count);
         }
-
-        [Test]
-        public void Get_Mentions_WithPageNumber()
-        {
-            int pageNumber = 2;
-            IList<IStatus> mentions = twitter.GetMetions(pageNumber, 20);
-
-            Assert.AreEqual(20, mentions.Count);
-
-            var statusCount = from m in mentions
-                              where m.StatusText.Contains("kindle")
-                              select m;
-        }
-
     }
 }

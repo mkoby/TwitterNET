@@ -133,40 +133,11 @@ namespace TwitterNET
          * BEGIN "Mentions" Calls
          * *****************************************************/
 
-        public IList<IStatus> GetMetions()
+        public IList<IStatus> GetMetions(RequestOptions requestOptions)
         {
-            return GetMetions(int.MinValue);
-        }
-
-        public IList<IStatus> GetMetions(int count)
-        {
-            return GetMetions(int.MinValue, count);
-        }
-
-        public IList<IStatus> GetMetions(int pageNumber, int count)
-        {
-            StringBuilder requestOptions = new StringBuilder();
-
-            if (pageNumber > 0)
-            {
-                if (requestOptions.Length == 0)
-                    requestOptions.AppendFormat("?page={0}", pageNumber);
-                else
-                    requestOptions.AppendFormat("&page={0}", pageNumber);
-            }
-
-            if (count > 0)
-            {
-                if (requestOptions.Length == 0)
-                    requestOptions.AppendFormat("?count={0}", count);
-                else
-                    requestOptions.AppendFormat("&count={0}", count);
-            }
-
-
             IList<IStatus> Output = new List<IStatus>();
             string apiURL = "http://twitter.com/statuses/mentions.xml";
-            string responseText = requestHandler.MakeAPIRequest(requestHandler, apiURL, requestOptions.ToString());
+            string responseText = requestHandler.MakeAPIRequest(requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
 
             if (!string.IsNullOrEmpty(responseText))
             {
