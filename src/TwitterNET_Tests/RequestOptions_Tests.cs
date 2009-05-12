@@ -11,7 +11,7 @@ namespace TwitterNET_Tests
 		private const string testUrl = "http://twitter.com/statuses/mentions.xml";
 		private const string testUserUrl = "http://twitter.com/statuses/user_timeline.xml";
 		private const long testStatusID = 144759968;
-		private const string testUserName = "mkoby";
+		private const string testScreenName = "mkoby";
         private const long testUserID = 7263572;
 		private const int testCount = 15;
 		private const int testPage = 3;
@@ -87,13 +87,13 @@ namespace TwitterNET_Tests
 		}
 		
 		[Test]
-		public void RequestOptions_Returns_URLForUsername()
+		public void RequestOptions_Returns_URLForScreenName()
 		{
 			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Username, testUserName);
+			requestOptions.Add(RequestOptionNames.ScreenName, testScreenName);
 			string builtUrl = requestOptions.BuildRequestUri(testUserUrl);
 			
-			Assert.AreEqual(String.Format("{0}?screen_name={1}", testUserUrl, testUserName), builtUrl);
+			Assert.AreEqual(String.Format("{0}?screen_name={1}", testUserUrl, testScreenName), builtUrl);
 		}
 		
 		[Test]
@@ -120,7 +120,7 @@ namespace TwitterNET_Tests
 		public void RequestOptions_Returns_Exception_When_Not_UserTimeline_Username()
 		{
 			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Username, testUserName);
+			requestOptions.Add(RequestOptionNames.ScreenName, testScreenName);
 			string builtUrl = String.Empty;
 			bool exceptionCaught = false;
 			

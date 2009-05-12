@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace TwitterNET
 {
-    class User : IUser
+    internal class User : IUser
     {
         private long _id;
         private string _realName;
@@ -20,6 +20,7 @@ namespace TwitterNET
 
         private bool _hasExtendedProperties;
         private IExtendedUserProperties _extendedUserProperties;
+        private IStatus _status;
 
         public User(long id, string realName, string screenName, string description, string location, string profileImageUrl, string website, bool protected_updates, long followerCount)
         {
@@ -121,6 +122,15 @@ namespace TwitterNET
         public long FollowerCount
         {
             get { return _followerCount; }
+        }
+
+        /// <summary>
+        /// The user's most recent status update
+        /// </summary>
+        public IStatus Status
+        {
+            get { return _status; }
+            set { _status = value; }
         }
 
         /// <summary>

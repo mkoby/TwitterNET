@@ -183,5 +183,47 @@ namespace TwitterNET
 
             return Output;
         }
+
+        //TODO: Figure out a better way to handle this
+        public IList<IUser> RepsonseHandler(string responseText, string DoesNothing)
+        {
+            IList<IUser> Output = null;
+            bool multipleUsers = responseText.Contains("users type=\"array\"");
+            XElement xmlElement = XElement.Load(new XmlTextReader(new StringReader(responseText)));
+
+            if (!multipleUsers)
+            {
+                IUser user = User.ParseUserXml(responseText);
+                user.Status = Status.ParseStatusXML(xmlElement.Element("status").ToString());
+
+                if (user != null)
+                {
+                    Output = new List<IUser>();
+                    Output.Add(user);
+                }
+            }
+            else
+            {
+                Output = new List<IUser>();
+                //Query for count of statuses to make sure we have some
+                var query = from c in xmlElement.Descendants("user")
+                            select c;
+
+                if (query.Count() > 0)
+                {
+                    Output = new List<IUser>();
+
+                    foreach (var user in query)
+                    {
+                        IUser currentUser = User.ParseUserXml(user.ToString());
+                        currentUser.Status = Status.ParseStatusXML(user.Element("status").ToString());
+                        Output.Add(currentUser);
+                    }
+                }
+            }
+
+
+            return Output;
+        }
     }
 }

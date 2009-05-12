@@ -58,7 +58,7 @@ namespace TwitterNET_Tests
         public void Get_UserTimeline_userName()
         {
 			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Username, TestUserName);
+			requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
 			
             IList<IStatus> statusList = twitter.GetUserTimeline(requestOptions);
 
@@ -126,6 +126,14 @@ namespace TwitterNET_Tests
 
             Console.WriteLine("TestStatusID: {0}\nMaxStatusID: {1}", TestStatusID, returnedStatusID);
             Assert.Less(returnedStatusID, TestStatusID);
+        }
+
+        [Test]
+        public void Get_UsersFriends_Test()
+        {
+            IList<IUser> friendsStatusList = twitter.GetUsersFriends(new RequestOptions());
+            
+            Assert.IsNotEmpty((ICollection)friendsStatusList);
         }
     }
 }

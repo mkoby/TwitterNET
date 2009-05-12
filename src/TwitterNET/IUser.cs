@@ -67,6 +67,11 @@ namespace TwitterNET
         /// </summary>
         long FollowerCount { get; }
 
+        /// <summary>
+        /// The user's most recent status update
+        /// </summary>
+        IStatus Status { get; set; }
+
 
         /*********************
          * User Methods

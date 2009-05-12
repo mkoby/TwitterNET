@@ -214,10 +214,21 @@ namespace TwitterNET
                 //We have some XML to mess with
                 Output = _requestHandler.RepsonseHandler(responseText);
             }
-
-			//Clean up our objects
-			requestOptions = null;
 			
+            return Output;
+        }
+
+        public IList<IUser> GetUsersFriends(RequestOptions requestOptions)
+        {
+            IList<IUser> Output = new List<IUser>();
+            string apiURL = "http://twitter.com/statuses/friends.xml";
+            string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
+
+            if(!String.IsNullOrEmpty(resposneText))
+            {
+                Output = _requestHandler.RepsonseHandler(resposneText, "");
+            }
+            
             return Output;
         }
     }

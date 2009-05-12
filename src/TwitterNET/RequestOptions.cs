@@ -7,7 +7,7 @@ namespace TwitterNET
 	public enum RequestOptionNames
 	{
 		ID,
-		Username,
+		ScreenName,
 		UserID,
 		SinceID,
 		MaxID,
@@ -45,7 +45,7 @@ namespace TwitterNET
 					case RequestOptionNames.Page:
 						sb.AppendFormat("&page={0}", this[key]);
 						break;
-					case RequestOptionNames.Username:
+					case RequestOptionNames.ScreenName:
 						if(!ApiUrl.Contains("user_timeline"))
 							throw new TwitterNetException("Username request option is only available for User Timeline requests");
 					
