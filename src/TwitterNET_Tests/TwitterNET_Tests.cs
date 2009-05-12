@@ -79,7 +79,6 @@ namespace TwitterNET_Tests
 			Assert.IsNotNull(myStatus, "Test can not continue due to no status being returned");
 			
 			IStatus deletedStatus = twitter.DeleteStatus(myStatus.ID);
-			myStatus = twitter.GetSingleStatus(myStatus.ID);
 			
 			Assert.IsNotNull(deletedStatus);
 		}
