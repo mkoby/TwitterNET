@@ -110,7 +110,7 @@ namespace TwitterNET_Tests
 			}
 			catch(Exception twex)
 			{
-				exceptionCaught = twex.Message.Contains("only available for User Timeline requests");
+				exceptionCaught = twex.Message.Contains("only available for StatusUser Timeline requests");
 			}
 			
 			Assert.IsTrue(exceptionCaught);
@@ -130,7 +130,7 @@ namespace TwitterNET_Tests
 			}
 			catch(Exception twex)
 			{
-				exceptionCaught = twex.Message.Contains("only available for User Timeline requests");
+				exceptionCaught = twex.Message.Contains("only available for StatusUser Timeline requests");
 			}
 			
 			Assert.IsTrue(exceptionCaught);

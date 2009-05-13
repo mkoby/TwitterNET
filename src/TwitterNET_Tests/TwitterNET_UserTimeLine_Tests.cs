@@ -64,11 +64,11 @@ namespace TwitterNET_Tests
 
             foreach (var status in statusList)
             {
-                Console.WriteLine("{0}: {1}", status.User.ScreenName, status.StatusText);
+                Console.WriteLine("{0}: {1}", status.StatusUser.ScreenName, status.StatusText);
             }
 			
 			var userCount = from c in statusList
-							where c.User.ScreenName == TestUserName
+							where c.StatusUser.ScreenName == TestUserName
 							select c;
 			
             Assert.AreEqual(20, userCount.Count());
@@ -84,11 +84,11 @@ namespace TwitterNET_Tests
 
             foreach (var status in statusList)
             {
-                Console.WriteLine("{0}: {1}", status.User.ScreenName, status.StatusText);
+                Console.WriteLine("{0}: {1}", status.StatusUser.ScreenName, status.StatusText);
             }
 			
 			var idCount = from c in statusList
-							where c.User.ID == TestUserID
+							where c.StatusUser.ID == TestUserID
 							select c;
 
             Assert.AreEqual(20, idCount.Count());
@@ -132,7 +132,12 @@ namespace TwitterNET_Tests
         public void Get_UsersFriends_Test()
         {
             IList<IUser> friendsStatusList = twitter.GetUsersFriends(new RequestOptions());
-            
+
+            foreach (var user in friendsStatusList)
+            {
+                Console.WriteLine("{0}", user.ScreenName);
+            }
+
             Assert.IsNotEmpty((ICollection)friendsStatusList);
         }
     }

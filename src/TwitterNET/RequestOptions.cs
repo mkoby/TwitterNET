@@ -47,13 +47,13 @@ namespace TwitterNET
 						break;
 					case RequestOptionNames.ScreenName:
 						if(!ApiUrl.Contains("user_timeline"))
-							throw new TwitterNetException("Username request option is only available for User Timeline requests");
+							throw new TwitterNetException("Username request option is only available for StatusUser Timeline requests");
 					
 						sb.AppendFormat("&screen_name={0}", this[key]);
 						break;
 					case RequestOptionNames.UserID:
 						if(!ApiUrl.Contains("user_timeline"))
-							throw new TwitterNetException("UserID request option is only available for User Timeline requests");
+							throw new TwitterNetException("UserID request option is only available for StatusUser Timeline requests");
 					
 						sb.AppendFormat("&user_id={0}", this[key]);
 						break;

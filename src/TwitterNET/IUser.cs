@@ -4,7 +4,7 @@ namespace TwitterNET
     {
 
         /*********************
-         * Internal User Properties
+         * Internal StatusUser Properties
          *********************/
 
         /// <summary>
@@ -19,11 +19,11 @@ namespace TwitterNET
 
 
         /*********************
-         * User Properties
+         * StatusUser Properties
          *********************/ 
 
         /// <summary>
-        /// System ID of User
+        /// System ID of StatusUser
         /// </summary>
         long ID { get; }
 
@@ -70,11 +70,11 @@ namespace TwitterNET
         /// <summary>
         /// The user's most recent status update
         /// </summary>
-        IStatus Status { get; set; }
+        IStatus UserStatus { get; set; }
 
 
         /*********************
-         * User Methods
+         * StatusUser Methods
          *********************/ 
 
         /// <summary>

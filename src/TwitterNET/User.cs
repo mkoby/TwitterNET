@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml;
@@ -53,7 +54,7 @@ namespace TwitterNET
 
 
         /// <summary>
-        /// System ID of User
+        /// System ID of StatusUser
         /// </summary>
         public long ID
         {
@@ -127,7 +128,7 @@ namespace TwitterNET
         /// <summary>
         /// The user's most recent status update
         /// </summary>
-        public IStatus Status
+        public IStatus UserStatus
         {
             get { return _status; }
             set { _status = value; }
@@ -174,6 +175,56 @@ namespace TwitterNET
             throw new NotImplementedException();
         }
 
+        internal static IEnumerable<IUser> ParseUserArrayXml(string userArrayXmlText)
+        {
+            var element = XElement.Parse(userArrayXmlText);
+            IUser user = null;
+
+            if (element.Name == "users")
+            {
+                foreach (var userElement in element.Descendants("user"))
+                {
+                    user = User.ParseUserXml(userElement.ToString()); ;
+
+                    foreach (var userStatusElement in userElement.Descendants("status"))
+                    {
+                        user.UserStatus = Status.ParseStatusXML(userStatusElement.ToString());
+                    }
+
+                    yield return user;
+                }
+            }
+            else if(element.Name == "user")
+            {
+                user = ParseUserXml(element.ToString());
+
+                foreach (var userStatusElement in element.Descendants("status"))
+                {
+                    user.UserStatus = Status.ParseStatusXML(userStatusElement.ToString());
+                }
+
+                yield return user;
+            }
+        }
+
+        internal static IUser ParseSingleUserXml(string xmlText)
+        {
+            var element = XElement.Parse(xmlText);
+            IUser user = null;
+
+            if(element.Name == "user")
+            {
+                user = ParseUserXml(element.ToString());
+
+                foreach (var userStatusElement in element.Descendants("status"))
+                {
+                    user.UserStatus = Status.ParseStatusXML(userStatusElement.ToString());
+                }
+            }
+
+            return user;
+        }
+
         internal static IUser ParseUserXml(string xmlText)
         {
             if (String.IsNullOrEmpty(xmlText))
@@ -199,7 +250,7 @@ namespace TwitterNET
                 bool protected_updates = (bool)user.Element("protected");
                 long followerCount = (long)user.Element("followers_count");
 
-                //Extended User Options
+                //Extended StatusUser Options
                 DateTime created_at = DateTime.MinValue;
                 int favorites_count = int.MinValue;
                 int utc_offset = int.MinValue;

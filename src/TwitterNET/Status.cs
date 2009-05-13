@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml;
@@ -15,12 +16,12 @@ namespace TwitterNET
         private bool _truncated;
         private string _inReplyToStatusId;
         private string _inReplyToUserId;
-        private IUser _user;
+        private IUser _statusUser;
 
         public Status(long id, DateTime timestamp, string statusText, string source, bool truncated, string inReplyToStatusId, string inReplyToUserId, IUser user)
         {
             _id = id;
-            _user = user;
+            _statusUser = user;
             _inReplyToUserId = inReplyToUserId;
             _inReplyToStatusId = inReplyToStatusId;
             _truncated = truncated;
@@ -96,10 +97,10 @@ namespace TwitterNET
         /// <summary>
         /// The user that posted this status
         /// </summary>
-        public IUser User
+        public IUser StatusUser
         {
-            get { return _user; }
-            set { _user = value; }
+            get { return _statusUser; }
+            set { _statusUser = value; }
         }
 
         /// <summary>
@@ -126,7 +127,46 @@ namespace TwitterNET
             throw new NotImplementedException();
         }
 
-        public static IStatus ParseStatusXML(string xmlText)
+        internal static IEnumerable<IStatus> ParseStatusArrayXml(string statusArrayXmlText)
+        {
+            var element = XElement.Parse(statusArrayXmlText);
+            IStatus status = null;
+
+            if (element.Name == "statuses")
+            {
+                foreach (var statusElement in element.Descendants("status"))
+                {
+                    status = ParseStatusXML(statusElement.ToString()); ;
+
+                    foreach (var statusUserElement in statusElement.Descendants("user"))
+                    {
+                        status.StatusUser = User.ParseUserXml(statusUserElement.ToString());
+                    }
+
+                    yield return status;
+                }
+            }
+        }
+
+        internal static IStatus ParseSingleStatusXml(string xmlText)
+        {
+            var element = XElement.Parse(xmlText);
+            IStatus status = null;
+
+            if(element.Name == "status")
+            {
+                status = ParseStatusXML(element.ToString());
+
+                foreach (var statusUserElement in element.Descendants("user"))
+                {
+                    status.StatusUser = User.ParseUserXml(statusUserElement.ToString());
+                }
+            }
+
+            return status;
+        }
+
+        internal static IStatus ParseStatusXML(string xmlText)
         {
             if (String.IsNullOrEmpty(xmlText))
                 return null; //return NULL status to show it wasn't processed correctly

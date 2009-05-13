@@ -54,7 +54,7 @@ namespace TwitterNET
         /// <summary>
         /// The user that posted this status
         /// </summary>
-        IUser User { get; set; }
+        IUser StatusUser { get; set; }
 
 
         /*********************

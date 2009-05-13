@@ -26,8 +26,10 @@ namespace TwitterNET
 			
             if(!string.IsNullOrEmpty(responseText))
             {
-                //We have some XML to mess with
-                Output = _requestHandler.RepsonseHandler(responseText);
+                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                {
+                    Output.Add(status);
+                }
             }
 
             return Output;
@@ -43,21 +45,17 @@ namespace TwitterNET
             if(StatusID <= 0)
                 throw new ArgumentNullException("StatusID", "StatusID can not be NULL or less than zero when requesting a single twitter status");
 
-            IList<IStatus> Output = null;
+            IStatus Output = null;
             string apiURL = "http://twitter.com/statuses/show/";
             string requestOptions = String.Format("{0}.xml", StatusID);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL, requestOptions);
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                //We have some XML to mess with
-                Output = _requestHandler.RepsonseHandler(responseText);
-
-                if (Output != null && Output.Count > 0)
-                    return Output[0];
+                Output = Status.ParseSingleStatusXml(responseText);
             }
 
-            return null; //Return a NULL IStatus because we didn't get anything back
+            return Output;
         }
 		
 		/// <summary>
@@ -70,7 +68,8 @@ namespace TwitterNET
 			if(StatusID <= 0)
                 throw new ArgumentNullException("StatusID", "StatusID can not be NULL or less than zero when requesting a single twitter status");
 
-			IStatus statusToDestory = null;
+			IStatus statusToDestory = null, 
+                    Output = null;
 				
 			try
 			{
@@ -83,27 +82,23 @@ namespace TwitterNET
 			
 			if(statusToDestory != null)
 			{
-				if(statusToDestory.User.ScreenName.ToLowerInvariant() != _requestHandler.Login.ToLowerInvariant())
+				if(statusToDestory.StatusUser.ScreenName.ToLowerInvariant() != _requestHandler.Login.ToLowerInvariant())
 				{
-					throw new TwitterNetException("User cannot delete a status that is not their own");
+					throw new TwitterNetException("StatusUser cannot delete a status that is not their own");
 				}
-				
-	            IList<IStatus> Output = null;
+
 	            string apiURL = "http://twitter.com/statuses/destroy/";
 	            string requestOptions = String.Format("{0}.xml", StatusID);
 	            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL, requestOptions);
 	
 	            if (!string.IsNullOrEmpty(responseText))
 	            {
-	                //We have some XML to mess with
-	                Output = _requestHandler.RepsonseHandler(responseText);
-	
-	                if (Output != null && Output.Count > 0)
-	                    return Output[0];
+                    Output = Status.ParseSingleStatusXml(responseText);
 	            }
 			}
 
-            return null; //Return a NULL IStatus because we didn't get anything back
+		    statusToDestory = null; //Clean up our objects
+            return Output; //Return a NULL IStatus because we didn't get anything back
 		}
 
 		/// <summary>
@@ -128,7 +123,7 @@ namespace TwitterNET
                 throw new ArgumentException("StatusText",
                                             "StatusText can not be NULL or EMPTY when updating twitter status");
 
-            IList<IStatus> Output = null;
+            IStatus Output = null;
             string apiUrl = "http://twitter.com/statuses/update.xml";
             StringBuilder requestOptions = new StringBuilder("?status=");
             string urlEncodedStatusText = HttpUtility.UrlEncode(StatusText);
@@ -141,14 +136,10 @@ namespace TwitterNET
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                //We have some XML to mess with
-                Output = _requestHandler.RepsonseHandler(responseText);
-
-                if (Output != null && Output.Count > 0)
-                    return Output[0];
+                Output = Status.ParseSingleStatusXml(responseText);
             }
 
-            return null; //Return a NULL IStatus because we didn't get anything back
+		    return Output;
 
         }
 
@@ -165,8 +156,10 @@ namespace TwitterNET
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                //We have some XML to mess with
-                Output = _requestHandler.RepsonseHandler(responseText);
+                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                {
+                    Output.Add(status);
+                }
             }
 			
 			//Clean up our objects
@@ -188,8 +181,10 @@ namespace TwitterNET
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                //We have some XML to mess with
-                Output = _requestHandler.RepsonseHandler(responseText);
+                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                {
+                    Output.Add(status);
+                }
             }
 
 			//Clean up our objects
@@ -211,8 +206,10 @@ namespace TwitterNET
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                //We have some XML to mess with
-                Output = _requestHandler.RepsonseHandler(responseText);
+                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                {
+                    Output.Add(status);
+                }
             }
 			
             return Output;
@@ -226,7 +223,10 @@ namespace TwitterNET
 
             if(!String.IsNullOrEmpty(resposneText))
             {
-                Output = _requestHandler.RepsonseHandler(resposneText, "");
+                foreach(IUser user in User.ParseUserArrayXml(resposneText))
+                {
+                    Output.Add(user);
+                }
             }
             
             return Output;

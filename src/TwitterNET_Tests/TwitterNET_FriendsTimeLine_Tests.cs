@@ -122,7 +122,7 @@ namespace TwitterNET_Tests
 
             foreach (IStatus status in statusList)
             {
-                Console.WriteLine("({0}){1}: {2}", status.ID, status.User.ScreenName, status.StatusText);
+                Console.WriteLine("({0}){1}: {2}", status.ID, status.StatusUser.ScreenName, status.StatusText);
             }
 
             #endregion
@@ -146,7 +146,7 @@ namespace TwitterNET_Tests
             //Console printout to compare with online webpage to ensure accuracy in order and recent tweets
             foreach (IStatus status in statusList)
             {
-                Console.WriteLine("({0}){1}: {2}", status.ID, status.User.ScreenName, status.StatusText);
+                Console.WriteLine("({0}){1}: {2}", status.ID, status.StatusUser.ScreenName, status.StatusText);
             }
 
             #endregion
