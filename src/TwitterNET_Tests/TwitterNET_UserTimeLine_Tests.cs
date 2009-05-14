@@ -140,6 +140,14 @@ namespace TwitterNET_Tests
 
             Assert.IsNotEmpty((ICollection)friendsStatusList);
         }
+		
+		[Test]
+		public void Get_UsersFollowers_Test()
+		{
+			IList<IUser> followersStatusList = twitter.GetUsersFollowers(new RequestOptions());
+			
+			Assert.IsNotEmpty((ICollection)followersStatusList);
+		}
     }
 }
 

@@ -173,7 +173,7 @@ namespace TwitterNET
 
             IStatus Output = null;
 
-            XElement statusXml = XElement.Load(new XmlTextReader(xmlText.ToString(), XmlNodeType.Document, null));
+            XElement statusXml = XElement.Parse(xmlText);
 
             var query = from c in statusXml.AncestorsAndSelf()
                     select c;

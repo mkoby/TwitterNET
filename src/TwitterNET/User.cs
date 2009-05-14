@@ -233,7 +233,7 @@ namespace TwitterNET
             IUser Output = null;
             IExtendedUserProperties extendedUserProperties = null;
 
-            XElement statusXml = XElement.Load(new XmlTextReader(xmlText.ToString(), XmlNodeType.Document, null));
+            XElement statusXml = XElement.Parse(xmlText);
 
             var userQuery = from u in statusXml.AncestorsAndSelf()
                         select u;

@@ -218,7 +218,7 @@ namespace TwitterNET
         public IList<IUser> GetUsersFriends(RequestOptions requestOptions)
         {
             IList<IUser> Output = new List<IUser>();
-            string apiURL = "http://twitter.com/statuses/friends.xml";
+            string apiURL = "";
             string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
 
             if(!String.IsNullOrEmpty(resposneText))
@@ -231,5 +231,20 @@ namespace TwitterNET
             
             return Output;
         }
+		
+		public IList<IUser> GetUsersFollowers(RequestOptions requestOptions)
+		{
+			IList<IUser> Output = new List<IUser>();
+			string apiURL = "http://twitter.com/statuses/followers.xml";
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
+			
+			if(!String.IsNullOrEmpty(responseText))
+			{
+				foreach(IUser user in User.ParseUserArrayXml(responseText))
+				        Output.Add(user);
+			}
+			
+			return Output;
+		}
     }
 }
