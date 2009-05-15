@@ -47,7 +47,7 @@ namespace TwitterNET
         {
             IList<IStatus> Output = new List<IStatus>();
             string apiURL = "http://twitter.com/statuses/public_timeline.xml";
-			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL, String.Empty);
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 			
             if(!string.IsNullOrEmpty(responseText))
             {
@@ -71,7 +71,7 @@ namespace TwitterNET
             IStatus Output = null;
             string apiURL = "http://twitter.com/statuses/show/";
             string requestOptions = String.Format("{0}.xml", StatusID);
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL, requestOptions);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 
             if (!string.IsNullOrEmpty(responseText))
             {
@@ -98,7 +98,7 @@ namespace TwitterNET
 			IStatus Output = null;
             string apiURL = "http://twitter.com/statuses/destroy/";
             string requestOptions = String.Format("{0}.xml", StatusID);
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL, requestOptions);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 
             if (!string.IsNullOrEmpty(responseText))
             {
@@ -140,7 +140,7 @@ namespace TwitterNET
             if (InReplyStatusID > long.MinValue)
                 requestOptions.AppendFormat("&in_reply_to_status_id={0}", InReplyStatusID);
 
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiUrl, requestOptions.ToString());
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiUrl);
 
             if (!string.IsNullOrEmpty(responseText))
             {
@@ -161,7 +161,7 @@ namespace TwitterNET
 		{
 			IList<IStatus> Output = new List<IStatus>();
             string apiURL = "http://twitter.com/statuses/friends_timeline.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
             if (!string.IsNullOrEmpty(responseText))
             {
@@ -181,7 +181,7 @@ namespace TwitterNET
 		{
 			IList<IStatus> Output = new List<IStatus>();
             string apiURL = "http://twitter.com/statuses/user_timeline.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
             if (!string.IsNullOrEmpty(responseText))
             {
@@ -196,7 +196,7 @@ namespace TwitterNET
         {
             IList<IUser> Output = new List<IUser>();
             string apiURL = "http://twitter.com/statuses/friends.xml";
-            string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
+            string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
             if(!String.IsNullOrEmpty(resposneText))
             {
@@ -211,7 +211,7 @@ namespace TwitterNET
 		{
 			IList<IUser> Output = new List<IUser>();
 			string apiURL = "http://twitter.com/statuses/followers.xml";
-			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
 			if(!String.IsNullOrEmpty(responseText))
 			{
@@ -231,7 +231,7 @@ namespace TwitterNET
         {
             IList<IStatus> Output = new List<IStatus>();
             string apiURL = "http://twitter.com/statuses/mentions.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
             if (!string.IsNullOrEmpty(responseText))
             {

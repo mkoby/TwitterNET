@@ -61,19 +61,27 @@
 		<copy file="${teamcity.dotnet.nunitaddin}-2.4.8.pdb" todir="${dir.nunit.addins}" />
 	</if>
 
-	<exec program="${partcover.exe}" failonerror="false">
+	<!--
+	<nunit2 verbose="true">
+		<formatter type="Xml" usefile="true" extension=".xml" outputdir="${dir.buildreports}" />
+		<test assemblyname="${dir.build}\${assembly.unittests}" />
+	</nunit2>
+	-->
+	
+	<exec program="${partcover.exe}" failonerror="false" verbose="true">
 		<arg line="--target ${nunitconsole}" />
 		<arg line="--target-work-dir ${dir.build}" />
 		<arg line="--target-args ${assembly.unittests}" />
 		<arg line="--output ${dir.build}\CodeCoverage.xml" />
 		<arg line="--include [TwitterNET]* " />
 	</exec>
-		
-	<style style="${dir.xslt}\class.report.xslt" in="${dir.build}\CodeCoverage.xml" out="${dir.buildreports}\CodeCoverageReport.html" />	
+	
+	<property name="xml.codecoverage" value="${dir.build}\CodeCoverage.xml" />
+	<style style="${dir.xslt}\class.report.xslt" in="${xml.codecoverage}" out="${dir.buildreports}\CodeCoverageReport.html" if="${file::exists(xml.codecoverage)}" />	
 	
 	<nunit2report todir="${dir.buildreports}">
 		<fileset>
-			<includes name="${dir.build}\TestResult.xml" />
+			<include name="${dir.build}\TestResult.xml" />
 		</fileset>
 	</nunit2report>
 	

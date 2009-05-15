@@ -62,21 +62,19 @@ namespace TwitterNET
         /// </summary>
         /// <param name="strURL">The Twitter API Url</param>
         /// <returns>Web request used to get data from the Twitter API</returns>
-        private WebRequest CreateNewTwitterRequest(string strURL, string strOptions)
+        private WebRequest CreateNewTwitterRequest(string strURL)
         {
             if(String.IsNullOrEmpty(strURL))
                 throw new ArgumentException("API URL not passed correctly");
 
             string methodType = "GET";
-            
-            StringBuilder requestURL = new StringBuilder(String.Format("{0}{1}", strURL, strOptions));
 
 			//TODO: Better way to do this?
-            if (requestURL.ToString().Contains("statuses/update") || 
-			    requestURL.ToString().Contains("statuses/destroy"))
+            if (strURL.Contains("statuses/update") || 
+			    strURL.Contains("statuses/destroy"))
                 methodType = "POST";
 
-            WebRequest Output = WebRequest.Create(requestURL.ToString());
+            WebRequest Output = WebRequest.Create(strURL.ToString());
             Output.Method = methodType;
 
             if(_HasLogin)
@@ -84,7 +82,7 @@ namespace TwitterNET
                 string usernamePassword = String.Format("{0}:{1}", _Login, _Password);
                 string loginBytes = Convert.ToBase64String(new ASCIIEncoding().GetBytes(usernamePassword));
                 CredentialCache credCache = new CredentialCache
-                                                {{new Uri(requestURL.ToString()), 
+                                                {{new Uri(strURL), 
                                                      "Basic", 
                                                      new NetworkCredential(_Login, _Password)}};
                 Output.Credentials = credCache;
@@ -136,10 +134,10 @@ namespace TwitterNET
             return Output.ToString();
         }
 		
-		public string MakeAPIRequest(RequestHandler requestHandler, string strAPIUrl, string strRequestOptions)
+		public string MakeAPIRequest(RequestHandler requestHandler, string strAPIUrl)
 		{
 			string Output = String.Empty;
-			Output = GetTwitterResponse( CreateNewTwitterRequest(strAPIUrl, strRequestOptions) ); 
+			Output = GetTwitterResponse( CreateNewTwitterRequest(strAPIUrl) ); 
 			
 			return Output;
 		}
