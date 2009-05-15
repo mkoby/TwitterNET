@@ -8,6 +8,31 @@ namespace TwitterNET
     public class Twitter
     {
         readonly RequestHandler _requestHandler = null;
+		
+		private bool UserOwnsStatus(long StatusID)
+		{
+			bool Output = true;
+			IStatus statusToDestory = null;
+			
+			try
+			{
+				statusToDestory = GetSingleStatus(StatusID);
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+			
+			if(statusToDestory != null)
+			{
+				if(statusToDestory.StatusUser.ScreenName.ToLowerInvariant() != _requestHandler.Login.ToLowerInvariant())
+				{
+					Output = false;
+				}
+			}
+			
+			return Output;
+		}
 
         public Twitter(string UserName, string Password)
         {
@@ -27,9 +52,7 @@ namespace TwitterNET
             if(!string.IsNullOrEmpty(responseText))
             {
                 foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
-                {
-                    Output.Add(status);
-                }
+					Output.Add(status);
             }
 
             return Output;
@@ -55,6 +78,7 @@ namespace TwitterNET
                 Output = Status.ParseSingleStatusXml(responseText);
             }
 
+			requestOptions = null;
             return Output;
         }
 		
@@ -67,38 +91,22 @@ namespace TwitterNET
 		{
 			if(StatusID <= 0)
                 throw new ArgumentNullException("StatusID", "StatusID can not be NULL or less than zero when requesting a single twitter status");
-
-			IStatus statusToDestory = null, 
-                    Output = null;
-				
-			try
-			{
-				statusToDestory = GetSingleStatus(StatusID);
-			}
-			catch(Exception ex)
-			{
-				throw ex;
-			}
 			
-			if(statusToDestory != null)
-			{
-				if(statusToDestory.StatusUser.ScreenName.ToLowerInvariant() != _requestHandler.Login.ToLowerInvariant())
-				{
-					throw new TwitterNetException("StatusUser cannot delete a status that is not their own");
-				}
+			if(!UserOwnsStatus(StatusID))
+				throw new TwitterNetException("StatusUser cannot delete a status that is not their own");
 
-	            string apiURL = "http://twitter.com/statuses/destroy/";
-	            string requestOptions = String.Format("{0}.xml", StatusID);
-	            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL, requestOptions);
-	
-	            if (!string.IsNullOrEmpty(responseText))
-	            {
-                    Output = Status.ParseSingleStatusXml(responseText);
-	            }
-			}
+			IStatus Output = null;
+            string apiURL = "http://twitter.com/statuses/destroy/";
+            string requestOptions = String.Format("{0}.xml", StatusID);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL, requestOptions);
 
-		    statusToDestory = null; //Clean up our objects
-            return Output; //Return a NULL IStatus because we didn't get anything back
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                Output = Status.ParseSingleStatusXml(responseText);
+            }
+
+			requestOptions = null;
+            return Output;
 		}
 
 		/// <summary>
@@ -139,6 +147,7 @@ namespace TwitterNET
                 Output = Status.ParseSingleStatusXml(responseText);
             }
 
+			requestOptions = null; //Clean up our objects
 		    return Output;
 
         }
@@ -157,14 +166,9 @@ namespace TwitterNET
             if (!string.IsNullOrEmpty(responseText))
             {
                 foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
-                {
-                    Output.Add(status);
-                }
+					Output.Add(status);
             }
 			
-			//Clean up our objects
-			requestOptions = null;
-
             return Output;
 		}
 		   
@@ -182,51 +186,22 @@ namespace TwitterNET
             if (!string.IsNullOrEmpty(responseText))
             {
                 foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
-                {
-                    Output.Add(status);
-                }
+					Output.Add(status);
             }
-
-			//Clean up our objects
-			requestOptions = null;
-			
+		
             return Output;
 		}
-
-		/// <summary>
-		/// Gets mentions of the authenticated user's screen name
-		/// </summary>
-		/// <param name="requestOptions"></param>
-		/// <returns></returns>
-        public IList<IStatus> GetMetions(RequestOptions requestOptions)
-        {
-            IList<IStatus> Output = new List<IStatus>();
-            string apiURL = "http://twitter.com/statuses/mentions.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
-
-            if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
-                {
-                    Output.Add(status);
-                }
-            }
-			
-            return Output;
-        }
-
-        public IList<IUser> GetUsersFriends(RequestOptions requestOptions)
+		
+		public IList<IUser> GetUsersFriends(RequestOptions requestOptions)
         {
             IList<IUser> Output = new List<IUser>();
-            string apiURL = "";
+            string apiURL = "http://twitter.com/statuses/friends.xml";
             string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
 
             if(!String.IsNullOrEmpty(resposneText))
             {
                 foreach(IUser user in User.ParseUserArrayXml(resposneText))
-                {
                     Output.Add(user);
-                }
             }
             
             return Output;
@@ -246,5 +221,26 @@ namespace TwitterNET
 			
 			return Output;
 		}
+
+		/// <summary>
+		/// Gets mentions of the authenticated user's screen name
+		/// </summary>
+		/// <param name="requestOptions"></param>
+		/// <returns></returns>
+        public IList<IStatus> GetMetions(RequestOptions requestOptions)
+        {
+            IList<IStatus> Output = new List<IStatus>();
+            string apiURL = "http://twitter.com/statuses/mentions.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL), String.Empty);
+
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                    Output.Add(status);
+            }
+			
+			requestOptions = null; //Clean up our objects
+            return Output;
+        }
     }
 }

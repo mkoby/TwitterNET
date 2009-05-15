@@ -62,7 +62,7 @@ namespace TwitterNET
         /// </summary>
         /// <param name="strURL">The Twitter API Url</param>
         /// <returns>Web request used to get data from the Twitter API</returns>
-        public WebRequest CreateNewTwitterRequest(string strURL, string strOptions)
+        private WebRequest CreateNewTwitterRequest(string strURL, string strOptions)
         {
             if(String.IsNullOrEmpty(strURL))
                 throw new ArgumentException("API URL not passed correctly");
@@ -71,6 +71,7 @@ namespace TwitterNET
             
             StringBuilder requestURL = new StringBuilder(String.Format("{0}{1}", strURL, strOptions));
 
+			//TODO: Better way to do this?
             if (requestURL.ToString().Contains("statuses/update") || 
 			    requestURL.ToString().Contains("statuses/destroy"))
                 methodType = "POST";
@@ -93,7 +94,7 @@ namespace TwitterNET
             return Output;
         }
 
-        public string GetTwitterResponse(WebRequest twitterRequest)
+        private string GetTwitterResponse(WebRequest twitterRequest)
         {
             if (twitterRequest == null)
                 throw new ArgumentException("TwitterRequest is either NULL or empty");
@@ -138,7 +139,7 @@ namespace TwitterNET
 		public string MakeAPIRequest(RequestHandler requestHandler, string strAPIUrl, string strRequestOptions)
 		{
 			string Output = String.Empty;
-			Output = this.GetTwitterResponse( CreateNewTwitterRequest(strAPIUrl, strRequestOptions) ); 
+			Output = GetTwitterResponse( CreateNewTwitterRequest(strAPIUrl, strRequestOptions) ); 
 			
 			return Output;
 		}

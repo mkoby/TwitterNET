@@ -133,12 +133,13 @@ namespace TwitterNET_Tests
         {
             IList<IUser> friendsStatusList = twitter.GetUsersFriends(new RequestOptions());
 
-            foreach (var user in friendsStatusList)
-            {
-                Console.WriteLine("{0}", user.ScreenName);
-            }
-
             Assert.IsNotEmpty((ICollection)friendsStatusList);
+			
+			var bizUser = from user in friendsStatusList
+						  where user.ScreenName == "biz"
+						  select user;
+			
+			Assert.AreEqual(1, bizUser.Count());
         }
 		
 		[Test]
@@ -147,6 +148,12 @@ namespace TwitterNET_Tests
 			IList<IUser> followersStatusList = twitter.GetUsersFollowers(new RequestOptions());
 			
 			Assert.IsNotEmpty((ICollection)followersStatusList);
+			
+			var mkobyUser = from user in followersStatusList
+							where user.ScreenName == "mkoby"
+							select user;
+			
+			Assert.AreEqual(1, mkobyUser.Count());
 		}
     }
 }
