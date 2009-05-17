@@ -126,47 +126,43 @@ namespace TwitterNET
         {
             throw new NotImplementedException();
         }
-
-        internal static IEnumerable<IStatus> ParseStatusArrayXml(string statusArrayXmlText)
-        {
-            var element = XElement.Parse(statusArrayXmlText);
-            IStatus status = null;
-
-            if (element.Name == "statuses")
-            {
-                foreach (var statusElement in element.Descendants("status"))
-                {
-                    status = ParseStatusXML(statusElement.ToString()); ;
-
-                    foreach (var statusUserElement in statusElement.Descendants("user"))
-                    {
-                        status.StatusUser = User.ParseUserXml(statusUserElement.ToString());
-                    }
-
-                    yield return status;
-                }
-            }
-        }
-
-        internal static IStatus ParseSingleStatusXml(string xmlText)
-        {
-            var element = XElement.Parse(xmlText);
-            IStatus status = null;
-
-            if(element.Name == "status")
-            {
-                status = ParseStatusXML(element.ToString());
-
-                foreach (var statusUserElement in element.Descendants("user"))
-                {
-                    status.StatusUser = User.ParseUserXml(statusUserElement.ToString());
-                }
-            }
-
-            return status;
-        }
-
-        internal static IStatus ParseStatusXML(string xmlText)
+		
+		internal static IEnumerable<IStatus> Load(string xmlText)
+		{
+			var element = XElement.Parse(xmlText);
+			IStatus status = null;
+			
+			if(element.Name == "statuses")
+			{
+				foreach(var statusElement in element.Descendants("status"))
+				{
+					status = null;
+					status = ParseStatusXML(statusElement.ToString());
+					
+					foreach(var statusUserElement in statusElement.Descendants("user"))
+					{
+						foreach(IUser user in User.Load(statusUserElement.ToString()))
+							status.StatusUser = user;
+					}
+					
+					yield return status;
+				}
+			}
+			else if(element.Name == "status")
+			{
+				status = ParseStatusXML(element.ToString());
+				
+				foreach(var statusUserElement in element.Descendants("user"))
+				{
+					foreach(IUser user in User.Load(statusUserElement.ToString()))
+						status.StatusUser = user;
+				}
+				
+				yield return status;
+			}
+		}
+		
+		private static IStatus ParseStatusXML(string xmlText)
         {
             if (String.IsNullOrEmpty(xmlText))
                 return null; //return NULL status to show it wasn't processed correctly

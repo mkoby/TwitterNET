@@ -51,7 +51,7 @@ namespace TwitterNET
 			
             if(!string.IsNullOrEmpty(responseText))
             {
-                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                foreach (IStatus status in Status.Load(responseText))
 					Output.Add(status);
             }
 
@@ -71,13 +71,17 @@ namespace TwitterNET
             IStatus Output = null;
             string apiURL = "http://twitter.com/statuses/show/";
             string requestOptions = String.Format("{0}.xml", StatusID);
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                Output = Status.ParseSingleStatusXml(responseText);
+                foreach(IStatus status in Status.Load(responseText))
+				{
+					Output = status;
+					break; //we only want the first status (there should only be 1 anyway)
+				}
             }
-
+			
 			requestOptions = null;
             return Output;
         }
@@ -98,11 +102,15 @@ namespace TwitterNET
 			IStatus Output = null;
             string apiURL = "http://twitter.com/statuses/destroy/";
             string requestOptions = String.Format("{0}.xml", StatusID);
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                Output = Status.ParseSingleStatusXml(responseText);
+                foreach(IStatus status in Status.Load(responseText))
+				{
+					Output = status;
+					break; //we only want the first status (there should only be 1 anyway)
+				}
             }
 
 			requestOptions = null;
@@ -140,11 +148,15 @@ namespace TwitterNET
             if (InReplyStatusID > long.MinValue)
                 requestOptions.AppendFormat("&in_reply_to_status_id={0}", InReplyStatusID);
 
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiUrl);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiUrl, requestOptions));
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                Output = Status.ParseSingleStatusXml(responseText);
+                foreach(IStatus status in Status.Load(responseText))
+				{
+					Output = status;
+					break; //we only want the first status (there should only be 1 anyway)
+				}
             }
 
 			requestOptions = null; //Clean up our objects
@@ -165,7 +177,7 @@ namespace TwitterNET
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                foreach (IStatus status in Status.Load(responseText))
 					Output.Add(status);
             }
 			
@@ -185,7 +197,7 @@ namespace TwitterNET
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                foreach (IStatus status in Status.Load(responseText))
 					Output.Add(status);
             }
 		
@@ -200,7 +212,7 @@ namespace TwitterNET
 
             if(!String.IsNullOrEmpty(resposneText))
             {
-                foreach(IUser user in User.ParseUserArrayXml(resposneText))
+                foreach(IUser user in User.Load(resposneText))
                     Output.Add(user);
             }
             
@@ -215,7 +227,7 @@ namespace TwitterNET
 			
 			if(!String.IsNullOrEmpty(responseText))
 			{
-				foreach(IUser user in User.ParseUserArrayXml(responseText))
+				foreach(IUser user in User.Load(responseText))
 				        Output.Add(user);
 			}
 			
@@ -235,12 +247,67 @@ namespace TwitterNET
 
             if (!string.IsNullOrEmpty(responseText))
             {
-                foreach (IStatus status in Status.ParseStatusArrayXml(responseText))
+                foreach (IStatus status in Status.Load(responseText))
                     Output.Add(status);
             }
 			
 			requestOptions = null; //Clean up our objects
             return Output;
         }
+		
+		public IList<IStatus> GetFavorites(RequestOptions requestOptions)
+		{
+			IList<IStatus> Output = new List<IStatus>();
+			string apiURL = "http://twitter.com/favorites.xml";
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+			
+			if(!String.IsNullOrEmpty(responseText))
+			{
+				foreach(IStatus status in Status.Load(responseText))
+				{
+				        Output.Add(status);
+				}
+			}
+			
+			return Output;
+		}
+		
+		public IStatus FavoriteStatus(long StatusID)
+		{
+			IStatus Output = null;
+			string apiURL = "http://twitter.com/favorites/create/";
+			string requestOptions = String.Format("{0}.xml", StatusID);
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}",apiURL, requestOptions));
+			
+			if (!string.IsNullOrEmpty(responseText))
+            {
+                foreach(IStatus status in Status.Load(responseText))
+				{
+					Output = status;
+					break; //we only want the first status (there should only be 1 anyway)
+				}
+            }
+			
+			return Output;
+		}
+		
+		public IStatus DeleteFavorite(long StatusID)
+		{			
+			IStatus Output = null;
+			string apiURL = "http://twitter.com/favorites/destroy/";
+			string requestOptions = String.Format("{0}.xml", StatusID);
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}",apiURL, requestOptions));
+			
+			if (!string.IsNullOrEmpty(responseText))
+            {
+                foreach(IStatus status in Status.Load(responseText))
+				{
+					Output = status;
+					break; //we only want the first status (there should only be 1 anyway)
+				}
+            }
+			
+			return Output;
+		}
     }
 }

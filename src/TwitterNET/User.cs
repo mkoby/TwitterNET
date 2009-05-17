@@ -174,58 +174,43 @@ namespace TwitterNET
         {
             throw new NotImplementedException();
         }
+		
+		internal static IEnumerable<IUser> Load(string xmlText)
+		{
+			var element = XElement.Parse(xmlText);
+			IUser user = null;
+			
+			if(element.Name == "users")
+			{
+				foreach(var userElement in element.Descendants("user"))
+				{
+					user = null;
+					user = ParseUserXml(userElement.ToString());
+					
+					foreach(var userStatusElement in userElement.Descendants("status"))
+					{
+						foreach(IStatus status in Status.Load(userStatusElement.ToString()))
+							user.UserStatus = status;
+					}
+					
+					yield return user;
+				}
+			}
+			else if(element.Name == "user")
+			{
+				user = ParseUserXml(element.ToString());
+				
+				foreach(var userStatusElement in element.Descendants("status"))
+				{
+					foreach(IStatus status in Status.Load(userStatusElement.ToString()))
+						user.UserStatus = status;
+				}
+				
+				yield return user;
+			}
+		}        
 
-        internal static IEnumerable<IUser> ParseUserArrayXml(string userArrayXmlText)
-        {
-            var element = XElement.Parse(userArrayXmlText);
-            IUser user = null;
-
-            if (element.Name == "users")
-            {
-                foreach (var userElement in element.Descendants("user"))
-                {
-                    user = User.ParseUserXml(userElement.ToString()); ;
-
-                    foreach (var userStatusElement in userElement.Descendants("status"))
-                    {
-                        user.UserStatus = Status.ParseStatusXML(userStatusElement.ToString());
-                    }
-
-                    yield return user;
-                }
-            }
-            else if(element.Name == "user")
-            {
-                user = ParseUserXml(element.ToString());
-
-                foreach (var userStatusElement in element.Descendants("status"))
-                {
-                    user.UserStatus = Status.ParseStatusXML(userStatusElement.ToString());
-                }
-
-                yield return user;
-            }
-        }
-
-        internal static IUser ParseSingleUserXml(string xmlText)
-        {
-            var element = XElement.Parse(xmlText);
-            IUser user = null;
-
-            if(element.Name == "user")
-            {
-                user = ParseUserXml(element.ToString());
-
-                foreach (var userStatusElement in element.Descendants("status"))
-                {
-                    user.UserStatus = Status.ParseStatusXML(userStatusElement.ToString());
-                }
-            }
-
-            return user;
-        }
-
-        internal static IUser ParseUserXml(string xmlText)
+        private static IUser ParseUserXml(string xmlText)
         {
             if (String.IsNullOrEmpty(xmlText))
                 return null;  //Return NULL user to show it wsan't processed correctly

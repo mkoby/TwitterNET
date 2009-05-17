@@ -71,7 +71,9 @@ namespace TwitterNET
 
 			//TODO: Better way to do this?
             if (strURL.Contains("statuses/update") || 
-			    strURL.Contains("statuses/destroy"))
+			    strURL.Contains("statuses/destroy") ||
+			    strURL.Contains("favorites/create") ||
+			    strURL.Contains("favorites/destroy"))
                 methodType = "POST";
 
             WebRequest Output = WebRequest.Create(strURL.ToString());
@@ -88,7 +90,11 @@ namespace TwitterNET
                 Output.Credentials = credCache;
                 Output.Headers.Add("Authorization", String.Format("Basic {0}", loginBytes)); 
             }
-
+			
+#if DEBUG
+			Console.WriteLine(strURL);
+#endif
+			
             return Output;
         }
 
