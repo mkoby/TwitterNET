@@ -15,7 +15,19 @@ namespace TwitterNET_Tests
 		
 		[TestFixtureSetUp]
         public void TwitterNET_Tests_Setup()
-        {}
+        {
+			try
+			{
+				//Make sure the status we're going to 
+				//test with is NOT currently a favorite.
+				twitter = new Twitter("apitest4769", "testaccount");
+				twitter.DeleteFavorite(idToFavorite);
+			}
+			finally
+			{
+				twitter = null;
+			}
+		}
 
         [TestFixtureTearDown]
         public void TwitterNET_Tests_TearDown()

@@ -85,8 +85,8 @@ namespace TwitterNET
                 string loginBytes = Convert.ToBase64String(new ASCIIEncoding().GetBytes(usernamePassword));
                 CredentialCache credCache = new CredentialCache
                                                 {{new Uri(strURL), 
-                                                     "Basic", 
-                                                     new NetworkCredential(_Login, _Password)}};
+                                                  "Basic", 
+                                                  new NetworkCredential(_Login, _Password)}};
                 Output.Credentials = credCache;
                 Output.Headers.Add("Authorization", String.Format("Basic {0}", loginBytes)); 
             }
