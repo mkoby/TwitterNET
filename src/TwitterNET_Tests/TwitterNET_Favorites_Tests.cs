@@ -23,6 +23,10 @@ namespace TwitterNET_Tests
 				twitter = new Twitter("apitest4769", "testaccount");
 				twitter.DeleteFavorite(idToFavorite);
 			}
+			catch(Exception ex)
+			{
+				Console.WriteLine("{0}\n\n{1}", ex.Message, ex.StackTrace);
+			}
 			finally
 			{
 				twitter = null;

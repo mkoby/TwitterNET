@@ -18,12 +18,29 @@ namespace TwitterNET
         private string _website;
         private bool _protected;
         private long _followerCount;
-
-        private bool _hasExtendedProperties;
-        private IExtendedUserProperties _extendedUserProperties;
+		
+		private DateTime _createAt;
+        private int _favoritesCount;
+        private bool _following;
+        private bool _notifications;
+        private string _profileBackgroundImageUrl;
+        private bool _profileBackgroundTile;
+        private string _profileBackgroundColor;
+        private string _profileLinkColor;
+        private string _profileSidebarFillColor;
+        private string _profileSidebarBorderColor;
+        private string _profileTextColor;
+        private long _statusCount;
+        private string _timeZone;
+        private int _utcOffset;
         private IStatus _status;
 
-        public User(long id, string realName, string screenName, string description, string location, string profileImageUrl, string website, bool protected_updates, long followerCount)
+        public User(long id, string realName, string screenName, string description, string location, 
+		            string profileImageUrl, string website, bool protected_updates, long followerCount, 
+		            DateTime createAt, int favoritesCount, bool following, bool notifications, 
+		            string profileBackgroundImageUrl, bool profileBackgroundTile, string profileBackgroundColor, 
+		            string profileLinkColor, string profileSidebarFillColor, string profileSidebarBorderColor, 
+		            string profileTextColor, long statusCount, string timeZone, int utcOffset)
         {
             _id = id;
             _followerCount = followerCount;
@@ -34,6 +51,21 @@ namespace TwitterNET
             _description = description;
             _screenName = screenName;
             _realName = realName;
+			
+			_createAt = createAt;
+            _utcOffset = utcOffset;
+            _timeZone = timeZone;
+            _statusCount = statusCount;
+            _profileTextColor = profileTextColor;
+            _profileSidebarBorderColor = profileSidebarBorderColor;
+            _profileSidebarFillColor = profileSidebarFillColor;
+            _profileLinkColor = profileLinkColor;
+            _profileBackgroundColor = profileBackgroundColor;
+            _profileBackgroundTile = profileBackgroundTile;
+            _profileBackgroundImageUrl = profileBackgroundImageUrl;
+            _following = following;
+            _notifications = notifications;
+            _favoritesCount = favoritesCount;
         }
 
         public User(long id, string realName, string screenName, string description, string location, string profileImageUrl, string website, bool protected_updates, long followerCount, bool hasExtendedProperties, IExtendedUserProperties extendedUserProperties)
@@ -47,9 +79,6 @@ namespace TwitterNET
             _description = description;
             _screenName = screenName;
             _realName = realName;
-
-            _hasExtendedProperties = hasExtendedProperties;
-            _extendedUserProperties = extendedUserProperties;
         }
 
 
@@ -133,23 +162,118 @@ namespace TwitterNET
             get { return _status; }
             set { _status = value; }
         }
-
-        /// <summary>
-        /// Does the user have extended properties
-        /// </summary>
-        public bool HasExtendedProperties
-        {
-            get { return _hasExtendedProperties; }
-        }
-
-        /// <summary>
-        /// Extended user properties, when available in the returned data
-        /// </summary>
-        public IExtendedUserProperties ExtendedUserProperties
-        {
-            get { return _extendedUserProperties; }
-            set { _extendedUserProperties = value; }
-        }
+		
+		/// <summary>
+		/// The date/time the user created their account
+		/// </summary>
+		public DateTime CreateAt 
+		{ 
+			get{ return _createAt; } 
+		}
+		
+		/// <summary>
+		/// Number of status' the user has favorited
+		/// </summary>
+        public int FavoritesCount 
+		{ 
+			get{ return _favoritesCount; } 
+		} 
+		
+		/// <summary>
+		/// The user's UTC Offset
+		/// </summary>
+        public int UTCOffset 
+		{ 
+			get{ return _utcOffset; } 
+		}
+		
+		/// <summary>
+		/// the user's time zone
+		/// </summary>
+        public string TimeZone 
+		{ 
+			get{ return _timeZone; } 
+		}
+		
+		/// <summary>
+		/// The user's background image URL
+		/// </summary>
+        public string ProfileBackgroundImageURL 
+		{ 
+			get{ return _profileBackgroundImageUrl; } 
+		}
+		
+		/// <summary>
+		/// Is the user's profile background tiled
+		/// </summary>
+        public bool ProfileBackgroundTile 
+		{ 
+			get{ return _profileBackgroundTile; } 
+		}
+		
+		/// <summary>
+		/// How many updates the user has posted
+		/// </summary>
+        public long StatusCount 
+		{ 
+			get{ return _statusCount; } 
+		}
+		
+		/// <summary>
+		/// Does the authenticated user get notifications on this user's updates?
+		/// </summary>
+        public bool Notifications 
+		{ 
+			get{ return _notifications; } 
+		}
+		
+		/// <summary>
+		/// Is the authenticated user following this user
+		/// </summary>
+        public bool Following 
+		{ 
+			get{ return _following; } 
+		}
+		
+		/// <summary>
+		/// User's profile background color
+		/// </summary>
+        public string ProfileBackgroundColor 
+		{ 
+			get{ return _profileBackgroundColor; } 
+		}
+		
+		/// <summary>
+		/// User's profile text color
+		/// </summary>
+        public string ProfileTextColor 
+		{ 
+			get{ return _profileTextColor; } 
+		}
+		
+		/// <summary>
+		/// User's profile link color
+		/// </summary>
+        public string ProfileLinkColor 
+		{ 
+			get{ return _profileLinkColor; } 
+		}
+		
+		/// <summary>
+		/// User's profile sidebar fill color
+		/// </summary>
+        public string ProfileSidebarFillColor 
+		{ 
+			get{ return _profileSidebarFillColor; } 
+		}
+		
+		/// <summary>
+		/// User's profile sidebar border color
+		/// </summary>
+        public string ProfileSidebarBorderColor 
+		{ 
+			get{ return _profileSidebarBorderColor; } 
+		}
 
         /// <summary>
         /// Follow the user
@@ -216,8 +340,6 @@ namespace TwitterNET
                 return null;  //Return NULL user to show it wsan't processed correctly
 
             IUser Output = null;
-            IExtendedUserProperties extendedUserProperties = null;
-
             XElement statusXml = XElement.Parse(xmlText);
 
             var userQuery = from u in statusXml.AncestorsAndSelf()
@@ -234,73 +356,55 @@ namespace TwitterNET
                 string website = (string)user.Element("url");
                 bool protected_updates = (bool)user.Element("protected");
                 long followerCount = (long)user.Element("followers_count");
-
-                //Extended StatusUser Options
-                DateTime created_at = DateTime.MinValue;
-                int favorites_count = int.MinValue;
-                int utc_offset = int.MinValue;
-                string time_zone = String.Empty;
-                string profile_background_image_url = String.Empty;
-                bool profile_background_tile = false;
-                long statuses_count = long.MinValue;
-                bool notifications = false;
-                bool following = false;
-                string profile_background_color = String.Empty;
-                string profile_text_color = String.Empty;
-                string profile_link_color = String.Empty;
-                string profile_sidebar_fill_color = String.Empty;
-                string profile_sidebar_border_color = String.Empty;
-
-
-                if (user.Element("profile_background_color") != null)
+                DateTime created_at = DateTime.ParseExact((string)user.Element("created_at"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture);
+                int favorites_count = (int)user.Element("favourites_count");
+                int utc_offset;
+				
+				try
                 {
-                    //We have extended properties so we need to process these
-                    created_at = DateTime.ParseExact((string)user.Element("created_at"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture); ;
-                    favorites_count = (int)user.Element("favourites_count");
-                    
-                    try
-                    {
-                        utc_offset = (int)user.Element("utc_offset");
-                    }
-                    catch { utc_offset = int.MinValue; }
-
-                    try
-                    {
-                        time_zone = (string)user.Element("time_zone");
-                    }
-                    catch { time_zone = String.Empty; }
-                    
-                    profile_background_image_url = (string)user.Element("profile_background_image_url");
-                    profile_background_tile = (bool)user.Element("profile_background_tile");
-                    statuses_count = (int)user.Element("statuses_count");
-
-                    try
-                    {
-                        notifications = (bool)user.Element("notifications");
-                    }
-                    catch { notifications = false; }
-
-                    try
-                    {
-                        following = (bool)user.Element("following");
-                    }
-                    catch { following = false; }
-
-                    profile_background_color = (string)user.Element("profile_background_color");
-                    profile_text_color = (string)user.Element("profile_text_color");
-                    profile_link_color = (string)user.Element("profile_link_color");
-                    profile_sidebar_fill_color = (string)user.Element("profile_sidebar_fill_color");
-                    profile_sidebar_border_color = (string)user.Element("profile_sidebar_border_color");
-
-                    extendedUserProperties = new ExtendedUserProperties(created_at, favorites_count, following, notifications, profile_background_image_url, profile_background_tile, 
-                        profile_background_color, profile_link_color, profile_sidebar_fill_color, profile_sidebar_border_color, profile_text_color, statuses_count, time_zone, utc_offset);
-
+                    utc_offset = (int)user.Element("utc_offset");
                 }
-
-                if(extendedUserProperties == null)
-                    Output = new User(id, realName, screenName, description, location, profileImageUrl, website, protected_updates, followerCount);
-                else
-                    Output = new User(id, realName, screenName, description, location, profileImageUrl, website, protected_updates, followerCount, true, extendedUserProperties);
+                catch { utc_offset = int.MinValue; }
+				
+                string time_zone;
+				
+				try
+                {
+                    time_zone = (string)user.Element("time_zone");
+                }
+                catch { time_zone = String.Empty; }
+				
+                string profile_background_image_url = (string)user.Element("profile_background_image_url");
+                bool profile_background_tile = (bool)user.Element("profile_background_tile");
+                long statuses_count = (int)user.Element("statuses_count");
+                bool notifications;
+				
+				try
+	            {
+	                notifications = (bool)user.Element("notifications");
+	            }
+	            catch { notifications = false; }
+				
+                bool following;
+				
+				try
+                {
+                    following = (bool)user.Element("following");
+                }
+                catch { following = false; }
+				
+                string profile_background_color = (string)user.Element("profile_background_color");;
+                string profile_text_color = (string)user.Element("profile_text_color");
+                string profile_link_color = (string)user.Element("profile_link_color");
+                string profile_sidebar_fill_color = (string)user.Element("profile_sidebar_fill_color");
+                string profile_sidebar_border_color = (string)user.Element("profile_sidebar_border_color");
+				
+				Output = new User(id, realName, screenName, description, location, profileImageUrl, website, 
+				                  protected_updates, followerCount, created_at, favorites_count, following, 
+				                  notifications, profile_background_image_url, profile_background_tile, 
+				                  profile_background_color, profile_link_color, profile_sidebar_fill_color, 
+				                  profile_sidebar_border_color, profile_text_color, statuses_count, time_zone, 
+				                  utc_offset);
             }
 
             return Output;

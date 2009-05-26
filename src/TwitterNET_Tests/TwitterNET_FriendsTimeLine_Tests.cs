@@ -25,14 +25,10 @@ namespace TwitterNET_Tests
 
                 if(publicTimeline != null && publicTimeline.Count > 0)
                 {
-                    foreach (IStatus status in publicTimeline)
-                    {
-                        if (TestStatusID == long.MinValue || TestStatusID > status.ID)
-                            TestStatusID = status.ID;
-                    }
+					 TestStatusID = publicTimeline.Min(status => status.ID);
                 }
 
-                //ensuring we have a status that when tested will have tweets bothe before and after
+                //ensuring we have a status that when tested will have tweets both before and after
                 Random rnd = new Random(DateTime.Now.Millisecond);
                 TestStatusID = TestStatusID - rnd.Next(10000, 250000);
             }
