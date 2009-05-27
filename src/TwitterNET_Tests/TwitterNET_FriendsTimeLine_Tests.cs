@@ -60,11 +60,6 @@ namespace TwitterNET_Tests
 			
             IList<IStatus> statusList = twitter.GetFriendsTimeline(myOptions);
             Console.WriteLine("Status Count: {0}", statusList.Count);
-			
-			foreach(IStatus status in statusList)
-			{
-				Console.WriteLine("\n{0}", status.StatusUser.ToString());
-			}
 
             Assert.IsNotEmpty((ICollection)statusList, 
 			                  "Status list was empty, expected at least 1 status returned");
