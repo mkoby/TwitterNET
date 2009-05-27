@@ -13,7 +13,8 @@ namespace TwitterNET_Tests
         private Twitter twitter = null;
         private const string TestUserName = "mkoby";
         private const long TestUserID = 7263572;
-        private long TestStatusID = long.MinValue;
+        private long minTestStatusID = long.MinValue,
+					 maxTestStatusID = long.MinValue;
 
         [TestFixtureSetUp]
         public void TestFixture_Setup()
@@ -25,9 +26,10 @@ namespace TwitterNET_Tests
 
                 if (friendsTimeline != null && friendsTimeline.Count > 0)
                 {
-                    TestStatusID = (long) friendsTimeline.Min(status => status.ID);
 					Random rnd = new Random(DateTime.Now.Millisecond);
-					TestStatusID = TestStatusID - rnd.Next(10000, 250000);
+					int rndNum = rnd.Next(100000, 250000);
+                    minTestStatusID = friendsTimeline.Min(status => status.ID) - rndNum;
+					maxTestStatusID = friendsTimeline.Max(status => status.ID) + rndNum;
                 }
             }
             catch (Exception exception)
@@ -97,8 +99,12 @@ namespace TwitterNET_Tests
         [Test]
         public void Get_UserTimeline_SinceStatusID()
         {
+			//We're going to run this for a specific user 
+			//because the test account doesn't post updates
+			//very often and we can't control test-run order
             RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.SinceID, TestStatusID);
+			requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
+			requestOptions.Add(RequestOptionNames.SinceID, minTestStatusID);
 			
             IList<IStatus> statusList = twitter.GetUserTimeline(requestOptions);
 
@@ -107,15 +113,15 @@ namespace TwitterNET_Tests
 
             long returnedStatusID = (long)statusList.Min(status => status.ID);
 
-            Console.WriteLine("TestStatusID: {0}\nMinStatusID: {1}", TestStatusID, returnedStatusID);
-            Assert.Greater(returnedStatusID, TestStatusID);
+            Console.WriteLine("TestStatusID: {0}\nMinStatusID: {1}", minTestStatusID, returnedStatusID);
+            Assert.Greater(returnedStatusID, minTestStatusID);
         }
 
         [Test]
         public void Get_UserTimeline_MaxStatusID()
         {
             RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.MaxID, TestStatusID);
+			requestOptions.Add(RequestOptionNames.MaxID, maxTestStatusID);
 			
             IList<IStatus> statusList = twitter.GetUserTimeline(requestOptions);
 
@@ -124,8 +130,8 @@ namespace TwitterNET_Tests
 
             long returnedStatusID = (long)statusList.Max(status => status.ID);
 
-            Console.WriteLine("TestStatusID: {0}\nMaxStatusID: {1}", TestStatusID, returnedStatusID);
-            Assert.Less(returnedStatusID, TestStatusID);
+            Console.WriteLine("TestStatusID: {0}\nMaxStatusID: {1}", maxTestStatusID, returnedStatusID);
+            Assert.Less(returnedStatusID, maxTestStatusID);
         }
 
         [Test]

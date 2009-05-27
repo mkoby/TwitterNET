@@ -101,12 +101,11 @@ namespace TwitterNET_Tests
 		{
 			RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.UserID, testUserID);
-			string builtUrl = String.Empty;
 			bool exceptionCaught = false;
 			
 			try
 			{
-				builtUrl = requestOptions.BuildRequestUri(testUrl);
+				requestOptions.BuildRequestUri(testUrl);
 			}
 			catch(Exception twex)
 			{
@@ -121,12 +120,11 @@ namespace TwitterNET_Tests
 		{
 			RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.ScreenName, testScreenName);
-			string builtUrl = String.Empty;
 			bool exceptionCaught = false;
 			
 			try
 			{
-				builtUrl = requestOptions.BuildRequestUri(testUrl);
+				requestOptions.BuildRequestUri(testUrl);
 			}
 			catch(Exception twex)
 			{

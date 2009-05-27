@@ -11,29 +11,10 @@ namespace TwitterNET_Tests
     public class TwitterNET_Mentions_Tests
     {
         private Twitter twitter = null;
-        private const string TestUserName = "mkoby";
-        private const long TestUserID = 7263572;
-        private long TestStatusID = long.MinValue;
 
         [TestFixtureSetUp]
         public void TestFixture_Setup()
         {
-            try
-            {
-                twitter = new Twitter("apitest4769", "testaccount");
-                IList<IStatus> friendsTimeline = twitter.GetFriendsTimeline(new RequestOptions());
-
-                if (friendsTimeline != null && friendsTimeline.Count > 0)
-                {
-                    TestStatusID = (long)friendsTimeline.Min(status => status.ID);
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
-
-            twitter = null;
         }
 
         [TestFixtureTearDown]
