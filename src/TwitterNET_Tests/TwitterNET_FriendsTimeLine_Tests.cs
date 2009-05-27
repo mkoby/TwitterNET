@@ -11,7 +11,8 @@ namespace TwitterNET_Tests
     public class TwitterNET_FriendsTimeLine_Tests
     {
         private Twitter twitter = null;
-        private long TestStatusID = long.MinValue;
+        private long minTestStatusID = long.MinValue,
+					 maxTestStatusID = long.MinValue;
 
         [TestFixtureSetUp]
         public void TwitterNET_Tests_Setup()
@@ -21,16 +22,13 @@ namespace TwitterNET_Tests
 
             try
             {
-                IList<IStatus> publicTimeline = twitter.GetPublicTimeline();
+                IList<IStatus> friendsTimeline = twitter.GetFriendsTimeline(new RequestOptions());
 
-                if(publicTimeline != null && publicTimeline.Count > 0)
+                if(friendsTimeline != null && friendsTimeline.Count > 0)
                 {
-					 TestStatusID = publicTimeline.Min(status => status.ID);
+					minTestStatusID = friendsTimeline.Min(status => status.ID);
+					maxTestStatusID = friendsTimeline.Max(status => status.ID);
                 }
-
-                //ensuring we have a status that when tested will have tweets both before and after
-                Random rnd = new Random(DateTime.Now.Millisecond);
-                TestStatusID = TestStatusID - rnd.Next(10000, 250000);
             }
             catch (Exception exception)
             {
@@ -62,44 +60,52 @@ namespace TwitterNET_Tests
 			
             IList<IStatus> statusList = twitter.GetFriendsTimeline(myOptions);
             Console.WriteLine("Status Count: {0}", statusList.Count);
+			
+			foreach(IStatus status in statusList)
+			{
+				Console.WriteLine("\n{0}", status.StatusUser.ToString());
+			}
 
-            Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
+            Assert.IsNotEmpty((ICollection)statusList, 
+			                  "Status list was empty, expected at least 1 status returned");
         }
 
         [Test]
         public void GetFriendsTimeline_SinceStatusID_Test()
         {
 			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.SinceID, TestStatusID);
+			requestOptions.Add(RequestOptionNames.SinceID, minTestStatusID);
 			
             IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
-            Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
+            Assert.IsNotEmpty((ICollection)statusList, 
+			                  "Status list was empty, expected at least 1 status returned");
 
             //Test to ensure statusID falls where we think it should
             long minStatusID = statusList.Min(status => status.ID);
 
-            Console.WriteLine("TestStatusID: {0}\nMinStatusID: {1}", TestStatusID, minStatusID);
-            Assert.Greater(minStatusID, TestStatusID);
+            Console.WriteLine("TestStatusID: {0}\nMinStatusID: {1}", minTestStatusID, minStatusID);
+            Assert.Greater(minStatusID, minTestStatusID);
         }
 
         [Test]
         public void GetFriendsTimeline_MaxStatusID_Test()
         {
             RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.MaxID, TestStatusID);
+			requestOptions.Add(RequestOptionNames.MaxID, maxTestStatusID);
 			
             IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
-            Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
+            Assert.IsNotEmpty((ICollection)statusList, 
+			                  "Status list was empty, expected at least 1 status returned");
 
             //Test to ensure statusID falls where we think it should
             long maxStatusID = statusList.Max(status => status.ID);
             
-            Console.WriteLine("TestStatusID: {0}\nMaxStatusID: {1}", TestStatusID, maxStatusID);
-            Assert.Less(maxStatusID, TestStatusID, "MaxStatusID is GREATER than TestStatusID");
+            Console.WriteLine("TestStatusID: {0}\nMaxStatusID: {1}", maxTestStatusID, maxStatusID);
+            Assert.Less(maxStatusID, maxTestStatusID, "MaxStatusID is GREATER than TestStatusID");
         }
 
         [Test]
@@ -123,7 +129,8 @@ namespace TwitterNET_Tests
 
             #endregion
 
-            Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
+            Assert.IsNotEmpty((ICollection)statusList, 
+			                  "Status list was empty, expected at least 1 status returned");
         }
 
         [Test]
@@ -135,7 +142,8 @@ namespace TwitterNET_Tests
             IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
-            Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
+            Assert.IsNotEmpty((ICollection)statusList, 
+			                  "Status list was empty, expected at least 1 status returned");
 
             #region Console
 
@@ -147,7 +155,8 @@ namespace TwitterNET_Tests
 
             #endregion
 
-            Assert.AreEqual(statusList.Count, 40, "Expected 40 statuses only had " + statusList.Count);
+            Assert.AreEqual(statusList.Count, 40, 
+			                "Expected 40 statuses only had " + statusList.Count);
         }
     }
 }

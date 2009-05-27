@@ -68,18 +68,6 @@ namespace TwitterNET
             _favoritesCount = favoritesCount;
         }
 
-        public User(long id, string realName, string screenName, string description, string location, string profileImageUrl, string website, bool protected_updates, long followerCount, bool hasExtendedProperties, IExtendedUserProperties extendedUserProperties)
-        {
-            _id = id;
-            _followerCount = followerCount;
-            _protected = protected_updates;
-            _website = website;
-            _profileImageUrl = profileImageUrl;
-            _location = location;
-            _description = description;
-            _screenName = screenName;
-            _realName = realName;
-        }
 
 
         /// <summary>
@@ -409,5 +397,11 @@ namespace TwitterNET
 
             return Output;
         }
+		
+		public override string ToString ()
+		{
+			return string.Format("[User: ID={0}, RealName={1}, ScreenName={2}, Description={3}, Location={4}, ProfileImageURL={5}, Website={6}, Protected={7}, FollowerCount={8}, UserStatus={9}, CreateAt={10}, FavoritesCount={11}, UTCOffset={12}, TimeZone={13}, ProfileBackgroundImageURL={14}, ProfileBackgroundTile={15}, StatusCount={16}, Notifications={17}, Following={18}, ProfileBackgroundColor={19}, ProfileTextColor={20}, ProfileLinkColor={21}, ProfileSidebarFillColor={22}, ProfileSidebarBorderColor={23}]", ID, RealName, ScreenName, Description, Location, ProfileImageURL, Website, Protected, FollowerCount, UserStatus, CreateAt, FavoritesCount, UTCOffset, TimeZone, ProfileBackgroundImageURL, ProfileBackgroundTile, StatusCount, Notifications, Following, ProfileBackgroundColor, ProfileTextColor, ProfileLinkColor, ProfileSidebarFillColor, ProfileSidebarBorderColor);
+		}
+
     }
 }

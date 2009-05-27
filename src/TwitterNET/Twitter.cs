@@ -23,12 +23,10 @@ namespace TwitterNET
 				throw ex;
 			}
 			
-			if(statusToDestory != null)
+			if(statusToDestory != null && 
+			   statusToDestory.StatusUser.ScreenName.ToLowerInvariant() != _requestHandler.Login.ToLowerInvariant())
 			{
-				if(statusToDestory.StatusUser.ScreenName.ToLowerInvariant() != _requestHandler.Login.ToLowerInvariant())
-				{
-					Output = false;
-				}
+				Output = false;
 			}
 			
 			return Output;
@@ -66,7 +64,8 @@ namespace TwitterNET
         public IStatus GetSingleStatus(long StatusID)
         {
             if(StatusID <= 0)
-                throw new ArgumentNullException("StatusID", "StatusID can not be NULL or less than zero when requesting a single twitter status");
+                throw new ArgumentNullException("StatusID", 
+				                                "StatusID can not be NULL or less than zero when requesting a single twitter status");
 
             IStatus Output = null;
             string apiURL = "http://twitter.com/statuses/show/";
@@ -94,7 +93,8 @@ namespace TwitterNET
 		public IStatus DeleteStatus(long StatusID)
 		{
 			if(StatusID <= 0)
-                throw new ArgumentNullException("StatusID", "StatusID can not be NULL or less than zero when requesting a single twitter status");
+                throw new ArgumentNullException("StatusID", 
+				                                "StatusID can not be NULL or less than zero when requesting a single twitter status");
 			
 			if(!UserOwnsStatus(StatusID))
 				throw new TwitterNetException("StatusUser cannot delete a status that is not their own");
@@ -204,6 +204,16 @@ namespace TwitterNET
             return Output;
 		}
 		
+		/// <summary>
+		/// Gets a user's friends and their most recent statuses 
+		/// Authenticated user by default, use RequestOptions to be more specific.
+		/// </summary>
+		/// <param name="requestOptions">
+		/// Accepts either the UserID or ScreenName and/or the Page RequestOptions <see cref="RequestOptions"/>
+		/// </param>
+		/// <returns>
+		/// A list of users, with their most recent statuses <see cref="IList"/>
+		/// </returns>
 		public IList<IUser> GetUsersFriends(RequestOptions requestOptions)
         {
             IList<IUser> Output = new List<IUser>();
@@ -219,6 +229,16 @@ namespace TwitterNET
             return Output;
         }
 		
+		/// <summary>
+		/// Gets a user's follower's and their most recent statuses. 
+		/// Authenticated user by default, use RequestOptions to be more specific.
+		/// </summary>
+		/// <param name="requestOptions">
+		/// Accepts either the UserID or ScreenName and/or the Page RequestOptions <see cref="RequestOptions"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IList"/>
+		/// </returns>
 		public IList<IUser> GetUsersFollowers(RequestOptions requestOptions)
 		{
 			IList<IUser> Output = new List<IUser>();
@@ -255,6 +275,16 @@ namespace TwitterNET
             return Output;
         }
 		
+		/// <summary>
+		/// Gets the 20 most recent favorited statuses of a user
+		/// Authenticated user by default. 
+		/// </summary>
+		/// <param name="requestOptions">
+		/// <see cref="RequestOptions"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IList"/>
+		/// </returns>
 		public IList<IStatus> GetFavorites(RequestOptions requestOptions)
 		{
 			IList<IStatus> Output = new List<IStatus>();
@@ -272,6 +302,15 @@ namespace TwitterNET
 			return Output;
 		}
 		
+		/// <summary>
+		/// Favorites the specified status for the authenticated user 
+		/// </summary>
+		/// <param name="StatusID">
+		/// ID of the status to favorite <see cref="System.Int64"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IStatus"/>
+		/// </returns>
 		public IStatus FavoriteStatus(long StatusID)
 		{
 			IStatus Output = null;
@@ -291,6 +330,15 @@ namespace TwitterNET
 			return Output;
 		}
 		
+		/// <summary>
+		/// Delete's a favorited status from the authenticated user's favorites 
+		/// </summary>
+		/// <param name="StatusID">
+		/// ID of status to unfavorite <see cref="System.Int64"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="IStatus"/>
+		/// </returns>
 		public IStatus DeleteFavorite(long StatusID)
 		{			
 			IStatus Output = null;
