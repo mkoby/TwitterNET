@@ -140,9 +140,9 @@ namespace TwitterNET_Tests
             IList<IUser> friendsStatusList = twitter.GetUsersFriends(new RequestOptions());
 
             Assert.IsNotEmpty((ICollection)friendsStatusList);
-			
-			var bizUser = from user in friendsStatusList
-						  where user.ScreenName == "biz"
+
+            var bizUser = from user in friendsStatusList
+                          where user.ScreenName.Equals("biz", StringComparison.OrdinalIgnoreCase)
 						  select user;
 			
 			Assert.AreEqual(1, bizUser.Count());
@@ -156,7 +156,7 @@ namespace TwitterNET_Tests
 			Assert.IsNotEmpty((ICollection)followersStatusList);
 			
 			var mkobyUser = from user in followersStatusList
-							where user.ScreenName == "mkoby"
+							where user.ScreenName.Equals("mkoby", StringComparison.OrdinalIgnoreCase)
 							select user;
 			
 			Assert.AreEqual(1, mkobyUser.Count());

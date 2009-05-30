@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 using NUnit.Framework;
 using TwitterNET;
 
@@ -21,7 +21,16 @@ namespace TwitterNET_Tests
 				//Make sure the status we're going to 
 				//test with is NOT currently a favorite.
 				twitter = new Twitter("apitest4769", "testaccount");
-				twitter.DeleteFavorite(idToFavorite);
+
+			    IList<IStatus> favorites = twitter.GetFavorites(new RequestOptions());
+
+			    var status = from f in favorites
+			                 where f.ID.Equals(idToFavorite)
+			                 select f;
+
+                if (status != null && status.Count() > 0)
+                    twitter.DeleteFavorite(idToFavorite);
+
 			}
 			catch(Exception ex)
 			{
@@ -48,47 +57,37 @@ namespace TwitterNET_Tests
         {}
 		
 		[Test]
-		public void GetFavorites_Test()
+		public void GetFavorites_Test_Should_Return_List_of_Current_Favorites()
 		{
 			IList<IStatus> favoritesList = twitter.GetFavorites(new RequestOptions());
 			
 			Assert.IsNotNull((ICollection)favoritesList);
-			Assert.AreEqual(3, favoritesList.Count);			
+			Assert.Greater(favoritesList.Count, 0, "No favorites returned");			
 		}
 		
 		[Test]
-		public void CreateFavorite_Test()
+		public void CreateFavorite_Test_Should_Create_a_New_Favorite_Out_Of_Test_Status()
 		{
-			IList<IStatus> currentFavorites = twitter.GetFavorites(new RequestOptions());
-			int startingCount = currentFavorites.Count;
 			IStatus favoriteStatus = twitter.FavoriteStatus(idToFavorite);
+
+            //Delete Favorite to clean up
+            twitter.DeleteFavorite(idToFavorite);
 			
 			Assert.IsNotNull(favoriteStatus);			
-			Assert.IsTrue(favoriteStatus.StatusText.StartsWith("breathalyser"));
-			
-			currentFavorites = twitter.GetFavorites(new RequestOptions());
-			Assert.Greater(currentFavorites.Count, startingCount);
-			
-			//Delete Favorite
-			twitter.DeleteFavorite(idToFavorite);
+			Assert.AreEqual(idToFavorite, favoriteStatus.ID);
 		}
 		
 		[Test]
-		public void DeleteFavorite_Test()
+		public void DeleteFavorite_Test_Should_Delete_Test_Favorite()
 		{
 			//Ensure that the favorite we want to delete is in fact a favorite
 			IStatus createdFavorite = twitter.FavoriteStatus(idToFavorite);
 			Assert.IsNotNull(createdFavorite);
 			
-			IList<IStatus> currentFavorites = twitter.GetFavorites(new RequestOptions());
-			int startingCount = currentFavorites.Count;
 			IStatus deletedFavorite = twitter.DeleteFavorite(idToFavorite);
 			
 			Assert.IsNotNull(deletedFavorite);
-			Assert.IsTrue(deletedFavorite.StatusText.StartsWith("breathalyser"));
-			
-			currentFavorites = twitter.GetFavorites(new RequestOptions());
-			Assert.Less(currentFavorites.Count, startingCount);
+			Assert.AreEqual(idToFavorite, deletedFavorite.ID);
 		}
 	}
 }
