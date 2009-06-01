@@ -31,7 +31,66 @@ namespace TwitterNET
 			
 			return Output;
 		}
+		
+		private IStatus ReturnSingleStatus(string responseText)
+		{
+			IStatus Output = null;
+			
+			if (!string.IsNullOrEmpty(responseText))
+            {
+                foreach(IStatus status in Status.Load(responseText))
+				{
+					Output = status;
+					break; //we only want the first status (there should only be 1 anyway)
+				}
+            }
+			
+			return Output;
+		}
+		
+		private IList<IStatus> ReturnListOfStatuses(string responseText)
+		{
+			IList<IStatus> Output = new List<IStatus>();
+			
+			if(!string.IsNullOrEmpty(responseText))
+            {
+                foreach (IStatus status in Status.Load(responseText))
+					Output.Add(status);
+            }
+			
+			return Output;
+		}
+		
+		private IList<IUser> ReturnListOfUsers(string responseText)
+		{
+			IList<IUser> Output = new List<IUser>();
+			
+			if(!string.IsNullOrEmpty(responseText))
+            {
+                foreach (IUser user in User.Load(responseText))
+					Output.Add(user);
+            }
+			
+			return Output;
+		}
 
+		/// <summary>
+		/// Create a Twitter object with no associated login 
+		/// </summary>
+		public Twitter()
+		{
+			_requestHandler = new RequestHandler(String.Empty, String.Empty);
+		}
+		
+		/// <summary>
+		/// Creates a new Twitter object with an associated login 
+		/// </summary>
+		/// <param name="UserName">
+		/// The username of the user
+		/// </param>
+		/// <param name="Password">
+		/// The password of the user
+		/// </param>
         public Twitter(string UserName, string Password)
         {
             _requestHandler = new RequestHandler(UserName, Password);
@@ -43,17 +102,10 @@ namespace TwitterNET
         /// <returns>List of IStatus objects</returns>
         public IList<IStatus> GetPublicTimeline()
         {
-            IList<IStatus> Output = new List<IStatus>();
             string apiURL = "http://twitter.com/statuses/public_timeline.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 			
-            if(!string.IsNullOrEmpty(responseText))
-            {
-                foreach (IStatus status in Status.Load(responseText))
-					Output.Add(status);
-            }
-
-            return Output;
+            return ReturnListOfStatuses(responseText);
         }
 
         /// <summary>
@@ -67,22 +119,12 @@ namespace TwitterNET
                 throw new ArgumentNullException("StatusID", 
 				                                "StatusID can not be NULL or less than zero when requesting a single twitter status");
 
-            IStatus Output = null;
             string apiURL = "http://twitter.com/statuses/show/";
             string requestOptions = String.Format("{0}.xml", StatusID);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
+			requestOptions = null; //Clean up now un-needed objects
 
-            if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach(IStatus status in Status.Load(responseText))
-				{
-					Output = status;
-					break; //we only want the first status (there should only be 1 anyway)
-				}
-            }
-			
-			requestOptions = null;
-            return Output;
+            return ReturnSingleStatus(responseText);
         }
 		
 		/// <summary>
@@ -99,22 +141,12 @@ namespace TwitterNET
 			if(!UserOwnsStatus(StatusID))
 				throw new TwitterNetException("StatusUser cannot delete a status that is not their own");
 
-			IStatus Output = null;
-            string apiURL = "http://twitter.com/statuses/destroy/";
+			string apiURL = "http://twitter.com/statuses/destroy/";
             string requestOptions = String.Format("{0}.xml", StatusID);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
+			requestOptions = null; //Clean up now un-needed objects
 
-            if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach(IStatus status in Status.Load(responseText))
-				{
-					Output = status;
-					break; //we only want the first status (there should only be 1 anyway)
-				}
-            }
-
-			requestOptions = null;
-            return Output;
+            return ReturnSingleStatus(responseText);
 		}
 
 		/// <summary>
@@ -139,7 +171,6 @@ namespace TwitterNET
                 throw new ArgumentException("StatusText",
                                             "StatusText can not be NULL or EMPTY when updating twitter status");
 
-            IStatus Output = null;
             string apiUrl = "http://twitter.com/statuses/update.xml";
             StringBuilder requestOptions = new StringBuilder("?status=");
             string urlEncodedStatusText = HttpUtility.UrlEncode(StatusText);
@@ -149,18 +180,9 @@ namespace TwitterNET
                 requestOptions.AppendFormat("&in_reply_to_status_id={0}", InReplyStatusID);
 
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiUrl, requestOptions));
+            requestOptions = null; //Clean up now un-needed objects
 
-            if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach(IStatus status in Status.Load(responseText))
-				{
-					Output = status;
-					break; //we only want the first status (there should only be 1 anyway)
-				}
-            }
-
-			requestOptions = null; //Clean up our objects
-		    return Output;
+            return ReturnSingleStatus(responseText);
 
         }
 
@@ -171,17 +193,10 @@ namespace TwitterNET
 		/// <returns></returns>
 		public IList<IStatus> GetFriendsTimeline(RequestOptions requestOptions)
 		{
-			IList<IStatus> Output = new List<IStatus>();
-            string apiURL = "http://twitter.com/statuses/friends_timeline.xml";
+			string apiURL = "http://twitter.com/statuses/friends_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach (IStatus status in Status.Load(responseText))
-					Output.Add(status);
-            }
-			
-            return Output;
+            return ReturnListOfStatuses(responseText);
 		}
 		   
 		/// <summary>
@@ -191,17 +206,10 @@ namespace TwitterNET
 		/// <returns></returns>
 		public IList<IStatus> GetUserTimeline(RequestOptions requestOptions)
 		{
-			IList<IStatus> Output = new List<IStatus>();
-            string apiURL = "http://twitter.com/statuses/user_timeline.xml";
+			string apiURL = "http://twitter.com/statuses/user_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach (IStatus status in Status.Load(responseText))
-					Output.Add(status);
-            }
-		
-            return Output;
+            return ReturnListOfStatuses(responseText);
 		}
 		
 		/// <summary>
@@ -216,17 +224,10 @@ namespace TwitterNET
 		/// </returns>
 		public IList<IUser> GetUsersFriends(RequestOptions requestOptions)
         {
-            IList<IUser> Output = new List<IUser>();
             string apiURL = "http://twitter.com/statuses/friends.xml";
             string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            if(!String.IsNullOrEmpty(resposneText))
-            {
-                foreach(IUser user in User.Load(resposneText))
-                    Output.Add(user);
-            }
-            
-            return Output;
+            return ReturnListOfUsers(resposneText);
         }
 		
 		/// <summary>
@@ -241,17 +242,10 @@ namespace TwitterNET
 		/// </returns>
 		public IList<IUser> GetUsersFollowers(RequestOptions requestOptions)
 		{
-			IList<IUser> Output = new List<IUser>();
 			string apiURL = "http://twitter.com/statuses/followers.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
-			if(!String.IsNullOrEmpty(responseText))
-			{
-				foreach(IUser user in User.Load(responseText))
-				        Output.Add(user);
-			}
-			
-			return Output;
+			return ReturnListOfUsers(responseText);
 		}
 
 		/// <summary>
@@ -261,18 +255,10 @@ namespace TwitterNET
 		/// <returns></returns>
         public IList<IStatus> GetMetions(RequestOptions requestOptions)
         {
-            IList<IStatus> Output = new List<IStatus>();
             string apiURL = "http://twitter.com/statuses/mentions.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach (IStatus status in Status.Load(responseText))
-                    Output.Add(status);
-            }
-			
-			requestOptions = null; //Clean up our objects
-            return Output;
+            return ReturnListOfStatuses(responseText);
         }
 		
 		/// <summary>
@@ -287,19 +273,10 @@ namespace TwitterNET
 		/// </returns>
 		public IList<IStatus> GetFavorites(RequestOptions requestOptions)
 		{
-			IList<IStatus> Output = new List<IStatus>();
 			string apiURL = "http://twitter.com/favorites.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
-			if(!String.IsNullOrEmpty(responseText))
-			{
-				foreach(IStatus status in Status.Load(responseText))
-				{
-				        Output.Add(status);
-				}
-			}
-			
-			return Output;
+			return ReturnListOfStatuses(responseText);
 		}
 		
 		/// <summary>
@@ -313,21 +290,12 @@ namespace TwitterNET
 		/// </returns>
 		public IStatus FavoriteStatus(long StatusID)
 		{
-			IStatus Output = null;
 			string apiURL = "http://twitter.com/favorites/create/";
 			string requestOptions = String.Format("{0}.xml", StatusID);
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}",apiURL, requestOptions));
-			
-			if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach(IStatus status in Status.Load(responseText))
-				{
-					Output = status;
-					break; //we only want the first status (there should only be 1 anyway)
-				}
-            }
-			
-			return Output;
+			requestOptions = null; //Clean up now un-needed objects
+
+            return ReturnSingleStatus(responseText);
 		}
 		
 		/// <summary>
@@ -341,21 +309,12 @@ namespace TwitterNET
 		/// </returns>
 		public IStatus DeleteFavorite(long StatusID)
 		{			
-			IStatus Output = null;
 			string apiURL = "http://twitter.com/favorites/destroy/";
 			string requestOptions = String.Format("{0}.xml", StatusID);
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}",apiURL, requestOptions));
-			
-			if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach(IStatus status in Status.Load(responseText))
-				{
-					Output = status;
-					break; //we only want the first status (there should only be 1 anyway)
-				}
-            }
-			
-			return Output;
+			requestOptions = null; //Clean up now un-needed objects
+
+            return ReturnSingleStatus(responseText);
 		}
     }
 }
