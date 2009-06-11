@@ -12,7 +12,7 @@ namespace TwitterNET
 		private bool UserOwnsStatus(long StatusID)
 		{
 			bool Output = true;
-			IStatus statusToDestory = null;
+			StatusMessage statusToDestory = null;
 			
 			try
 			{
@@ -24,7 +24,7 @@ namespace TwitterNET
 			}
 			
 			if(statusToDestory != null && 
-			   statusToDestory.StatusUser.ScreenName.ToLowerInvariant() != _requestHandler.Login.ToLowerInvariant())
+			   statusToDestory.Author.ScreenName.ToLowerInvariant() != _requestHandler.Login.ToLowerInvariant())
 			{
 				Output = false;
 			}
@@ -32,13 +32,13 @@ namespace TwitterNET
 			return Output;
 		}
 		
-		private IStatus ReturnSingleStatus(string responseText)
+		private StatusMessage ReturnSingleStatus(string responseText)
 		{
-			IStatus Output = null;
+			StatusMessage Output = null;
 			
 			if (!string.IsNullOrEmpty(responseText))
             {
-                foreach(IStatus status in Status.Load(responseText))
+                foreach(StatusMessage status in StatusMessage.Load(responseText))
 				{
 					Output = status;
 					break; //we only want the first status (there should only be 1 anyway)
@@ -48,13 +48,13 @@ namespace TwitterNET
 			return Output;
 		}
 		
-		private IList<IStatus> ReturnListOfStatuses(string responseText)
+		private IList<StatusMessage> ReturnListOfStatuses(string responseText)
 		{
-			IList<IStatus> Output = new List<IStatus>();
+			IList<StatusMessage> Output = new List<StatusMessage>();
 			
 			if(!string.IsNullOrEmpty(responseText))
             {
-                foreach (IStatus status in Status.Load(responseText))
+                foreach (StatusMessage status in StatusMessage.Load(responseText))
 					Output.Add(status);
             }
 			
@@ -99,8 +99,8 @@ namespace TwitterNET
         /// <summary>
         /// Returns the 20 most recent statuses from the public Twitter timeline
         /// </summary>
-        /// <returns>List of IStatus objects</returns>
-        public IList<IStatus> GetPublicTimeline()
+        /// <returns>List of StatusMessage objects</returns>
+        public IList<StatusMessage> GetPublicTimeline()
         {
             string apiURL = "http://twitter.com/statuses/public_timeline.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
@@ -113,7 +113,7 @@ namespace TwitterNET
         /// </summary>
         /// <param name="StatusID"></param>
         /// <returns>The status ID of the status to request</returns>
-        public IStatus GetSingleStatus(long StatusID)
+        public StatusMessage GetSingleStatus(long StatusID)
         {
             if(StatusID <= 0)
                 throw new ArgumentNullException("StatusID", 
@@ -132,7 +132,7 @@ namespace TwitterNET
 		/// </summary>
 		/// <param name="StatusID"></param>
 		/// <returns></returns>
-		public IStatus DeleteStatus(long StatusID)
+		public StatusMessage DeleteStatus(long StatusID)
 		{
 			if(StatusID <= 0)
                 throw new ArgumentNullException("StatusID", 
@@ -154,7 +154,7 @@ namespace TwitterNET
 		/// </summary>
 		/// <param name="StatusText"></param>
 		/// <returns></returns>
-        public IStatus UpdateStatus(string StatusText)
+        public StatusMessage UpdateStatus(string StatusText)
         {
             return UpdateStatus(StatusText, long.MinValue);
         }
@@ -165,7 +165,7 @@ namespace TwitterNET
 		/// <param name="StatusText">The actual status message</param>
 		/// <param name="InReplyStatusID">Status ID being replied to</param>
 		/// <returns></returns>
-        public IStatus UpdateStatus(string StatusText, long InReplyStatusID)
+        public StatusMessage UpdateStatus(string StatusText, long InReplyStatusID)
         {
             if (String.IsNullOrEmpty(StatusText))
                 throw new ArgumentException("StatusText",
@@ -191,7 +191,7 @@ namespace TwitterNET
 		/// </summary>
 		/// <param name="requestOptions"></param>
 		/// <returns></returns>
-		public IList<IStatus> GetFriendsTimeline(RequestOptions requestOptions)
+		public IList<StatusMessage> GetFriendsTimeline(RequestOptions requestOptions)
 		{
 			string apiURL = "http://twitter.com/statuses/friends_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
@@ -204,7 +204,7 @@ namespace TwitterNET
 		/// </summary>
 		/// <param name="requestOptions"></param>
 		/// <returns></returns>
-		public IList<IStatus> GetUserTimeline(RequestOptions requestOptions)
+		public IList<StatusMessage> GetUserTimeline(RequestOptions requestOptions)
 		{
 			string apiURL = "http://twitter.com/statuses/user_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
@@ -253,7 +253,7 @@ namespace TwitterNET
 		/// </summary>
 		/// <param name="requestOptions"></param>
 		/// <returns></returns>
-        public IList<IStatus> GetMetions(RequestOptions requestOptions)
+        public IList<StatusMessage> GetMetions(RequestOptions requestOptions)
         {
             string apiURL = "http://twitter.com/statuses/mentions.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
@@ -271,7 +271,7 @@ namespace TwitterNET
 		/// <returns>
 		/// A <see cref="IList"/>
 		/// </returns>
-		public IList<IStatus> GetFavorites(RequestOptions requestOptions)
+		public IList<StatusMessage> GetFavorites(RequestOptions requestOptions)
 		{
 			string apiURL = "http://twitter.com/favorites.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
@@ -286,9 +286,9 @@ namespace TwitterNET
 		/// ID of the status to favorite <see cref="System.Int64"/>
 		/// </param>
 		/// <returns>
-		/// A <see cref="IStatus"/>
+		/// A <see cref="StatusMessage"/>
 		/// </returns>
-		public IStatus FavoriteStatus(long StatusID)
+		public StatusMessage FavoriteStatus(long StatusID)
 		{
 			string apiURL = "http://twitter.com/favorites/create/";
 			string requestOptions = String.Format("{0}.xml", StatusID);
@@ -305,9 +305,9 @@ namespace TwitterNET
 		/// ID of status to unfavorite <see cref="System.Int64"/>
 		/// </param>
 		/// <returns>
-		/// A <see cref="IStatus"/>
+		/// A <see cref="StatusMessage"/>
 		/// </returns>
-		public IStatus DeleteFavorite(long StatusID)
+		public StatusMessage DeleteFavorite(long StatusID)
 		{			
 			string apiURL = "http://twitter.com/favorites/destroy/";
 			string requestOptions = String.Format("{0}.xml", StatusID);

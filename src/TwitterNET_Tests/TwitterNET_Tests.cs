@@ -33,13 +33,13 @@ namespace TwitterNET_Tests
         [Test]
         public void TwitterNET_GetPublicTimeline_Test()
         {
-            IList<IStatus> statusList = twitter.GetPublicTimeline();
+            IList<StatusMessage> statusList = twitter.GetPublicTimeline();
 
             #region Console
 
-            foreach (IStatus status in statusList)
+            foreach (StatusMessage status in statusList)
             {
-                Console.WriteLine("{0}: {1}", status.StatusUser.ScreenName, status.StatusText);
+                Console.WriteLine("{0}: {1}", status.Author.ScreenName, status.MessageText);
             }
 
             #endregion
@@ -50,13 +50,13 @@ namespace TwitterNET_Tests
         [Test]
         public void TwitterNET_GetSingleStatus_Test()
         {
-            IStatus status = twitter.GetSingleStatus(TestStatusID);
+            StatusMessage status = twitter.GetSingleStatus(TestStatusID);
 
             Assert.IsNotNull(status); //Check to make sure we actually got something back
 
             Assert.AreEqual(TestStatusID, status.ID); //Assure we got the status we were expecting
 
-            Assert.AreEqual("Looks like Sun just pulled a Yahoo", status.StatusText); //Assure we got the right status text
+            Assert.AreEqual("Looks like Sun just pulled a Yahoo", status.MessageText); //Assure we got the right status text
 
         }
 
@@ -65,20 +65,20 @@ namespace TwitterNET_Tests
         {
             string dateTimeString = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
             string TestStatus = "This is a test status update sent at " + dateTimeString;
-            IStatus updatedStatus = twitter.UpdateStatus(TestStatus);
+            StatusMessage updatedStatus = twitter.UpdateStatus(TestStatus);
 
             Assert.IsNotNull(updatedStatus);
-            Assert.AreEqual(TestStatus, updatedStatus.StatusText);
+            Assert.AreEqual(TestStatus, updatedStatus.MessageText);
         }
 		
 		[Test]
 		public void TwitterNET_DeleteStatus_Test()
 		{
-			IStatus myStatus = twitter.UpdateStatus("This is a Test Status that I will Delete");
+			StatusMessage myStatus = twitter.UpdateStatus("This is a Test Status that I will Delete");
 			
 			Assert.IsNotNull(myStatus, "Test can not continue due to no status being returned");
 			
-			IStatus deletedStatus = twitter.DeleteStatus(myStatus.ID);
+			StatusMessage deletedStatus = twitter.DeleteStatus(myStatus.ID);
 			
 			Assert.IsNotNull(deletedStatus);
 		}

@@ -33,7 +33,7 @@ namespace TwitterNET
         private long _statusCount;
         private string _timeZone;
         private int _utcOffset;
-        private IStatus _status;
+        private StatusMessage _status;
 
         public User(long id, string realName, string screenName, string description, string location, 
 		            string profileImageUrl, string website, bool protected_updates, long followerCount, 
@@ -145,7 +145,7 @@ namespace TwitterNET
         /// <summary>
         /// The user's most recent status update
         /// </summary>
-        public IStatus UserStatus
+        public StatusMessage UserStatus
         {
             get { return _status; }
             set { _status = value; }
@@ -301,7 +301,7 @@ namespace TwitterNET
 					
 					foreach(var userStatusElement in userElement.Descendants("status"))
 					{
-						foreach(IStatus status in Status.Load(userStatusElement.ToString()))
+						foreach(StatusMessage status in StatusMessage.Load(userStatusElement.ToString()))
 							user.UserStatus = status;
 					}
 					
@@ -314,7 +314,7 @@ namespace TwitterNET
 				
 				foreach(var userStatusElement in element.Descendants("status"))
 				{
-					foreach(IStatus status in Status.Load(userStatusElement.ToString()))
+					foreach(StatusMessage status in StatusMessage.Load(userStatusElement.ToString()))
 						user.UserStatus = status;
 				}
 				

@@ -56,7 +56,7 @@ namespace TwitterNET
         /// <summary>
         /// The user's most recent status update
         /// </summary>
-        IStatus UserStatus { get; set; }
+        StatusMessage UserStatus { get; set; }
 		
 		/// <summary>
 		/// The date/time the user created their account

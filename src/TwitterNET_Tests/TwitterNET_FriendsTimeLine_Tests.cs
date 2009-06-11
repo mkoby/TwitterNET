@@ -22,7 +22,7 @@ namespace TwitterNET_Tests
 
             try
             {
-                IList<IStatus> publicTimeline = twitter.GetPublicTimeline();
+                IList<StatusMessage> publicTimeline = twitter.GetPublicTimeline();
 
                 if(publicTimeline != null && publicTimeline.Count > 0)
                 {
@@ -60,7 +60,7 @@ namespace TwitterNET_Tests
         {
 			RequestOptions myOptions = new RequestOptions();
 			
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(myOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(myOptions);
             Console.WriteLine("Status Count: {0}", statusList.Count);
 
             Assert.IsNotEmpty((ICollection)statusList, 
@@ -75,7 +75,7 @@ namespace TwitterNET_Tests
 			RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.SinceID, minTestStatusID);
 			
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, 
@@ -96,7 +96,7 @@ namespace TwitterNET_Tests
             RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.MaxID, maxTestStatusID);
 			
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, 
@@ -117,15 +117,15 @@ namespace TwitterNET_Tests
 			requestOptions.Add(RequestOptionNames.Page, 2);
 			requestOptions.Add(RequestOptionNames.Count, 10);
 			
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             #region Console
 
             Console.WriteLine("Statuses from page 2");
 
-            foreach (IStatus status in statusList)
+            foreach (StatusMessage status in statusList)
             {
-                Console.WriteLine("({0}){1}: {2}", status.ID, status.StatusUser.ScreenName, status.StatusText);
+                Console.WriteLine("({0}){1}: {2}", status.ID, status.Author.ScreenName, status.MessageText);
             }
 
             #endregion
@@ -140,7 +140,7 @@ namespace TwitterNET_Tests
             RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.Count, 40);
 			
-            IList<IStatus> statusList = twitter.GetFriendsTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, 
@@ -149,9 +149,9 @@ namespace TwitterNET_Tests
             #region Console
 
             //Console printout to compare with online webpage to ensure accuracy in order and recent tweets
-            foreach (IStatus status in statusList)
+            foreach (StatusMessage status in statusList)
             {
-                Console.WriteLine("({0}){1}: {2}", status.ID, status.StatusUser.ScreenName, status.StatusText);
+                Console.WriteLine("({0}){1}: {2}", status.ID, status.Author.ScreenName, status.MessageText);
             }
 
             #endregion

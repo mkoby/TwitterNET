@@ -22,7 +22,7 @@ namespace TwitterNET_Tests
             try
             {
                 twitter = new Twitter("apitest4769", "testaccount");
-                IList<IStatus> friendsTimeline = twitter.GetFriendsTimeline(new RequestOptions());
+                IList<StatusMessage> friendsTimeline = twitter.GetFriendsTimeline(new RequestOptions());
 
                 if (friendsTimeline != null && friendsTimeline.Count > 0)
                 {
@@ -62,15 +62,15 @@ namespace TwitterNET_Tests
 			RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
 			
-            IList<IStatus> statusList = twitter.GetUserTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);
 
             foreach (var status in statusList)
             {
-                Console.WriteLine("{0}: {1}", status.StatusUser.ScreenName, status.StatusText);
+                Console.WriteLine("{0}: {1}", status.Author.ScreenName, status.MessageText);
             }
 			
 			var userCount = from c in statusList
-							where c.StatusUser.ScreenName == TestUserName
+							where c.Author.ScreenName == TestUserName
 							select c;
 			
             Assert.AreEqual(20, userCount.Count());
@@ -82,15 +82,15 @@ namespace TwitterNET_Tests
             RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.UserID, TestUserID);
 			
-            IList<IStatus> statusList = twitter.GetUserTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);
 
             foreach (var status in statusList)
             {
-                Console.WriteLine("{0}: {1}", status.StatusUser.ScreenName, status.StatusText);
+                Console.WriteLine("{0}: {1}", status.Author.ScreenName, status.MessageText);
             }
 			
 			var idCount = from c in statusList
-							where c.StatusUser.ID == TestUserID
+							where c.Author.ID == TestUserID
 							select c;
 
             Assert.AreEqual(20, idCount.Count());
@@ -106,7 +106,7 @@ namespace TwitterNET_Tests
 			requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
 			requestOptions.Add(RequestOptionNames.SinceID, minTestStatusID);
 			
-            IList<IStatus> statusList = twitter.GetUserTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
@@ -123,7 +123,7 @@ namespace TwitterNET_Tests
             RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.MaxID, maxTestStatusID);
 			
-            IList<IStatus> statusList = twitter.GetUserTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
