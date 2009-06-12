@@ -99,8 +99,8 @@ namespace TwitterNET
 				
                 string source = (string)status.Element("source");
                 bool truncated = (bool)status.Element("truncated");
-                string inReplyStatusID = (string)status.Element("in_reply_to_status_id");
-                string inReplyUserID = (string)status.Element("in_reply_to_user_id");
+                string inReplyStatusID = (String.IsNullOrEmpty((string)status.Element("in_reply_to_status_id"))) ? long.MinValue.ToString() : (string)status.Element("in_reply_to_status_id");
+                string inReplyUserID = (String.IsNullOrEmpty((string)status.Element("in_reply_to_user_id"))) ? long.MinValue.ToString() : (string)status.Element("in_reply_to_user_id");
 
                 Output = new StatusMessage(id, timestamp, messageText, null, Convert.ToInt64(inReplyStatusID), Convert.ToInt64(inReplyUserID), source, truncated);
             }
