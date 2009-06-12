@@ -96,6 +96,12 @@ namespace TwitterNET
             _requestHandler = new RequestHandler(UserName, Password);
         }
 
+        public void EndTwitterSession()
+        {
+            string apiURL = "http://twitter.com/account/end_session.xml";
+            _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+        }
+
         /// <summary>
         /// Returns the 20 most recent statuses from the public Twitter timeline
         /// </summary>

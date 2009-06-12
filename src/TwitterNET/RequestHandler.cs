@@ -73,7 +73,8 @@ namespace TwitterNET
             if (strURL.Contains("statuses/update") || 
 			    strURL.Contains("statuses/destroy") ||
 			    strURL.Contains("favorites/create") ||
-			    strURL.Contains("favorites/destroy"))
+			    strURL.Contains("favorites/destroy") ||
+                strURL.Contains("account/end_session"))
                 methodType = "POST";
 
             WebRequest Output = WebRequest.Create(strURL.ToString());

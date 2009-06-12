@@ -14,7 +14,7 @@ namespace TwitterNET_Tests
 		private long idToFavorite = 1807262311;
 		
 		[TestFixtureSetUp]
-        public void TwitterNET_Tests_Setup()
+        public void TwitterNET_Favorites_Tests_Setup()
         {
 			try
 			{
@@ -38,6 +38,7 @@ namespace TwitterNET_Tests
 			}
 			finally
 			{
+			    twitter.EndTwitterSession();
 				twitter = null;
 			}
 		}
