@@ -22,14 +22,16 @@ namespace TwitterNET_Tests
 
             try
             {
-                IList<StatusMessage> publicTimeline = twitter.GetPublicTimeline();
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.Add(RequestOptionNames.ScreenName, "apitest4769");
+                IList<StatusMessage> userTimeline = twitter.GetUserTimeline(requestOptions);
 
-                if(publicTimeline != null && publicTimeline.Count > 0)
+                if(userTimeline != null && userTimeline.Count > 0)
                 {
 					Random rnd = new Random(DateTime.Now.Millisecond);
-					int rndNum = rnd.Next(100000, 250000);
-                    minTestStatusID = publicTimeline.Min(status => status.ID) - rndNum;
-					maxTestStatusID = publicTimeline.Max(status => status.ID);
+					//int rndNum = rnd.Next(100000, 250000);
+                    minTestStatusID = userTimeline.Min(status => status.ID);
+					maxTestStatusID = userTimeline.Max(status => status.ID);
                 }
             }
             catch (Exception exception)
@@ -85,7 +87,7 @@ namespace TwitterNET_Tests
             long minStatusID = statusList.Min(status => status.ID);
 
             Console.WriteLine("TestStatusID: {0}\nMinStatusID: {1}", minTestStatusID, minStatusID);
-            Assert.Greater(minStatusID, minTestStatusID);
+            Assert.GreaterOrEqual(minStatusID, minTestStatusID);
         }
 
         [Test]
@@ -106,7 +108,7 @@ namespace TwitterNET_Tests
             long maxStatusID = statusList.Max(status => status.ID);
             
             Console.WriteLine("TestStatusID: {0}\nMaxStatusID: {1}", maxTestStatusID, maxStatusID);
-            Assert.Less(maxStatusID, maxTestStatusID, "MaxStatusID is GREATER than TestStatusID");
+            Assert.LessOrEqual(maxStatusID, maxTestStatusID, "MaxStatusID is GREATER than TestStatusID");
         }
 
         [Test]

@@ -11,7 +11,37 @@ namespace TwitterNET_Tests
 	public class TwitterNET_Favorites_Tests
 	{
 		private Twitter twitter = null;
-		private long idToFavorite = 1807262311;
+		private long idToFavorite = 2327017739;
+
+        private StatusMessage DeleteFavoriteToTest()
+        {
+            StatusMessage Output = null;
+            IList<StatusMessage> favorites = twitter.GetFavorites(new RequestOptions());
+
+            var status = from f in favorites
+                         where f.ID.Equals(idToFavorite)
+                         select f;
+
+            if (status != null && status.Count() > 0)
+                Output = twitter.DeleteFavorite(idToFavorite);
+
+            return Output;
+        }
+
+	    private StatusMessage AddFavoriteToTest()
+	    {
+	        StatusMessage Output = null;
+            IList<StatusMessage> favorites = twitter.GetFavorites(new RequestOptions());
+
+            var status = from f in favorites
+                         where f.ID.Equals(idToFavorite)
+                         select f;
+
+            if (status != null && status.Count() == 0)
+                Output = twitter.MarkAsFavorite(idToFavorite);
+
+	        return Output;
+	    }
 		
 		[TestFixtureSetUp]
         public void TwitterNET_Favorites_Tests_Setup()
@@ -21,15 +51,7 @@ namespace TwitterNET_Tests
 				//Make sure the status we're going to 
 				//test with is NOT currently a favorite.
 				twitter = new Twitter("apitest4769", "testaccount");
-
-			    IList<StatusMessage> favorites = twitter.GetFavorites(new RequestOptions());
-
-			    var status = from f in favorites
-			                 where f.ID.Equals(idToFavorite)
-			                 select f;
-
-                if (status != null && status.Count() > 0)
-                    twitter.DeleteFavorite(idToFavorite);
+                DeleteFavoriteToTest();
 
 			}
 			catch(Exception ex)
@@ -69,10 +91,10 @@ namespace TwitterNET_Tests
 		[Test]
 		public void CreateFavorite_Test_Should_Create_a_New_Favorite_Out_Of_Test_Status()
 		{
-			StatusMessage favoriteStatus = twitter.FavoriteStatus(idToFavorite);
+			StatusMessage favoriteStatus = twitter.MarkAsFavorite(idToFavorite);
 
             //Delete Favorite to clean up
-            twitter.DeleteFavorite(idToFavorite);
+		    DeleteFavoriteToTest();
 			
 			Assert.IsNotNull(favoriteStatus);			
 			Assert.AreEqual(idToFavorite, favoriteStatus.ID);
@@ -82,8 +104,7 @@ namespace TwitterNET_Tests
 		public void DeleteFavorite_Test_Should_Delete_Test_Favorite()
 		{
 			//Ensure that the favorite we want to delete is in fact a favorite
-			StatusMessage createdFavorite = twitter.FavoriteStatus(idToFavorite);
-			Assert.IsNotNull(createdFavorite);
+			Assert.IsNotNull(AddFavoriteToTest());
 			
 			StatusMessage deletedFavorite = twitter.DeleteFavorite(idToFavorite);
 			

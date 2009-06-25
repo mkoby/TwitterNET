@@ -294,7 +294,7 @@ namespace TwitterNET
 		/// <returns>
 		/// A <see cref="StatusMessage"/>
 		/// </returns>
-		public StatusMessage FavoriteStatus(long StatusID)
+		public StatusMessage MarkAsFavorite(long StatusID)
 		{
 			string apiURL = "http://twitter.com/favorites/create/";
 			string requestOptions = String.Format("{0}.xml", StatusID);

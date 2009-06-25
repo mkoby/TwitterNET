@@ -27,9 +27,9 @@ namespace TwitterNET_Tests
                 if (friendsTimeline != null && friendsTimeline.Count > 0)
                 {
 					Random rnd = new Random(DateTime.Now.Millisecond);
-					int rndNum = rnd.Next(100000, 250000);
-                    minTestStatusID = friendsTimeline.Min(status => status.ID) - rndNum;
-					maxTestStatusID = friendsTimeline.Max(status => status.ID) + rndNum;
+					//int rndNum = rnd.Next(100000, 250000);
+                    minTestStatusID = friendsTimeline.Min(status => status.ID);
+					maxTestStatusID = friendsTimeline.Max(status => status.ID);
                 }
             }
             catch (Exception exception)

@@ -144,7 +144,15 @@ namespace TwitterNET
 		public string MakeAPIRequest(RequestHandler requestHandler, string strAPIUrl)
 		{
 			string Output = String.Empty;
-			Output = GetTwitterResponse( CreateNewTwitterRequest(strAPIUrl) ); 
+
+		    try
+		    {
+                Output = GetTwitterResponse(CreateNewTwitterRequest(strAPIUrl)); 
+		    }
+		    catch (WebException webex)
+		    {
+                throw new TwitterNetException(webex.Message, webex);
+		    }
 			
 			return Output;
 		}
