@@ -22,7 +22,9 @@ namespace TwitterNET_Tests
             try
             {
                 twitter = new Twitter("apitest4769", "testaccount");
-                IList<StatusMessage> friendsTimeline = twitter.GetFriendsTimeline(new RequestOptions());
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.Add(RequestOptionNames.Page, 3);
+                IList<StatusMessage> friendsTimeline = twitter.GetFriendsTimeline(requestOptions);
 
                 if (friendsTimeline != null && friendsTimeline.Count > 0)
                 {
@@ -114,7 +116,7 @@ namespace TwitterNET_Tests
             long returnedStatusID = (long)statusList.Min(status => status.ID);
 
             Console.WriteLine("TestStatusID: {0}\nMinStatusID: {1}", minTestStatusID, returnedStatusID);
-            Assert.Greater(returnedStatusID, minTestStatusID);
+            Assert.GreaterOrEqual(returnedStatusID, minTestStatusID);
         }
 
         [Test]
@@ -131,7 +133,7 @@ namespace TwitterNET_Tests
             long returnedStatusID = (long)statusList.Max(status => status.ID);
 
             Console.WriteLine("TestStatusID: {0}\nMaxStatusID: {1}", maxTestStatusID, returnedStatusID);
-            Assert.Less(returnedStatusID, maxTestStatusID);
+            Assert.LessOrEqual(returnedStatusID, maxTestStatusID);
         }
 
         [Test]
