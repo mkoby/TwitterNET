@@ -28,7 +28,7 @@ namespace TwitterNET_Tests
 
                 if (friendsTimeline != null && friendsTimeline.Count > 0)
                 {
-					Random rnd = new Random(DateTime.Now.Millisecond);
+					//Random rnd = new Random(DateTime.Now.Millisecond);
 					//int rndNum = rnd.Next(100000, 250000);
                     minTestStatusID = friendsTimeline.Min(status => status.ID);
 					maxTestStatusID = friendsTimeline.Max(status => status.ID);
@@ -121,8 +121,12 @@ namespace TwitterNET_Tests
 
         [Test]
         public void Get_UserTimeline_MaxStatusID()
-        {
+        {			
+			//We're going to run this for a specific user 
+			//because the test account doesn't post updates
+			//very often and we can't control test-run order
             RequestOptions requestOptions = new RequestOptions();
+			requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
 			requestOptions.Add(RequestOptionNames.MaxID, maxTestStatusID);
 			
             IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);

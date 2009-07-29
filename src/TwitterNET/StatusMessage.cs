@@ -44,39 +44,17 @@ namespace TwitterNET
 			get { return _truncated; }
 		}
 		
-		internal static IEnumerable<StatusMessage> Load(string xmlText)
+		private static IUser GetUser(XElement statusElement)
 		{
-			var element = XElement.Parse(xmlText);
-			StatusMessage status = null;
+			IUser Output = null;
 			
-			if(element.Name == "statuses")
+			foreach(var statusUserElement in statusElement.Descendants("user"))
 			{
-				foreach(var statusElement in element.Descendants("status"))
-				{
-					status = null;
-					status = ParseStatusXML(statusElement.ToString());
-					
-					foreach(var statusUserElement in statusElement.Descendants("user"))
-					{
-						foreach(IUser user in User.Load(statusUserElement.ToString()))
-							status.Author = user;
-					}
-					
-					yield return status;
-				}
+				foreach(IUser user in User.Load(statusUserElement.ToString()))
+					Output = user;
 			}
-			else if(element.Name == "status")
-			{
-				status = ParseStatusXML(element.ToString());
-				
-				foreach(var statusUserElement in element.Descendants("user"))
-				{
-					foreach(IUser user in User.Load(statusUserElement.ToString()))
-						status.Author = user;
-				}
-				
-				yield return status;
-			}
+			
+			return Output;
 		}
 		
 		private static StatusMessage ParseStatusXML(string xmlText)
@@ -107,5 +85,38 @@ namespace TwitterNET
 
             return Output;
         }
+		
+		private static StatusMessage GetStatusMessage(XElement element)
+		{
+			StatusMessage Output = null;
+			
+			Output = ParseStatusXML(element.ToString());					
+			Output.Author = GetUser(element);
+			
+			return Output;
+		}
+		
+		internal static IEnumerable<StatusMessage> Load(string xmlText)
+		{
+			var element = XElement.Parse(xmlText);
+			StatusMessage status = null;
+			
+			if(element.Name == "statuses")
+			{
+				foreach(var statusElement in element.Descendants("status"))
+				{
+					status = GetStatusMessage(statusElement);
+					
+					yield return status;
+				}
+			}
+			else if(element.Name == "status")
+			{
+				status = GetStatusMessage(element);
+				
+				yield return status;
+			}
+		}		
+		
 	}
 }

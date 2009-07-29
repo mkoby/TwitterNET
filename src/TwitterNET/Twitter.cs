@@ -61,6 +61,19 @@ namespace TwitterNET
 			return Output;
 		}
 		
+		private IList<DirectMessage> ReturnListofDirectMsgs(string responseText)
+		{
+			IList<DirectMessage> Output = new List<DirectMessage>();
+			
+			if(!string.IsNullOrEmpty(responseText))
+			{
+				foreach(DirectMessage message in DirectMessage.Load(responseText))
+					Output.Add(message);
+			}
+			
+			return Output;
+		}
+		
 		private IList<IUser> ReturnListOfUsers(string responseText)
 		{
 			IList<IUser> Output = new List<IUser>();
@@ -321,6 +334,14 @@ namespace TwitterNET
 			requestOptions = null; //Clean up now un-needed objects
 
             return ReturnSingleStatus(responseText);
+		}
+		
+		public IList<DirectMessage> GetDirectMessages(RequestOptions requestOptions)
+		{
+			string apiURL = "http://twitter.com/direct_messages.xml";
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+			
+			return ReturnListofDirectMsgs(responseText);
 		}
     }
 }
