@@ -29,6 +29,7 @@ namespace TwitterNET
 			
 			foreach(var statusUserElement in statusElement.Descendants(userType))
 			{
+
 				foreach(IUser user in User.Load(statusUserElement.ToString()))
 					Output = user;
 			}

@@ -61,6 +61,22 @@ namespace TwitterNET
 			return Output;
 		}
 		
+        private DirectMessage ReternSingleDirectMsg(string responseText)
+        {
+            DirectMessage Output = null;
+
+            if(!String.IsNullOrEmpty(responseText))
+            {
+                foreach (DirectMessage dm in DirectMessage.Load(responseText))
+                {
+                    Output = dm;
+                    break; //we only want the first DM (there should only be 1 anyway)
+                }
+            }
+
+            return Output;
+        }
+
 		private IList<DirectMessage> ReturnListofDirectMsgs(string responseText)
 		{
 			IList<DirectMessage> Output = new List<DirectMessage>();
@@ -324,7 +340,7 @@ namespace TwitterNET
 		/// ID of status to unfavorite <see cref="System.Int64"/>
 		/// </param>
 		/// <returns>
-		/// A <see cref="StatusMessage"/>
+		/// Returns the favorite that was deleted <see cref="StatusMessage"/>
 		/// </returns>
 		public StatusMessage DeleteFavorite(long StatusID)
 		{			
@@ -335,13 +351,70 @@ namespace TwitterNET
 
             return ReturnSingleStatus(responseText);
 		}
-		
-		public IList<DirectMessage> GetDirectMessages(RequestOptions requestOptions)
+
+        public DirectMessage GetSingleDirectMessage(long id)
+        {
+            if (id < 0)
+                throw new TwitterNetException("The ID must be a value greater than zero.");
+
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.Add(RequestOptionNames.ID, id);
+
+            return GetDirectMessages(requestOptions)[0];
+        }
+
+        public IList<DirectMessage> GetDirectMessages(RequestOptions requestOptions)
 		{
 			string apiURL = "http://twitter.com/direct_messages.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
 			return ReturnListofDirectMsgs(responseText);
 		}
+
+        public IList<DirectMessage> GetSentDirectMessages(RequestOptions requestOptions)
+        {
+            string apiURL = "http://twitter.com/direct_messages/sent.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+
+            return ReturnListofDirectMsgs(responseText);
+        }
+
+        public DirectMessage SendDirectMessage(string screenName, string messageText)
+        {
+            if (String.IsNullOrEmpty(screenName))
+                throw new TwitterNetException(
+                    "The screen name for the Direct Message recipient can not be empty or NULL");
+            if (String.IsNullOrEmpty(messageText))
+                throw new TwitterNetException(
+                    "The message text for the Direct Message can not be empty or NULL");
+
+            string apiURL = "http://twitter.com/direct_messages/new.xml";
+            StringBuilder sb = new StringBuilder(apiURL);
+            sb.AppendFormat("?screen_name={0}&text={1}", screenName, messageText);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, sb.ToString());
+            sb = null; //Clean up un-needed objects
+
+            return ReternSingleDirectMsg(responseText);
+        }
+
+        public DirectMessage DeleteDirectMessage(long id)
+        {
+            if (id < 0)
+                throw new TwitterNetException("The ID must be a value greater than zero.");
+
+            //Check DM to ensure it's owned by the user
+            if (!GetSingleDirectMessage(id).Recipient.ScreenName.ToLower().Equals(_requestHandler.Login.ToLower()))
+                throw new TwitterNetException(
+                    "Authenticated user must be the recipient of the Direct Message being deleted");
+
+
+            string apiURL = "http://twitter.com/direct_messages/destroy/";
+            StringBuilder sb = new StringBuilder(apiURL);
+            sb.AppendFormat("{0}.xml", id);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, sb.ToString());
+            sb = null; //Clean up un-needed objects
+
+            return ReternSingleDirectMsg(responseText);
+        }
     }
 }

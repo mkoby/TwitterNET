@@ -308,7 +308,7 @@ namespace TwitterNET
 					yield return user;
 				}
 			}
-			else if(element.Name == "user")
+            else if (element.Name == "user" || element.Name == "sender" || element.Name == "recipient")
 			{
 				user = ParseUserXml(element.ToString());
 				
