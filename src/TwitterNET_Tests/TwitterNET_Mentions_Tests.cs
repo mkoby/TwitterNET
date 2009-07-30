@@ -42,7 +42,7 @@ namespace TwitterNET_Tests
         }
 
         [Test]
-        public void Get_Mentions_WithCount()
+        public void Get_Mentions_WithCount_Test()
         {
             RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.Count, 1);
