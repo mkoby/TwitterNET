@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Web;
-using System.Xml.Linq;
 
 namespace TwitterNET
 {
@@ -30,93 +28,6 @@ namespace TwitterNET
 			{
 				Output = false;
 			}
-			
-			return Output;
-		}
-		
-		private StatusMessage ReturnSingleStatus(string responseText)
-		{
-			StatusMessage Output = null;
-			
-			if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach(StatusMessage status in StatusMessage.Load(responseText))
-				{
-					Output = status;
-					break; //we only want the first status (there should only be 1 anyway)
-				}
-            }
-			
-			return Output;
-		}
-		
-		private IList<StatusMessage> ReturnListOfStatuses(string responseText)
-		{
-			IList<StatusMessage> Output = new List<StatusMessage>();
-			
-			if(!string.IsNullOrEmpty(responseText))
-            {
-                foreach (StatusMessage status in StatusMessage.Load(responseText))
-					Output.Add(status);
-            }
-			
-			return Output;
-		}
-		
-        private DirectMessage ReternSingleDirectMsg(string responseText)
-        {
-            DirectMessage Output = null;
-
-            if(!String.IsNullOrEmpty(responseText))
-            {
-                foreach (DirectMessage dm in DirectMessage.Load(responseText))
-                {
-                    Output = dm;
-                    break; //we only want the first DM (there should only be 1 anyway)
-                }
-            }
-
-            return Output;
-        }
-
-		private IList<DirectMessage> ReturnListofDirectMsgs(string responseText)
-		{
-			IList<DirectMessage> Output = new List<DirectMessage>();
-			
-			if(!string.IsNullOrEmpty(responseText))
-			{
-				foreach(DirectMessage message in DirectMessage.Load(responseText))
-					Output.Add(message);
-			}
-			
-			return Output;
-		}
-		
-        private IUser ReturnSingleUser(string responseText)
-        {
-            IUser Output = null;
-
-            if (!string.IsNullOrEmpty(responseText))
-            {
-                foreach (IUser user in User.Load(responseText))
-                {
-                    Output = user;
-                    break; //we only want the first user (there should only be 1 anyway)
-                }
-            }
-
-            return Output;
-        }
-
-		private IList<IUser> ReturnListOfUsers(string responseText)
-		{
-			IList<IUser> Output = new List<IUser>();
-			
-			if(!string.IsNullOrEmpty(responseText))
-            {
-                foreach (IUser user in User.Load(responseText))
-					Output.Add(user);
-            }
 			
 			return Output;
 		}
@@ -158,7 +69,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/public_timeline.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 			
-            return ReturnListOfStatuses(responseText);
+            return Parser.ReturnListOfStatuses(responseText);
         }
 
         /// <summary>
@@ -177,7 +88,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
 			requestOptions = null; //Clean up now un-needed objects
 
-            return ReturnSingleStatus(responseText);
+            return Parser.ReturnSingleStatus(responseText);
         }
 
         /// <summary>
@@ -186,6 +97,16 @@ namespace TwitterNET
         /// <param name="screenName">The screen name of the user to request</param>
         /// <returns></returns>
         public IUser GetSingleUser(string screenName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns a single twitter user object
+        /// </summary>
+        /// <param name="userID">The ID (numeric) of the user to request</param>
+        /// <returns></returns>
+        public IUser GetSingleUser(long userID)
         {
             throw new NotImplementedException();
         }
@@ -209,7 +130,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
 			requestOptions = null; //Clean up now un-needed objects
 
-            return ReturnSingleStatus(responseText);
+            return Parser.ReturnSingleStatus(responseText);
 		}
 
 		/// <summary>
@@ -245,7 +166,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiUrl, requestOptions));
             requestOptions = null; //Clean up now un-needed objects
 
-            return ReturnSingleStatus(responseText);
+            return Parser.ReturnSingleStatus(responseText);
 
         }
 
@@ -259,7 +180,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/statuses/friends_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return ReturnListOfStatuses(responseText);
+            return Parser.ReturnListOfStatuses(responseText);
 		}
 		   
 		/// <summary>
@@ -272,7 +193,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/statuses/user_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return ReturnListOfStatuses(responseText);
+            return Parser.ReturnListOfStatuses(responseText);
 		}
 		
 		/// <summary>
@@ -290,7 +211,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/friends.xml";
             string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return ReturnListOfUsers(resposneText);
+            return Parser.ReturnListOfUsers(resposneText);
         }
 		
 		/// <summary>
@@ -308,7 +229,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/statuses/followers.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
-			return ReturnListOfUsers(responseText);
+			return Parser.ReturnListOfUsers(responseText);
 		}
 
 		/// <summary>
@@ -321,7 +242,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/mentions.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return ReturnListOfStatuses(responseText);
+            return Parser.ReturnListOfStatuses(responseText);
         }
 		
 		/// <summary>
@@ -339,7 +260,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/favorites.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
-			return ReturnListOfStatuses(responseText);
+			return Parser.ReturnListOfStatuses(responseText);
 		}
 		
 		/// <summary>
@@ -358,7 +279,7 @@ namespace TwitterNET
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}",apiURL, requestOptions));
 			requestOptions = null; //Clean up now un-needed objects
 
-            return ReturnSingleStatus(responseText);
+            return Parser.ReturnSingleStatus(responseText);
 		}
 		
 		/// <summary>
@@ -377,7 +298,7 @@ namespace TwitterNET
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}",apiURL, requestOptions));
 			requestOptions = null; //Clean up now un-needed objects
 
-            return ReturnSingleStatus(responseText);
+            return Parser.ReturnSingleStatus(responseText);
 		}
 
         public DirectMessage GetSingleDirectMessage(long id)
@@ -396,7 +317,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/direct_messages.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
-			return ReturnListofDirectMsgs(responseText);
+			return Parser.ReturnListofDirectMsgs(responseText);
 		}
 
         public IList<DirectMessage> GetSentDirectMessages(RequestOptions requestOptions)
@@ -404,7 +325,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/direct_messages/sent.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return ReturnListofDirectMsgs(responseText);
+            return Parser.ReturnListofDirectMsgs(responseText);
         }
 
         public DirectMessage SendDirectMessage(string screenName, string messageText)
@@ -422,7 +343,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, sb.ToString());
             sb = null; //Clean up un-needed objects
 
-            return ReternSingleDirectMsg(responseText);
+            return Parser.ReternSingleDirectMsg(responseText);
         }
 
         public DirectMessage DeleteDirectMessage(long id)
@@ -442,7 +363,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, sb.ToString());
             sb = null; //Clean up un-needed objects
 
-            return ReternSingleDirectMsg(responseText);
+            return Parser.ReternSingleDirectMsg(responseText);
         }
 
         public bool CheckFriendship(string authenticatedUser, string checkUser)
@@ -474,7 +395,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                                                                  String.Format("{0}{1}", apiURL, requestOptions));
 
-            return ReturnSingleUser(responseText);
+            return Parser.ReturnSingleUser(responseText);
         }
 
         public IUser UnfollowUser(string screenName)
@@ -485,7 +406,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                                                                  String.Format("{0}{1}", apiURL, requestOptions));
 
-            return ReturnSingleUser(responseText);
+            return Parser.ReturnSingleUser(responseText);
         }
     }
 }
