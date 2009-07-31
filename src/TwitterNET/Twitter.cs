@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
+using System.Xml.Linq;
 
 namespace TwitterNET
 {
@@ -90,6 +92,22 @@ namespace TwitterNET
 			return Output;
 		}
 		
+        private IUser ReturnSingleUser(string responseText)
+        {
+            IUser Output = null;
+
+            if (!string.IsNullOrEmpty(responseText))
+            {
+                foreach (IUser user in User.Load(responseText))
+                {
+                    Output = user;
+                    break; //we only want the first user (there should only be 1 anyway)
+                }
+            }
+
+            return Output;
+        }
+
 		private IList<IUser> ReturnListOfUsers(string responseText)
 		{
 			IList<IUser> Output = new List<IUser>();
@@ -146,8 +164,8 @@ namespace TwitterNET
         /// <summary>
         /// Returns a single twitter status
         /// </summary>
-        /// <param name="StatusID"></param>
-        /// <returns>The status ID of the status to request</returns>
+        /// <param name="StatusID">The status ID of the status to request</param>
+        /// <returns></returns>
         public StatusMessage GetSingleStatus(long StatusID)
         {
             if(StatusID <= 0)
@@ -161,8 +179,18 @@ namespace TwitterNET
 
             return ReturnSingleStatus(responseText);
         }
-		
-		/// <summary>
+
+        /// <summary>
+        /// Returns a single twitter user object
+        /// </summary>
+        /// <param name="screenName">The screen name of the user to request</param>
+        /// <returns></returns>
+        public IUser GetSingleUser(string screenName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
 		/// Deletes a single status owned by the authenticating user
 		/// </summary>
 		/// <param name="StatusID"></param>
@@ -415,6 +443,49 @@ namespace TwitterNET
             sb = null; //Clean up un-needed objects
 
             return ReternSingleDirectMsg(responseText);
+        }
+
+        public bool CheckFriendship(string authenticatedUser, string checkUser)
+        {
+            if (String.IsNullOrEmpty(authenticatedUser) || String.IsNullOrEmpty(checkUser))
+                throw new TwitterNetException(
+                    "When checking if a friendship exists, both screen names must be not be NULL and not EMPTY");
+
+            bool Output = false;
+
+            //We're using the JSON API point for this call because it requires LESS post-processing
+            string apiURL = "http://twitter.com/friendships/exists.json";
+            string requestOptions = String.Format("?user_a={0}&user_b={1}", authenticatedUser, checkUser);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
+
+            if(!String.IsNullOrEmpty(responseText))
+            {
+                Output = bool.Parse(responseText);
+            }
+
+            return Output;
+        }
+
+        public IUser FollowUser(string screenName, bool enableDeviceUpdates)
+        {
+            IUser Output = null;
+            string apiURL = "http://twitter.com/friendships/create.xml";
+            string requestOptions = String.Format("?screen_name={0}&follow={1}", screenName, enableDeviceUpdates);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
+                                                                 String.Format("{0}{1}", apiURL, requestOptions));
+
+            return ReturnSingleUser(responseText);
+        }
+
+        public IUser UnfollowUser(string screenName)
+        {
+            IUser Output = null;
+            string apiURL = "http://twitter.com/friendships/destroy.xml";
+            string requestOptions = String.Format("?screen_name={0}", screenName);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
+                                                                 String.Format("{0}{1}", apiURL, requestOptions));
+
+            return ReturnSingleUser(responseText);
         }
     }
 }

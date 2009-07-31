@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using TwitterNET;
 
@@ -15,8 +13,6 @@ namespace TwitterNET_Tests
 		private Twitter twitter = null;
         private const string TestUserName = "mkoby";
         private const long TestUserID = 7263572;
-        private long minTestStatusID = long.MinValue,
-					 maxTestStatusID = long.MinValue;
 
         [TestFixtureSetUp]
         public void TestFixture_Setup()
