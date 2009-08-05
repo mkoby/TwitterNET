@@ -24,7 +24,8 @@ namespace TwitterNET_Tests
                 twitter = new Twitter("apitest4769", "testaccount");
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions.Add(RequestOptionNames.Page, 3);
-                IList<StatusMessage> friendsTimeline = twitter.GetFriendsTimeline(requestOptions);
+                requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
+                IList<StatusMessage> friendsTimeline = twitter.GetUserTimeline(requestOptions);
 
                 if (friendsTimeline != null && friendsTimeline.Count > 0)
                 {

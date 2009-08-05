@@ -117,7 +117,7 @@ namespace TwitterNET_Tests
             //TODO: Find better method to test than just pull page 2 of tweets
             RequestOptions requestOptions = new RequestOptions();
 			requestOptions.Add(RequestOptionNames.Page, 2);
-			requestOptions.Add(RequestOptionNames.Count, 10);
+			requestOptions.Add(RequestOptionNames.Count, 7);
 			
             IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
 
@@ -134,13 +134,14 @@ namespace TwitterNET_Tests
 
             Assert.IsNotEmpty((ICollection)statusList, 
 			                  "Status list was empty, expected at least 1 status returned");
+            Assert.AreEqual(7, statusList.Count);
         }
 
         [Test]
         public void GetFriendsTimeline_ReturnCountOnly_Test()
         {
             RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Count, 40);
+			requestOptions.Add(RequestOptionNames.Count, 5);
 			
             IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
 
@@ -158,8 +159,8 @@ namespace TwitterNET_Tests
 
             #endregion
 
-            Assert.AreEqual(statusList.Count, 40, 
-			                "Expected 40 statuses only had " + statusList.Count);
+            Assert.AreEqual(5, statusList.Count,  
+			                "Expected 5 statuses only had " + statusList.Count);
         }
     }
 }

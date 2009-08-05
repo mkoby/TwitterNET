@@ -120,7 +120,7 @@ namespace TwitterNET
 			}
 			catch(WebException webex)
 			{
-				throw new TwitterNetException(webex.Message, webex);
+                throw new TwitterNETWebException(webex.Message, webex);
 			}
 			
 			if(twitterResponse != null)
