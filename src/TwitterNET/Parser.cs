@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace TwitterNET
 {
@@ -91,6 +92,22 @@ namespace TwitterNET
                 foreach (IUser user in User.Load(responseText))
                     Output.Add(user);
             }
+
+            return Output;
+        }
+
+        public static IList<long> ReturnListOfUserIDs(string responseText)
+        {
+            IList<long> Output = new List<long>();
+            XElement responseElement = XElement.Parse(responseText);
+
+            var idQuery = from i in responseElement.Descendants("id")
+                          select i;
+
+            foreach (var query in idQuery)
+            {
+                Output.Add(long.Parse(query.Value));
+            }  
 
             return Output;
         }

@@ -408,5 +408,22 @@ namespace TwitterNET
 
             return Parser.ReturnSingleUser(responseText);
         }
+
+        public IList<long> GetFollowersList(RequestOptions requestOptions)
+        {
+            string apiURL = "http://twitter.com/followers/ids.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+
+            return Parser.ReturnListOfUserIDs(responseText);
+        }
+
+        public IList<long> GetFollowingList(RequestOptions requestOptions)
+        {
+            
+            string apiURL = "http://twitter.com/friends/ids.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+
+            return Parser.ReturnListOfUserIDs(responseText);
+        }
     }
 }

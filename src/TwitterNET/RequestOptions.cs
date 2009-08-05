@@ -46,14 +46,14 @@ namespace TwitterNET
 						sb.AppendFormat("&page={0}", this[key]);
 						break;
 					case RequestOptionNames.ScreenName:
-						if(!ApiUrl.Contains("user_timeline"))
-							throw new TwitterNetException("Username request option is only available for StatusUser Timeline requests");
+						if(!CheckApproporiateUse(key, ApiUrl))
+							throw new TwitterNetException("Username request option is only available for certain kinds of requests");
 					
 						sb.AppendFormat("&screen_name={0}", this[key]);
 						break;
 					case RequestOptionNames.UserID:
-						if(!ApiUrl.Contains("user_timeline"))
-							throw new TwitterNetException("UserID request option is only available for StatusUser Timeline requests");
+                        if (!CheckApproporiateUse(key, ApiUrl))
+                            throw new TwitterNetException("UserID request option is only available for certain kinds of requests");
 					
 						sb.AppendFormat("&user_id={0}", this[key]);
 						break;
@@ -65,8 +65,34 @@ namespace TwitterNET
 			//Return the string but remove the first "&" from the string builder string
 			return String.Format("{0}?{1}", ApiUrl, sb.ToString().Substring(1));
 		}
-		
-		public new void Add(RequestOptionNames Key, object Value)
+
+        private bool CheckApproporiateUse(RequestOptionNames requestOptionName, string ApiUrl)
+        {
+            bool Output = false;
+
+            switch(requestOptionName)
+            {
+                case RequestOptionNames.ScreenName:
+                    if (ApiUrl.Contains("user_timeline") || 
+                        ApiUrl.Contains("friends/ids") || 
+                        ApiUrl.Contains("followers/ids"))
+                        Output = true;
+                    break;
+                case RequestOptionNames.UserID:
+                    if (ApiUrl.Contains("user_timeline") || 
+                        ApiUrl.Contains("friends/ids") || 
+                        ApiUrl.Contains("followers/ids"))
+                        Output = true;
+                    break;
+                default:
+                    Output = false;
+                    break;
+            }
+
+            return Output;
+        }
+
+	    public new void Add(RequestOptionNames Key, object Value)
 		{
 			switch(Key)
 			{
