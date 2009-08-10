@@ -19,6 +19,7 @@
   <!-- Testing Properties -->
   <property name="dir.nunit" value="${directory::get-current-directory()}\lib\nunit\bin" />
   <property name="dir.nunit.addins" value="${dir.nunit}\addins" />
+  <property name="nunit.exe" value="${dir.nunit}\nunit-console.exe" />
   <property name="nunitconsole" value="${dir.nunit}\nunit-console.exe" />
   <property name="assembly.unittests" value="${project::get-name()}_Tests.dll" />
   <property name="partcover.exe" value="${directory::get-current-directory()}\lib\partcover\partcover.exe" />
@@ -68,16 +69,23 @@
 	</nunit2>
 	-->
 	
+	<exec program="${nunit.exe}" failonerror="false" verbose="true">
+		<arg line="${dir.build}\${assembly.unittests}" />
+		<arg line="/xml=${dir.build}\TestResult.xml" />
+	</exec>
+		
+	<!-- PartCover stuff doesn't work on x64, so bypassing for now
 	<exec program="${partcover.exe}" failonerror="false" verbose="true">
-		<arg line="--target ${nunitconsole}" />
-		<arg line="--target-work-dir ${dir.build}" />
-		<arg line="--target-args ${assembly.unittests}" />
-		<arg line="--output ${dir.build}\CodeCoverage.xml" />
-		<arg line="--include [TwitterNET]* " />
+		<arg line="-target ${nunitconsole}" />
+		<arg line="-target-work-dir ${dir.build}" />
+		<arg line="-target-args ${assembly.unittests}" />
+		<arg line="-output ${dir.build}\CodeCoverage.xml" />
+		<arg line="-include [TwitterNET]* " />
 	</exec>
 	
 	<property name="xml.codecoverage" value="${dir.build}\CodeCoverage.xml" />
 	<style style="${dir.xslt}\class.report.xslt" in="${xml.codecoverage}" out="${dir.buildreports}\CodeCoverageReport.html" if="${file::exists(xml.codecoverage)}" />	
+	-->
 	
 	<nunit2report todir="${dir.buildreports}">
 		<fileset>
