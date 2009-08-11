@@ -19,10 +19,13 @@
   <!-- Testing Properties -->
   <property name="dir.nunit" value="${directory::get-current-directory()}\lib\nunit\bin" />
   <property name="dir.nunit.addins" value="${dir.nunit}\addins" />
-  <property name="nunit.exe" value="${dir.nunit}\nunit-console.exe" />
+  <property name="nunit.exe" value="${dir.nunit}\nunit-console-x86.exe" />
   <property name="nunitconsole" value="${dir.nunit}\nunit-console.exe" />
   <property name="assembly.unittests" value="${project::get-name()}_Tests.dll" />
   <property name="partcover.exe" value="${directory::get-current-directory()}\lib\partcover\partcover.exe" />
+  <property name="ncover.dir" value="${directory::get-current-directory()}\lib\ncover" />
+  <property name="ncover.exe" value="${ncover.dir}\NCover.Console.exe" />
+  <property name="ncover.xslt" value="${ncover.dir}\Coverage.xsl" />
 
   <target name="build" depends="init, compile, testing" description="The main build target that builds TwitterNet"/>
   
@@ -67,11 +70,20 @@
 		<formatter type="Xml" usefile="true" extension=".xml" outputdir="${dir.buildreports}" />
 		<test assemblyname="${dir.build}\${assembly.unittests}" />
 	</nunit2>
-	-->
+	
 	
 	<exec program="${nunit.exe}" failonerror="false" verbose="true">
 		<arg line="${dir.build}\${assembly.unittests}" />
 		<arg line="/xml=${dir.build}\TestResult.xml" />
+	</exec>
+	-->
+	
+	<exec program="${ncover.exe}" failonerror="false" verbose="true">
+		<arg line="${nunit.exe} ${dir.build}\${assembly.unittests} /xml=${dir.build}\TestResult.xml" />
+		<arg line="//a &quot;TwitterNET&quot;" />
+		<arg line="//ea &quot;TwitterNET_Tests&quot;" />
+		<arg line="//x ${dir.build}\CodeCoverage.xml" />
+		<arg line="//v" />		
 	</exec>
 		
 	<!-- PartCover stuff doesn't work on x64, so bypassing for now
@@ -82,10 +94,11 @@
 		<arg line="-output ${dir.build}\CodeCoverage.xml" />
 		<arg line="-include [TwitterNET]* " />
 	</exec>
+	-->
 	
 	<property name="xml.codecoverage" value="${dir.build}\CodeCoverage.xml" />
-	<style style="${dir.xslt}\class.report.xslt" in="${xml.codecoverage}" out="${dir.buildreports}\CodeCoverageReport.html" if="${file::exists(xml.codecoverage)}" />	
-	-->
+	<style style="${ncover.xslt}" in="${xml.codecoverage}" out="${dir.buildreports}\CodeCoverageReport.html" if="${file::exists(xml.codecoverage)}" />	
+	
 	
 	<nunit2report todir="${dir.buildreports}">
 		<fileset>
