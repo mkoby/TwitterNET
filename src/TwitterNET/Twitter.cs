@@ -378,11 +378,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/friendships/exists.json";
             string requestOptions = String.Format("?user_a={0}&user_b={1}", authenticatedUser, checkUser);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
-
-            if(!String.IsNullOrEmpty(responseText))
-            {
-                Output = bool.Parse(responseText);
-            }
+            Output = (String.IsNullOrEmpty(responseText)) ? bool.Parse(responseText) : false;
 
             return Output;
         }

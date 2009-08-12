@@ -28,45 +28,54 @@ namespace TwitterNET
 			
 			foreach(RequestOptionNames key in Keys)
 			{
-				switch(key)
-				{
-					case RequestOptionNames.ID:
-						sb.AppendFormat("&id={0}", this[key]);
-						break;
-					case RequestOptionNames.SinceID:
-						sb.AppendFormat("&since_id={0}", this[key]);
-						break;
-					case RequestOptionNames.MaxID:
-						sb.AppendFormat("&max_id={0}", this[key]);
-						break;
-					case RequestOptionNames.Count:
-						sb.AppendFormat("&count={0}", this[key]);
-						break;
-					case RequestOptionNames.Page:
-						sb.AppendFormat("&page={0}", this[key]);
-						break;
-					case RequestOptionNames.ScreenName:
-						if(!CheckApproporiateUse(key, ApiUrl))
-							throw new TwitterNetException("Username request option is only available for certain kinds of requests");
-					
-						sb.AppendFormat("&screen_name={0}", this[key]);
-						break;
-					case RequestOptionNames.UserID:
-                        if (!CheckApproporiateUse(key, ApiUrl))
-                            throw new TwitterNetException("UserID request option is only available for certain kinds of requests");
-					
-						sb.AppendFormat("&user_id={0}", this[key]);
-						break;
-					default:
-						break;
-				}
+			    sb.Append(GetKeyString(key, ApiUrl));
 			}
 			
 			//Return the string but remove the first "&" from the string builder string
 			return String.Format("{0}?{1}", ApiUrl, sb.ToString().Substring(1));
 		}
 
-        private bool CheckApproporiateUse(RequestOptionNames requestOptionName, string ApiUrl)
+	    private string GetKeyString(RequestOptionNames key, string ApiUrl)
+	    {
+	        string Output = String.Empty;
+
+            switch (key)
+            {
+                case RequestOptionNames.ID:
+                   Output = String.Format("&id={0}", this[key]);
+                    break;
+                case RequestOptionNames.SinceID:
+                   Output = String.Format("&since_id={0}", this[key]);
+                    break;
+                case RequestOptionNames.MaxID:
+                   Output = String.Format("&max_id={0}", this[key]);
+                    break;
+                case RequestOptionNames.Count:
+                   Output = String.Format("&count={0}", this[key]);
+                    break;
+                case RequestOptionNames.Page:
+                   Output = String.Format("&page={0}", this[key]);
+                    break;
+                case RequestOptionNames.ScreenName:
+                    if (!CheckApproporiateUse(key, ApiUrl))
+                        throw new TwitterNetException("Username request option is only available for certain kinds of requests");
+
+                   Output = String.Format("&screen_name={0}", this[key]);
+                    break;
+                case RequestOptionNames.UserID:
+                    if (!CheckApproporiateUse(key, ApiUrl))
+                        throw new TwitterNetException("UserID request option is only available for certain kinds of requests");
+
+                   Output = String.Format("&user_id={0}", this[key]);
+                    break;
+                default:
+                    break;
+            }
+
+	        return Output;
+	    }
+
+	    private bool CheckApproporiateUse(RequestOptionNames requestOptionName, string ApiUrl)
         {
             bool Output = false;
 
