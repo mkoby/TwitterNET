@@ -34,6 +34,7 @@ namespace TwitterNET_Tests
         public void TwitterNET_GetPublicTimeline_Test()
         {
             IList<StatusMessage> statusList = twitter.GetPublicTimeline();
+            Assert.IsNotNull(statusList);
 
             #region Console
 

@@ -69,7 +69,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/public_timeline.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 			
-            return Parser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnListOfStatuses(responseText);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
 			requestOptions = null; //Clean up now un-needed objects
 
-            return Parser.ReturnSingleStatus(responseText);
+            return ResponseParser.ReturnSingleStatus(responseText);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
 			requestOptions = null; //Clean up now un-needed objects
 
-            return Parser.ReturnSingleStatus(responseText);
+            return ResponseParser.ReturnSingleStatus(responseText);
 		}
 
 		/// <summary>
@@ -166,7 +166,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiUrl, requestOptions));
             requestOptions = null; //Clean up now un-needed objects
 
-            return Parser.ReturnSingleStatus(responseText);
+            return ResponseParser.ReturnSingleStatus(responseText);
 
         }
 
@@ -180,7 +180,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/statuses/friends_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnListOfStatuses(responseText);
 		}
 		   
 		/// <summary>
@@ -193,7 +193,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/statuses/user_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnListOfStatuses(responseText);
 		}
 		
 		/// <summary>
@@ -211,7 +211,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/friends.xml";
             string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnListOfUsers(resposneText);
+            return ResponseParser.ReturnListOfUsers(resposneText);
         }
 		
 		/// <summary>
@@ -229,7 +229,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/statuses/followers.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
-			return Parser.ReturnListOfUsers(responseText);
+			return ResponseParser.ReturnListOfUsers(responseText);
 		}
 
 		/// <summary>
@@ -242,7 +242,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/mentions.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnListOfStatuses(responseText);
         }
 		
 		/// <summary>
@@ -260,7 +260,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/favorites.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
-			return Parser.ReturnListOfStatuses(responseText);
+			return ResponseParser.ReturnListOfStatuses(responseText);
 		}
 		
 		/// <summary>
@@ -279,7 +279,7 @@ namespace TwitterNET
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}",apiURL, requestOptions));
 			requestOptions = null; //Clean up now un-needed objects
 
-            return Parser.ReturnSingleStatus(responseText);
+            return ResponseParser.ReturnSingleStatus(responseText);
 		}
 		
 		/// <summary>
@@ -298,7 +298,7 @@ namespace TwitterNET
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}",apiURL, requestOptions));
 			requestOptions = null; //Clean up now un-needed objects
 
-            return Parser.ReturnSingleStatus(responseText);
+            return ResponseParser.ReturnSingleStatus(responseText);
 		}
 
         public DirectMessage GetSingleDirectMessage(long id)
@@ -317,7 +317,7 @@ namespace TwitterNET
 			string apiURL = "http://twitter.com/direct_messages.xml";
 			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 			
-			return Parser.ReturnListofDirectMsgs(responseText);
+			return ResponseParser.ReturnListofDirectMsgs(responseText);
 		}
 
         public IList<DirectMessage> GetSentDirectMessages(RequestOptions requestOptions)
@@ -325,7 +325,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/direct_messages/sent.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnListofDirectMsgs(responseText);
+            return ResponseParser.ReturnListofDirectMsgs(responseText);
         }
 
         public DirectMessage SendDirectMessage(string screenName, string messageText)
@@ -343,7 +343,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, sb.ToString());
             sb = null; //Clean up un-needed objects
 
-            return Parser.ReternSingleDirectMsg(responseText);
+            return ResponseParser.ReternSingleDirectMsg(responseText);
         }
 
         public DirectMessage DeleteDirectMessage(long id)
@@ -363,7 +363,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, sb.ToString());
             sb = null; //Clean up un-needed objects
 
-            return Parser.ReternSingleDirectMsg(responseText);
+            return ResponseParser.ReternSingleDirectMsg(responseText);
         }
 
         public bool CheckFriendship(string authenticatedUser, string checkUser)
@@ -394,7 +394,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                                                                  String.Format("{0}{1}", apiURL, requestOptions));
 
-            return Parser.ReturnSingleUser(responseText);
+            return ResponseParser.ReturnSingleUser(responseText);
         }
 
         public IUser UnfollowUser(string screenName)
@@ -404,7 +404,7 @@ namespace TwitterNET
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                                                                  String.Format("{0}{1}", apiURL, requestOptions));
 
-            return Parser.ReturnSingleUser(responseText);
+            return ResponseParser.ReturnSingleUser(responseText);
         }
 
         public IList<long> GetFollowersList(RequestOptions requestOptions)
@@ -412,7 +412,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/followers/ids.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnListOfUserIDs(responseText);
+            return ResponseParser.ReturnListOfUserIDs(responseText);
         }
 
         public IList<long> GetFollowingList(RequestOptions requestOptions)
@@ -420,7 +420,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/friends/ids.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnListOfUserIDs(responseText);
+            return ResponseParser.ReturnListOfUserIDs(responseText);
         }
 
         public IUser TurnDeviceNotificationsOn(RequestOptions requestOptions)
@@ -428,7 +428,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/notifications/follow.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnSingleUser(responseText);
+            return ResponseParser.ReturnSingleUser(responseText);
         }
 
         public IUser TurnDeviceNotificationsOff(RequestOptions requestOptions)
@@ -436,7 +436,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/notifications/leave.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
-            return Parser.ReturnSingleUser(responseText);
+            return ResponseParser.ReturnSingleUser(responseText);
         }
     }
 }
