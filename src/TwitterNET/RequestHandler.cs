@@ -67,20 +67,7 @@ namespace TwitterNET
             if(String.IsNullOrEmpty(strURL))
                 throw new ArgumentException("API URL not passed correctly");
 
-            string methodType = "GET";
-
-			//TODO: Better way to do this?
-            if (strURL.Contains("statuses/update") || 
-			    strURL.Contains("statuses/destroy") ||
-			    strURL.Contains("favorites/create") ||
-			    strURL.Contains("favorites/destroy") ||
-                strURL.Contains("account/end_session") ||
-                strURL.Contains("direct_messages/new") ||
-                strURL.Contains("direct_messages/destroy") ||
-                strURL.Contains("friendships/create") ||
-                strURL.Contains("friendships/destroy"))
-                methodType = "POST";
-
+            string methodType = GetHTMLRequestType(strURL);
             WebRequest Output = WebRequest.Create(strURL.ToString());
             Output.Method = methodType;
 
@@ -100,6 +87,26 @@ namespace TwitterNET
 			Console.WriteLine(strURL);
 #endif
 			
+            return Output;
+        }
+
+        private string GetHTMLRequestType(string strURL)
+        {
+            string Output = "GET";
+
+            if (strURL.Contains("statuses/update") ||
+                strURL.Contains("statuses/destroy") ||
+                strURL.Contains("favorites/create") ||
+                strURL.Contains("favorites/destroy") ||
+                strURL.Contains("account/end_session") ||
+                strURL.Contains("direct_messages/new") ||
+                strURL.Contains("direct_messages/destroy") ||
+                strURL.Contains("friendships/create") ||
+                strURL.Contains("friendships/destroy") ||
+                strURL.Contains("notifications/follow") ||
+                strURL.Contains("notifications/leave"))
+                Output = "POST";
+
             return Output;
         }
 

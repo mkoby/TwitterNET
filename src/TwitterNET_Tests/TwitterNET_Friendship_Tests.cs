@@ -69,6 +69,9 @@ namespace TwitterNET_Tests
 
             //Reset the environment
             twitter.UnfollowUser(TestFollowUser);
+
+            Console.WriteLine("Waiting 5 seconds before next test to help requests not be marked as spam");
+            System.Threading.Thread.Sleep(5000);
         }
 
         [Test]
@@ -82,6 +85,9 @@ namespace TwitterNET_Tests
 
             Assert.IsNotNull(userToUnfollow);
             Assert.AreEqual(testFollow.ScreenName, userToUnfollow.ScreenName);
+
+            Console.WriteLine("Waiting 5 seconds before next test to help requests not be marked as spam");
+            System.Threading.Thread.Sleep(5000);
         }
 
         /* 

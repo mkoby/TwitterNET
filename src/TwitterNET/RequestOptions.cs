@@ -73,15 +73,12 @@ namespace TwitterNET
             switch(requestOptionName)
             {
                 case RequestOptionNames.ScreenName:
-                    if (ApiUrl.Contains("user_timeline") || 
-                        ApiUrl.Contains("friends/ids") || 
-                        ApiUrl.Contains("followers/ids"))
-                        Output = true;
-                    break;
                 case RequestOptionNames.UserID:
                     if (ApiUrl.Contains("user_timeline") || 
                         ApiUrl.Contains("friends/ids") || 
-                        ApiUrl.Contains("followers/ids"))
+                        ApiUrl.Contains("followers/ids") ||
+                        ApiUrl.Contains("notifications/follow") ||
+                        ApiUrl.Contains("notifications/leave"))
                         Output = true;
                     break;
                 default:

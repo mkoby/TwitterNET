@@ -389,7 +389,6 @@ namespace TwitterNET
 
         public IUser FollowUser(string screenName, bool enableDeviceUpdates)
         {
-            IUser Output = null;
             string apiURL = "http://twitter.com/friendships/create.xml";
             string requestOptions = String.Format("?screen_name={0}&follow={1}", screenName, enableDeviceUpdates);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
@@ -400,7 +399,6 @@ namespace TwitterNET
 
         public IUser UnfollowUser(string screenName)
         {
-            IUser Output = null;
             string apiURL = "http://twitter.com/friendships/destroy.xml";
             string requestOptions = String.Format("?screen_name={0}", screenName);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
@@ -419,11 +417,26 @@ namespace TwitterNET
 
         public IList<long> GetFollowingList(RequestOptions requestOptions)
         {
-            
             string apiURL = "http://twitter.com/friends/ids.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
 
             return Parser.ReturnListOfUserIDs(responseText);
+        }
+
+        public IUser TurnDeviceNotificationsOn(RequestOptions requestOptions)
+        {
+            string apiURL = "http://twitter.com/notifications/follow.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+
+            return Parser.ReturnSingleUser(responseText);
+        }
+
+        public IUser TurnDeviceNotificationsOff(RequestOptions requestOptions)
+        {
+            string apiURL = "http://twitter.com/notifications/leave.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+
+            return Parser.ReturnSingleUser(responseText);
         }
     }
 }
