@@ -38,7 +38,7 @@
   <property name="nunit.exe" value="${dir.nunit}${file.sep}nunit-console-x86.exe" />
   <property name="nunitconsole" value="${dir.nunit}${file.sep}nunit-console.exe" />
   <property name="assembly.unittests" value="${project::get-name()}_Tests.dll" />
-  <property name="nunit.xslt" value="lib${file.sep}xslt${file.sep}tests.xsl" />
+  <property name="nunit.xslt" value="lib${file.sep}xslt${file.sep}nunit.xslt" />
   <property name="partcover.exe" value="${directory::get-current-directory()}${file.sep}lib${file.sep}partcover${file.sep}partcover.exe" />
   <property name="ncover.dir" value="${directory::get-current-directory()}${file.sep}lib${file.sep}NCover" />
   <property name="ncover.exe" value="${ncover.dir}${file.sep}NCover.Console.exe" />
@@ -171,7 +171,8 @@
 	</if>
 	
 	<if test="${build.os == 'Unix'}">
-	     <exec program="mono" commandline="${nunit.exe} ${dir.build}${file.sep}${assembly.unittests} -xml=${dir.build}${file.sep}TestResult.xml" failonerror="false" verbose="true" />
+	     <exec program="mono" commandline=" ${nunit.exe} ${dir.build}${file.sep}${assembly.unittests} -xml=${dir.build}${file.sep}TestResult.xml" 
+	          failonerror="false" verbose="true" />
 	</if>
 	
 	<!-- Code Coverage Report Style -->
@@ -189,12 +190,19 @@
 	     </nunit2report>
 	</if>
 	
+	<if test="${build.os == 'Unix'}">
+	     <style style="${nunit.xslt}" in="${dir.build}${file.sep}TestResult.xml" out="${dir.buildreports}${file.sep}NUnitReport.html" />
+	     <exec program="mono" 
+	          commandline="${dir.nunit}${file.sep}nunit-summary.exe ${dir.build}${file.sep}TestResult.xml 
+	               -o=${dir.buildreports}${file.sep}NUnitSummaryReport.html -html" verbose="true" />
+	</if>
+	
 	<delete dir="${dir.nunit.addins}" if="${directory::exists(dir.nunit.addins)}" />
-	<delete>
+	<!-- <delete>
 		<fileset>
 			<include name="${dir.build}${file.sep}*.xml" />
 			<include name="*.log" />
 		</fileset>
-	</delete>	
+	</delete>	-->
   </target>
 </project>
