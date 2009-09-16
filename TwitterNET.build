@@ -70,7 +70,7 @@
     <echo message="Build Folder: ${dir.build}"/>
     <echo message="Framework Path: ${framework.path}" />
     <if test="${build.os != 'Unix'}">
-         <echo message="msbuild: ${msbuild.exe}"/>
+         <echo message="msbuild: ${build.exe}"/>
     </if>
   </target>
 
@@ -161,7 +161,7 @@
 	-->
 	
 	<if test="${build.os != 'Unix'}"> <!-- Not on Linux, so we can run code coverage -->
-	     <exec program="mono ${ncover.exe}" failonerror="false" verbose="true">
+	     <exec program="${ncover.exe}" failonerror="false" verbose="true">
 		     <arg line="${nunit.exe} ${dir.build}${file.sep}${assembly.unittests} /xml=${dir.build}${file.sep}TestResult.xml" />
 		     <arg line="//a &quot;TwitterNET&quot;" />
 		     <arg line="//ea &quot;TwitterNET_Tests&quot;" />
