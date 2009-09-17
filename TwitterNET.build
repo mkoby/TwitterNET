@@ -46,6 +46,7 @@
 
   <!-- Load additional NAnt Contrib tasks -->
   <loadtasks assembly="${directory::get-current-directory()}${file.sep}lib${file.sep}nantcontrib${file.sep}bin${file.sep}NAnt.Contrib.Tasks.dll"  />
+  <include buildfile="TwitterNET.build.linux" />
   
   <target name="build" depends="init, compile, testing" description="The main build target that builds TwitterNet"/>
   
@@ -78,60 +79,16 @@
     <echo message="Build Directory is ${dir.build}"/>
     <echo message="Building solution: ${file.solution}" />
 	
+	<if test="${build.os == 'Unix'}" >
+		<call target="compile-linux" />
+	</if>
+	
 	<if test="${build.os != 'Unix'}"> <!-- Build on Windows -->
 	     <exec program="${build.exe}" 
                commandline="${file.solution} /t:Clean /p:Configuration=${project.config};outdir=${dir.build}${file.sep}  /v:q" verbose="true" />
 	     <exec program="${build.exe}" 
                commandline="${file.solution} /t:Build /p:Configuration=${project.config};outdir=${dir.build}${file.sep}  /v:q" verbose="true" />
-     </if>
-     
-     <if test="${build.os == 'Unix'}"> <!-- Build on Linux -->
-          <exec program="${build.exe}"
-               commandline="&quot;/out:${dir.build}${file.sep}TwitterNET.dll&quot; 
-                    &quot;/r:System.dll&quot; &quot;/r:System.Core.dll&quot; 
-                    &quot;/r:System.Web.dll&quot; &quot;/r:System.Xml.Linq.dll&quot; 
-                    &quot;/r:System.Data.DataSetExtensions.dll&quot; 
-                    &quot;/r:System.Data.dll&quot; &quot;/r:System.Xml.dll&quot; 
-                    /noconfig /nologo /warn:4 /optimize- /codepage:utf8 
-                    /define:&quot;RELEASE&quot; /t:library 
-                    &quot;src/TwitterNET/Exceptions/TwitterNETWebException.cs&quot; 
-                    &quot;src/TwitterNET/ResponseParser.cs&quot; 
-                    &quot;src/TwitterNET/Properties/AssemblyInfo.cs&quot; 
-                    &quot;src/TwitterNET/RequestHandler.cs&quot; 
-                    &quot;src/TwitterNET/Twitter.cs&quot; 
-                    &quot;src/TwitterNET/User.cs&quot; 
-                    &quot;src/TwitterNET/RequestOptions.cs&quot; 
-                    &quot;src/TwitterNET/Interfaces/IUser.cs&quot; 
-                    &quot;src/TwitterNET/Exceptions/TwitterNetException.cs&quot; 
-                    &quot;src/TwitterNET/Message.cs&quot; 
-                    &quot;src/TwitterNET/StatusMessage.cs&quot; 
-                    &quot;src/TwitterNET/DirectMessage.cs&quot;" 
-               verbose="true"/>
-               
-          <exec program="${build.exe}" 
-               commandline="&quot;/out:${dir.build}${file.sep}TwitterNET_Tests.dll&quot; 
-                    &quot;/r:lib/nunit/bin/nunit.framework.dll&quot; 
-                    &quot;/r:System.dll&quot; &quot;/r:System.Core.dll&quot; 
-                    &quot;/r:System.Xml.Linq.dll&quot; 
-                    &quot;/r:System.Data.DataSetExtensions.dll&quot; 
-                    &quot;/r:System.Data.dll&quot; &quot;/r:System.Xml.dll&quot; 
-                    &quot;/r:src/TwitterNET/bin/Debug/TwitterNET.dll&quot; 
-                    /noconfig /nologo /warn:4 /optimize- /codepage:utf8 /define:&quot;RELEASE&quot; 
-                    /t:library 
-                    &quot;src/TwitterNET_Tests/TwitterNET_Friendship_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/TwitterNET_FriendsTimeLine_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/TwitterNET_Mentions_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/TwitterNET_Notifications_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/TwitterNET_SocialGraph_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/TwitterNET_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/Properties/AssemblyInfo.cs&quot; 
-                    &quot;src/TwitterNET_Tests/TwitterNET_UserTimeLine_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/RequestOptions_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/TwitterNET_Favorites_Tests.cs&quot; 
-                    &quot;src/TwitterNET_Tests/TwitterNET_DirectMsgs_Tests.cs&quot;" 
-               verbose="true"/>
-     </if>
-     
+     </if>     
      
   </target>
 
@@ -143,9 +100,8 @@
 	</if>
 	
 	<if test="${build.os == 'Unix'}">
-	     <copy file="${dir.nunit}${file.sep}nunit.framework.dll" todir="${dir.build}" />
-	</if>
-	
+	     <call target="testing-linux" />
+	</if>	
 
 	<!--
 	<nunit2 verbose="true">
@@ -170,11 +126,6 @@
 	     </exec>
 	</if>
 	
-	<if test="${build.os == 'Unix'}">
-	     <exec program="mono" commandline=" ${nunit.exe} ${dir.build}${file.sep}${assembly.unittests} -xml=${dir.build}${file.sep}TestResult.xml" 
-	          failonerror="false" verbose="true" />
-	</if>
-	
 	<!-- Code Coverage Report Style -->
 	<if test="${build.os != 'Unix'}">
 	     <property name="xml.codecoverage" value="${dir.build}${file.sep}CodeCoverage.xml" />
@@ -188,13 +139,6 @@
 			     <include name="${dir.build}${file.sep}TestResult.xml" />
 		     </fileset>
 	     </nunit2report>
-	</if>
-	
-	<if test="${build.os == 'Unix'}">
-	     <style style="${nunit.xslt}" in="${dir.build}${file.sep}TestResult.xml" out="${dir.buildreports}${file.sep}NUnitReport.html" />
-	     <exec program="mono" 
-	          commandline="${dir.nunit}${file.sep}nunit-summary.exe ${dir.build}${file.sep}TestResult.xml 
-	               -o=${dir.buildreports}${file.sep}NUnitSummaryReport.html -html" verbose="true" />
 	</if>
 	
 	<delete dir="${dir.nunit.addins}" if="${directory::exists(dir.nunit.addins)}" />
