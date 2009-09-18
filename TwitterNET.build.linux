@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/release/0.85/nant.xsd">
+	<target name="clean-linux">
+	     <delete dir="${dir.build}" />
+	</target>
+	
 	<target name="compile-linux">
 		<if test="${build.os == 'Unix'}"> <!-- Build on Linux -->
 			  <exec program="${build.exe}"
@@ -65,6 +69,16 @@
 	          commandline="${dir.nunit}${file.sep}nunit-summary.exe ${dir.build}${file.sep}TestResult.xml 
 	               -o=${dir.buildreports}${file.sep}NUnitSummaryReport.html -html" verbose="true" />
 		</if>
+		
+		<delete>
+	     	<fileset>
+	     		<include name="${dir.build}${file.sep}*.xml" />
+	     		<include name="*.log" />
+	     		<include name="*.txt" />
+	     		<include name="${dir.build}${file.sep}nunit*.dll"/>
+	     	</fileset>
+     	</delete>
+		
 	</target>
 
 </project>
