@@ -94,11 +94,14 @@
 	</if>
 	
 	<delete dir="${dir.nunit.addins}" if="${directory::exists(dir.nunit.addins)}" />
-	<!-- <delete>
-		<fileset>
-			<include name="${dir.build}${file.sep}*.xml" />
-			<include name="*.log" />
-		</fileset>
-	</delete>	-->
+	
+	<delete>
+	    	<fileset>
+	    		<include name="${dir.build}${file.sep}*.xml" />
+	    		<include name="*.log" />
+	    		<include name="*.txt" />
+	    		<include name="${dir.build}${file.sep}nunit*.dll"/>
+	    	</fileset>
+     </delete>
   </target>
 </project>
