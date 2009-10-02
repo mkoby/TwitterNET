@@ -434,5 +434,13 @@ namespace TwitterNET
 
             return ResponseParser.ReturnSingleUser(responseText);
         }
+
+        public IUser VerifyCredentials(string userName, string password)
+        {
+            string apiURL = "http://twitter.com/account/verify_credentials.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+
+            return ResponseParser.ReturnSingleUser(responseText);
+        }
     }
 }
