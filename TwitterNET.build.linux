@@ -14,18 +14,7 @@
 						&quot;/r:System.Data.dll&quot; &quot;/r:System.Xml.dll&quot; 
 						/noconfig /nologo /warn:4 /optimize- /codepage:utf8 
 						/define:&quot;RELEASE&quot; /t:library 
-						&quot;src/TwitterNET/Exceptions/TwitterNETWebException.cs&quot; 
-						&quot;src/TwitterNET/ResponseParser.cs&quot; 
-						&quot;src/TwitterNET/Properties/AssemblyInfo.cs&quot; 
-						&quot;src/TwitterNET/RequestHandler.cs&quot; 
-						&quot;src/TwitterNET/Twitter.cs&quot; 
-						&quot;src/TwitterNET/User.cs&quot; 
-						&quot;src/TwitterNET/RequestOptions.cs&quot; 
-						&quot;src/TwitterNET/Interfaces/IUser.cs&quot; 
-						&quot;src/TwitterNET/Exceptions/TwitterNetException.cs&quot; 
-						&quot;src/TwitterNET/Message.cs&quot; 
-						&quot;src/TwitterNET/StatusMessage.cs&quot; 
-						&quot;src/TwitterNET/DirectMessage.cs&quot;" 
+						-recurse:'src/TwitterNET/*.cs'" 
 				   verbose="true"/>
 				   
 			  <exec program="${build.exe}" 
@@ -35,20 +24,10 @@
 						&quot;/r:System.Xml.Linq.dll&quot; 
 						&quot;/r:System.Data.DataSetExtensions.dll&quot; 
 						&quot;/r:System.Data.dll&quot; &quot;/r:System.Xml.dll&quot; 
-						&quot;/r:src/TwitterNET/bin/Debug/TwitterNET.dll&quot; 
-						/noconfig /nologo /warn:4 /optimize- /codepage:utf8 /define:&quot;RELEASE&quot; 
-						/t:library 
-						&quot;src/TwitterNET_Tests/TwitterNET_Friendship_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/TwitterNET_FriendsTimeLine_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/TwitterNET_Mentions_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/TwitterNET_Notifications_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/TwitterNET_SocialGraph_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/TwitterNET_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/Properties/AssemblyInfo.cs&quot; 
-						&quot;src/TwitterNET_Tests/TwitterNET_UserTimeLine_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/RequestOptions_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/TwitterNET_Favorites_Tests.cs&quot; 
-						&quot;src/TwitterNET_Tests/TwitterNET_DirectMsgs_Tests.cs&quot;" 
+						&quot;/r:${dir.build}${file.sep}TwitterNET.dll&quot; 
+						/noconfig /nologo /warn:4 /optimize- /codepage:utf8 
+						/define:&quot;RELEASE&quot; /t:library 
+						-recurse:'src/TwitterNET_Tests/*.cs'" 
 				   verbose="true"/>
 			 </if>
 	</target>
