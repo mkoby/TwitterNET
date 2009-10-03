@@ -92,16 +92,18 @@
 		     </fileset>
 	     </nunit2report>
 	</if>
+
+	<if test="${build.os != 'Unix'}" >		
+	    <delete dir="${dir.nunit.addins}" if="${directory::exists(dir.nunit.addins)}" />
 	
-	<delete dir="${dir.nunit.addins}" if="${directory::exists(dir.nunit.addins)}" />
-	
-	<delete>
-	    	<fileset>
-	    		<include name="${dir.build}${file.sep}*.xml" />
-	    		<include name="*.log" />
-	    		<include name="*.txt" />
-	    		<include name="${dir.build}${file.sep}nunit*.dll"/>
-	    	</fileset>
-     </delete>
+    	<delete>
+	        	<fileset>
+	        		<include name="${dir.build}${file.sep}*.xml" />
+	        		<include name="*.log" />
+	        		<include name="*.txt" />
+	        		<include name="${dir.build}${file.sep}nunit*.dll"/>
+	        	</fileset>
+         </delete>
+    </if>>
   </target>
 </project>
