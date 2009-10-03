@@ -47,13 +47,15 @@
 			<exec program="mono" commandline=" ${nunit.exe} ${dir.build}${file.sep}${assembly.unittests} -xml=${dir.build}${file.sep}TestResult.xml" 
 				failonerror="false" verbose="true" />
 		</if>
-		
+
+<!--		
 		<if test="${build.os == 'Unix'}">
 			<style style="${nunit.xslt}" in="${dir.build}${file.sep}TestResult.xml" out="${dir.buildreports}${file.sep}NUnitReport.html" />
 			<exec program="mono" 
 	          commandline="${dir.nunit}${file.sep}nunit-summary.exe ${dir.build}${file.sep}TestResult.xml 
 	               -o=${dir.buildreports}${file.sep}NUnitSummaryReport.html -html" verbose="true" />
 		</if>
+-->
 		
 		<delete>
 	     	<fileset>
