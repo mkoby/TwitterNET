@@ -57,7 +57,7 @@
 		
 		<delete>
 	     	<fileset>
-	     		<include name="${dir.build}${file.sep}*.xml" />
+	     		<!-- <include name="${dir.build}${file.sep}*.xml" /> -->
 	     		<include name="*.log" />
 	     		<include name="*.txt" />
 	     		<include name="${dir.build}${file.sep}nunit*.dll"/>
