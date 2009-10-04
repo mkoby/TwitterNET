@@ -7,6 +7,13 @@ namespace TwitterNET
 {
     public class Twitter
     {
+        public enum DeliveryDeviceType
+        {
+            IM,
+            SMS,
+            None
+        }
+
         readonly RequestHandler _requestHandler = null;
 		
 		private bool UserOwnsStatus(long StatusID)
@@ -54,10 +61,12 @@ namespace TwitterNET
             _requestHandler = new RequestHandler(UserName, Password);
         }
 
-        public void EndTwitterSession()
+        public IDictionary<string, object> EndTwitterSession()
         {
             string apiURL = "http://twitter.com/account/end_session.xml";
-            _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+
+            return ResponseParser.ReturnHashDictionary(responseText);
         }
 
         /// <summary>
@@ -173,12 +182,12 @@ namespace TwitterNET
 		/// <summary>
 		/// Returns the authenticated user's friends timeline
 		/// </summary>
-		/// <param name="requestOptions"></param>
+		/// <param name="statusRequestOptions"></param>
 		/// <returns></returns>
-		public IList<StatusMessage> GetFriendsTimeline(RequestOptions requestOptions)
+		public IList<StatusMessage> GetFriendsTimeline(StatusRequestOptions statusRequestOptions)
 		{
 			string apiURL = "http://twitter.com/statuses/friends_timeline.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnListOfStatuses(responseText);
 		}
@@ -186,48 +195,48 @@ namespace TwitterNET
 		/// <summary>
 		/// Gets a specific user's timeline
 		/// </summary>
-		/// <param name="requestOptions"></param>
+		/// <param name="statusRequestOptions"></param>
 		/// <returns></returns>
-		public IList<StatusMessage> GetUserTimeline(RequestOptions requestOptions)
+		public IList<StatusMessage> GetUserTimeline(StatusRequestOptions statusRequestOptions)
 		{
 			string apiURL = "http://twitter.com/statuses/user_timeline.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnListOfStatuses(responseText);
 		}
 		
 		/// <summary>
 		/// Gets a user's friends and their most recent statuses 
-		/// Authenticated user by default, use RequestOptions to be more specific.
+		/// Authenticated user by default, use StatusRequestOptions to be more specific.
 		/// </summary>
-		/// <param name="requestOptions">
-		/// Accepts either the UserID or ScreenName and/or the Page RequestOptions <see cref="RequestOptions"/>
+		/// <param name="statusRequestOptions">
+		/// Accepts either the UserID or ScreenName and/or the Page RequestOptions <see cref="StatusRequestOptions"/>
 		/// </param>
 		/// <returns>
 		/// A list of users, with their most recent statuses <see cref="IList"/>
 		/// </returns>
-		public IList<IUser> GetUsersFriends(RequestOptions requestOptions)
+		public IList<IUser> GetUsersFriends(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/statuses/friends.xml";
-            string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnListOfUsers(resposneText);
         }
 		
 		/// <summary>
 		/// Gets a user's follower's and their most recent statuses. 
-		/// Authenticated user by default, use RequestOptions to be more specific.
+		/// Authenticated user by default, use StatusRequestOptions to be more specific.
 		/// </summary>
-		/// <param name="requestOptions">
-		/// Accepts either the UserID or ScreenName and/or the Page RequestOptions <see cref="RequestOptions"/>
+		/// <param name="statusRequestOptions">
+		/// Accepts either the UserID or ScreenName and/or the Page RequestOptions <see cref="StatusRequestOptions"/>
 		/// </param>
 		/// <returns>
 		/// A <see cref="IList"/>
 		/// </returns>
-		public IList<IUser> GetUsersFollowers(RequestOptions requestOptions)
+		public IList<IUser> GetUsersFollowers(StatusRequestOptions statusRequestOptions)
 		{
 			string apiURL = "http://twitter.com/statuses/followers.xml";
-			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 			
 			return ResponseParser.ReturnListOfUsers(responseText);
 		}
@@ -235,12 +244,12 @@ namespace TwitterNET
 		/// <summary>
 		/// Gets mentions of the authenticated user's screen name
 		/// </summary>
-		/// <param name="requestOptions"></param>
+		/// <param name="statusRequestOptions"></param>
 		/// <returns></returns>
-        public IList<StatusMessage> GetMetions(RequestOptions requestOptions)
+        public IList<StatusMessage> GetMetions(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/statuses/mentions.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnListOfStatuses(responseText);
         }
@@ -249,16 +258,16 @@ namespace TwitterNET
 		/// Gets the 20 most recent favorited statuses of a user
 		/// Authenticated user by default. 
 		/// </summary>
-		/// <param name="requestOptions">
-		/// <see cref="RequestOptions"/>
+		/// <param name="statusRequestOptions">
+		/// <see cref="StatusRequestOptions"/>
 		/// </param>
 		/// <returns>
 		/// A <see cref="IList"/>
 		/// </returns>
-		public IList<StatusMessage> GetFavorites(RequestOptions requestOptions)
+		public IList<StatusMessage> GetFavorites(StatusRequestOptions statusRequestOptions)
 		{
 			string apiURL = "http://twitter.com/favorites.xml";
-			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 			
 			return ResponseParser.ReturnListOfStatuses(responseText);
 		}
@@ -306,24 +315,24 @@ namespace TwitterNET
             if (id < 0)
                 throw new TwitterNetException("The ID must be a value greater than zero.");
 
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.Add(RequestOptionNames.ID, id);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+            statusRequestOptions.Add(StatusRequestOptionNames.ID, id);
 
-            return GetDirectMessages(requestOptions)[0];
+            return GetDirectMessages(statusRequestOptions)[0];
         }
 
-        public IList<DirectMessage> GetDirectMessages(RequestOptions requestOptions)
+        public IList<DirectMessage> GetDirectMessages(StatusRequestOptions statusRequestOptions)
 		{
 			string apiURL = "http://twitter.com/direct_messages.xml";
-			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+			string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 			
 			return ResponseParser.ReturnListofDirectMsgs(responseText);
 		}
 
-        public IList<DirectMessage> GetSentDirectMessages(RequestOptions requestOptions)
+        public IList<DirectMessage> GetSentDirectMessages(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/direct_messages/sent.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnListofDirectMsgs(responseText);
         }
@@ -378,7 +387,9 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/friendships/exists.json";
             string requestOptions = String.Format("?user_a={0}&user_b={1}", authenticatedUser, checkUser);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
-            Output = (String.IsNullOrEmpty(responseText)) ? bool.Parse(responseText) : false;
+            
+            if(!String.IsNullOrEmpty(responseText))
+                Output = bool.Parse(responseText) ? true : false;
 
             return Output;
         }
@@ -403,34 +414,34 @@ namespace TwitterNET
             return ResponseParser.ReturnSingleUser(responseText);
         }
 
-        public IList<long> GetFollowersList(RequestOptions requestOptions)
+        public IList<long> GetFollowersList(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/followers/ids.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnListOfUserIDs(responseText);
         }
 
-        public IList<long> GetFollowingList(RequestOptions requestOptions)
+        public IList<long> GetFollowingList(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/friends/ids.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnListOfUserIDs(responseText);
         }
 
-        public IUser TurnDeviceNotificationsOn(RequestOptions requestOptions)
+        public IUser TurnDeviceNotificationsOn(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/notifications/follow.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnSingleUser(responseText);
         }
 
-        public IUser TurnDeviceNotificationsOff(RequestOptions requestOptions)
+        public IUser TurnDeviceNotificationsOff(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/notifications/leave.xml";
-            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiURL));
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
             return ResponseParser.ReturnSingleUser(responseText);
         }
@@ -439,6 +450,50 @@ namespace TwitterNET
         {
             string apiURL = "http://twitter.com/account/verify_credentials.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+
+            return ResponseParser.ReturnSingleUser(responseText);
+        }
+
+        public IDictionary<string, object> RateLimitStatus()
+        {
+            string apiURL = "http://twitter.com/account/rate_limit_status.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+
+            return ResponseParser.ReturnHashDictionary(responseText);
+        }
+
+        public IUser UpdateDeliveryDevice(DeliveryDeviceType deviceType)
+        {
+            string apiURL = "http://twitter.com/account/update_delivery_device.xml";
+            string requestOptions = String.Format("?device={0}", deviceType.ToString().ToLower());
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
+                                                                 String.Format("{0}{1}", apiURL, requestOptions));
+
+            return ResponseParser.ReturnSingleUser(responseText);
+        }
+
+        public IUser UpdateProfileColors(AccountRequestOptions requestOptions)
+        {
+            string apiUrl = "http://twitter.com/account/update_profile_colors.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiUrl));
+
+            return ResponseParser.ReturnSingleUser(responseText);
+        }
+
+        public IUser UpdateProfileImage(string imagefile)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUser UpdateProfileBackgroundImage(string imagefile)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IUser UpdateProfileInfo(AccountRequestOptions requestOptions)
+        {
+            string apiUrl = "http://twitter.com/account/update_profile.xml";
+            string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiUrl));
 
             return ResponseParser.ReturnSingleUser(responseText);
         }

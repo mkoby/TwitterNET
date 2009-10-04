@@ -36,7 +36,7 @@ namespace TwitterNET_Tests
         [Test]
         public void Get_Metions_NoArgs_Test()
         {
-            IList<StatusMessage> mentions = twitter.GetMetions(new RequestOptions());
+            IList<StatusMessage> mentions = twitter.GetMetions(new StatusRequestOptions());
 
             Assert.IsNotEmpty((ICollection)mentions);
         }
@@ -44,10 +44,10 @@ namespace TwitterNET_Tests
         [Test]
         public void Get_Mentions_WithCount_Test()
         {
-            RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Count, 1);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.Count, 1);
 			
-            IList<StatusMessage> mentions = twitter.GetMetions(requestOptions);
+            IList<StatusMessage> mentions = twitter.GetMetions(statusRequestOptions);
 
             Assert.GreaterOrEqual(1, mentions.Count);
         }

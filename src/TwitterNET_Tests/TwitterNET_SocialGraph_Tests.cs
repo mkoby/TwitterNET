@@ -38,9 +38,9 @@ namespace TwitterNET_Tests
         [Test]
         public void GetFollowingList_Test()
         {
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
-            IList<long> friendsList = twitter.GetFollowingList(requestOptions);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+            statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, TestUserName);
+            IList<long> friendsList = twitter.GetFollowingList(statusRequestOptions);
 
             Console.WriteLine("Number of Users Being Followed: {0}", friendsList.Count);
             
@@ -51,9 +51,9 @@ namespace TwitterNET_Tests
         [Test]
         public void GetFollowersList_Test()
         {
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
-            IList<long> friendsList = twitter.GetFollowersList(requestOptions);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+            statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, TestUserName);
+            IList<long> friendsList = twitter.GetFollowersList(statusRequestOptions);
 
             Console.WriteLine("Number of Users Following Specified User: {0}", friendsList.Count);
 

@@ -20,8 +20,8 @@ namespace TwitterNET_Tests
 		public void RequestOptions_Returns_PassedURL()
 		{
 			string testUrl = "http://twitter.com/statuses/mentions.xml";
-			RequestOptions requestOptions = new RequestOptions();
-			string builtUrl = requestOptions.BuildRequestUri(testUrl);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			string builtUrl = statusRequestOptions.BuildRequestUri(testUrl);
 			
 			Assert.AreEqual(testUrl, builtUrl);
 		}
@@ -29,9 +29,9 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_URLForSinceID()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.SinceID, testStatusID);
-			string builtUrl = requestOptions.BuildRequestUri(testUrl);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.SinceID, testStatusID);
+			string builtUrl = statusRequestOptions.BuildRequestUri(testUrl);
 			
 			Assert.AreEqual(String.Format("{0}?since_id={1}", testUrl, testStatusID), builtUrl);
 		}
@@ -39,9 +39,9 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_URLForMaxID()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.MaxID, testStatusID);
-			string builtUrl = requestOptions.BuildRequestUri(testUrl);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.MaxID, testStatusID);
+			string builtUrl = statusRequestOptions.BuildRequestUri(testUrl);
 			
 			Assert.AreEqual(String.Format("{0}?max_id={1}", testUrl, testStatusID), builtUrl);
 		}
@@ -49,9 +49,9 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_URLForStatusID()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.ID, testStatusID);
-			string builtUrl = requestOptions.BuildRequestUri(testUrl);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.ID, testStatusID);
+			string builtUrl = statusRequestOptions.BuildRequestUri(testUrl);
 			
 			Assert.AreEqual(String.Format("{0}?id={1}", testUrl, testStatusID), builtUrl);
 		}
@@ -59,9 +59,9 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_URLForCount()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Count, testCount);
-			string builtUrl = requestOptions.BuildRequestUri(testUrl);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.Count, testCount);
+			string builtUrl = statusRequestOptions.BuildRequestUri(testUrl);
 			
 			Assert.AreEqual(String.Format("{0}?count={1}", testUrl, testCount), builtUrl);
 		}
@@ -69,9 +69,9 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_URLForPageNumber()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Page, testPage);
-			string builtUrl = requestOptions.BuildRequestUri(testUrl);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.Page, testPage);
+			string builtUrl = statusRequestOptions.BuildRequestUri(testUrl);
 			
 			Assert.AreEqual(String.Format("{0}?page={1}", testUrl, testPage), builtUrl);
 		}
@@ -79,9 +79,9 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_URLForUserID()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.UserID, testUserID);
-			string builtUrl = requestOptions.BuildRequestUri(testUserUrl);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.UserID, testUserID);
+			string builtUrl = statusRequestOptions.BuildRequestUri(testUserUrl);
 			
 			Assert.AreEqual(String.Format("{0}?user_id={1}", testUserUrl, testUserID), builtUrl);
 		}
@@ -89,9 +89,9 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_URLForScreenName()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.ScreenName, testScreenName);
-			string builtUrl = requestOptions.BuildRequestUri(testUserUrl);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, testScreenName);
+			string builtUrl = statusRequestOptions.BuildRequestUri(testUserUrl);
 			
 			Assert.AreEqual(String.Format("{0}?screen_name={1}", testUserUrl, testScreenName), builtUrl);
 		}
@@ -99,13 +99,13 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_Exception_When_Not_UserTimeline_UserID()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.UserID, testUserID);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.UserID, testUserID);
 			bool exceptionCaught = false;
 			
 			try
 			{
-				requestOptions.BuildRequestUri(testUrl);
+				statusRequestOptions.BuildRequestUri(testUrl);
 			}
 			catch(Exception twex)
 			{
@@ -118,13 +118,13 @@ namespace TwitterNET_Tests
 		[Test]
 		public void RequestOptions_Returns_Exception_When_Not_UserTimeline_Username()
 		{
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.ScreenName, testScreenName);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, testScreenName);
 			bool exceptionCaught = false;
 			
 			try
 			{
-				requestOptions.BuildRequestUri(testUrl);
+				statusRequestOptions.BuildRequestUri(testUrl);
 			}
 			catch(Exception twex)
 			{

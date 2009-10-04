@@ -22,10 +22,10 @@ namespace TwitterNET_Tests
             try
             {
                 twitter = new Twitter("apitest4769", "testaccount");
-                RequestOptions requestOptions = new RequestOptions();
-                requestOptions.Add(RequestOptionNames.Page, 3);
-                requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
-                IList<StatusMessage> friendsTimeline = twitter.GetUserTimeline(requestOptions);
+                StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+                statusRequestOptions.Add(StatusRequestOptionNames.Page, 3);
+                statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, TestUserName);
+                IList<StatusMessage> friendsTimeline = twitter.GetUserTimeline(statusRequestOptions);
 
                 if (friendsTimeline != null && friendsTimeline.Count > 0)
                 {
@@ -62,10 +62,10 @@ namespace TwitterNET_Tests
         [Test]
         public void Get_UserTimeline_userName()
         {
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, TestUserName);
 			
-            IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetUserTimeline(statusRequestOptions);
 
             foreach (var status in statusList)
             {
@@ -82,10 +82,10 @@ namespace TwitterNET_Tests
         [Test]
         public void Get_UserTimeline_longID()
         {
-            RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.UserID, TestUserID);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.UserID, TestUserID);
 			
-            IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetUserTimeline(statusRequestOptions);
 
             foreach (var status in statusList)
             {
@@ -105,11 +105,11 @@ namespace TwitterNET_Tests
 			//We're going to run this for a specific user 
 			//because the test account doesn't post updates
 			//very often and we can't control test-run order
-            RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
-			requestOptions.Add(RequestOptionNames.SinceID, minTestStatusID);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, TestUserName);
+			statusRequestOptions.Add(StatusRequestOptionNames.SinceID, minTestStatusID);
 			
-            IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetUserTimeline(statusRequestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
@@ -126,11 +126,11 @@ namespace TwitterNET_Tests
 			//We're going to run this for a specific user 
 			//because the test account doesn't post updates
 			//very often and we can't control test-run order
-            RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.ScreenName, TestUserName);
-			requestOptions.Add(RequestOptionNames.MaxID, maxTestStatusID);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, TestUserName);
+			statusRequestOptions.Add(StatusRequestOptionNames.MaxID, maxTestStatusID);
 			
-            IList<StatusMessage> statusList = twitter.GetUserTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetUserTimeline(statusRequestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, "Status list was empty, expected at least 1 status returned");
@@ -144,7 +144,7 @@ namespace TwitterNET_Tests
         [Test]
         public void Get_UsersFriends_Test()
         {
-            IList<IUser> friendsStatusList = twitter.GetUsersFriends(new RequestOptions());
+            IList<IUser> friendsStatusList = twitter.GetUsersFriends(new StatusRequestOptions());
 
             Assert.IsNotEmpty((ICollection)friendsStatusList);
 
@@ -158,7 +158,7 @@ namespace TwitterNET_Tests
 		[Test]
 		public void Get_UsersFollowers_Test()
 		{
-			IList<IUser> followersStatusList = twitter.GetUsersFollowers(new RequestOptions());
+			IList<IUser> followersStatusList = twitter.GetUsersFollowers(new StatusRequestOptions());
 			
 			Assert.IsNotEmpty((ICollection)followersStatusList);
 			

@@ -47,7 +47,7 @@ namespace TwitterNET_Tests
 		public void GetLatestRecievedDirectMessages_Test()
 		{
 			IList<DirectMessage> directMsgs = null;
-			directMsgs = twitter.GetDirectMessages(new RequestOptions());
+			directMsgs = twitter.GetDirectMessages(new StatusRequestOptions());
 			
 			Assert.IsNotNull(directMsgs, "List of DMs is NULL, expected at least 1 DM");
 			Assert.GreaterOrEqual(directMsgs.Count, 3);
@@ -57,7 +57,7 @@ namespace TwitterNET_Tests
         public void GetSentDirectMessages_Test()
         {
             IList<DirectMessage> directMessages = null;
-            directMessages = twitter.GetSentDirectMessages(new RequestOptions());
+            directMessages = twitter.GetSentDirectMessages(new StatusRequestOptions());
 
             Assert.IsNotNull(directMessages);
         }

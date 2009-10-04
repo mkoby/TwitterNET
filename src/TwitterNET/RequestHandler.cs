@@ -104,7 +104,10 @@ namespace TwitterNET
                 strURL.Contains("friendships/create") ||
                 strURL.Contains("friendships/destroy") ||
                 strURL.Contains("notifications/follow") ||
-                strURL.Contains("notifications/leave"))
+                strURL.Contains("notifications/leave") ||
+                strURL.Contains("account/update_delivery_device") ||
+                strURL.Contains("account/update_profile_colors") ||
+                strURL.Contains("account/update_profile"))
                 Output = "POST";
 
             return Output;

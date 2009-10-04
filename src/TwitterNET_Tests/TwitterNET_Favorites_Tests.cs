@@ -11,12 +11,12 @@ namespace TwitterNET_Tests
 	public class TwitterNET_Favorites_Tests
 	{
 		private Twitter twitter = null;
-		private long idToFavorite = 2327017739;
+	    private long idToFavorite = 4611792922; //2327017739;
 
         private StatusMessage DeleteFavoriteToTest()
         {
             StatusMessage Output = null;
-            IList<StatusMessage> favorites = twitter.GetFavorites(new RequestOptions());
+            IList<StatusMessage> favorites = twitter.GetFavorites(new StatusRequestOptions());
 
             var status = from f in favorites
                          where f.ID.Equals(idToFavorite)
@@ -31,7 +31,7 @@ namespace TwitterNET_Tests
 	    private StatusMessage AddFavoriteToTest()
 	    {
 	        StatusMessage Output = null;
-            IList<StatusMessage> favorites = twitter.GetFavorites(new RequestOptions());
+            IList<StatusMessage> favorites = twitter.GetFavorites(new StatusRequestOptions());
 
             var status = from f in favorites
                          where f.ID.Equals(idToFavorite)
@@ -82,7 +82,7 @@ namespace TwitterNET_Tests
 		[Test]
 		public void GetFavorites_Test_Should_Return_List_of_Current_Favorites()
 		{
-			IList<StatusMessage> favoritesList = twitter.GetFavorites(new RequestOptions());
+			IList<StatusMessage> favoritesList = twitter.GetFavorites(new StatusRequestOptions());
 			
 			Assert.IsNotNull((ICollection)favoritesList);
 			Assert.Greater(favoritesList.Count, 0, "No favorites returned");			

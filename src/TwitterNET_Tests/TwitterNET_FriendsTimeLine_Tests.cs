@@ -22,9 +22,9 @@ namespace TwitterNET_Tests
 
             try
             {
-                RequestOptions requestOptions = new RequestOptions();
-                requestOptions.Add(RequestOptionNames.ScreenName, "apitest4769");
-                IList<StatusMessage> userTimeline = twitter.GetUserTimeline(requestOptions);
+                StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+                statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, "apitest4769");
+                IList<StatusMessage> userTimeline = twitter.GetUserTimeline(statusRequestOptions);
 
                 if(userTimeline != null && userTimeline.Count > 0)
                 {
@@ -60,7 +60,7 @@ namespace TwitterNET_Tests
         [Test]
         public void GetFriendsTimeline_NoArgs_Test()
         {
-			RequestOptions myOptions = new RequestOptions();
+			StatusRequestOptions myOptions = new StatusRequestOptions();
 			
             IList<StatusMessage> statusList = twitter.GetFriendsTimeline(myOptions);
             Console.WriteLine("Status Count: {0}", statusList.Count);
@@ -74,10 +74,10 @@ namespace TwitterNET_Tests
         {
             Assert.AreNotEqual(long.MinValue, minTestStatusID, "minTestStatusID is Long.MinValue");
 
-			RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.SinceID, minTestStatusID);
+			StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.SinceID, minTestStatusID);
 			
-            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(statusRequestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, 
@@ -95,10 +95,10 @@ namespace TwitterNET_Tests
         {
             Assert.AreNotEqual(long.MinValue, maxTestStatusID, "maxTestStatusID is Long.MinValue");
 
-            RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.MaxID, maxTestStatusID);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.MaxID, maxTestStatusID);
 			
-            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(statusRequestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, 
@@ -115,11 +115,11 @@ namespace TwitterNET_Tests
         public void GetFriendsTimeline_Page_Test()
         {
             //TODO: Find better method to test than just pull page 2 of tweets
-            RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Page, 2);
-			requestOptions.Add(RequestOptionNames.Count, 7);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.Page, 2);
+			statusRequestOptions.Add(StatusRequestOptionNames.Count, 7);
 			
-            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(statusRequestOptions);
 
             #region Console
 
@@ -140,10 +140,10 @@ namespace TwitterNET_Tests
         [Test]
         public void GetFriendsTimeline_ReturnCountOnly_Test()
         {
-            RequestOptions requestOptions = new RequestOptions();
-			requestOptions.Add(RequestOptionNames.Count, 5);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+			statusRequestOptions.Add(StatusRequestOptionNames.Count, 5);
 			
-            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(requestOptions);
+            IList<StatusMessage> statusList = twitter.GetFriendsTimeline(statusRequestOptions);
 
             //Make sure we got at least 1 status back
             Assert.IsNotEmpty((ICollection)statusList, 

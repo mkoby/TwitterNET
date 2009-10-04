@@ -135,6 +135,28 @@ namespace TwitterNET
             return Output;
         }
 
+        public static IDictionary<string, object> ReturnHashDictionary(string responseText)
+        {
+            if(String.IsNullOrEmpty(responseText))
+                return null;
+
+            IDictionary<string, object> Output = null;
+            XElement hashXml = XElement.Parse(responseText);
+
+            var query = from c in hashXml.Descendants()
+                        select c;
+            
+            if(query.Count() > 0)
+                Output = new Dictionary<string, object>();
+
+            foreach(var hash in query)
+            {
+                Output.Add(hash.Name.ToString(), hash.Value);
+            }
+
+            return Output;
+        }
+
         // Internal Methods that handle the actual parsing of the XML
         // using XML to LINQ
 

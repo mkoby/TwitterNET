@@ -38,9 +38,9 @@ namespace TwitterNET_Tests
         [Test]
         public void TurnDeviceNotificationsOn_Test()
         {
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.Add(RequestOptionNames.ScreenName, testUserName);
-            IUser userFollowed = twitter.TurnDeviceNotificationsOn(requestOptions);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+            statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, testUserName);
+            IUser userFollowed = twitter.TurnDeviceNotificationsOn(statusRequestOptions);
 
             Assert.IsNotNull(userFollowed);
             Assert.AreEqual(testUserName, userFollowed.ScreenName);
@@ -49,9 +49,9 @@ namespace TwitterNET_Tests
         [Test]
         public void TurnDeviceNotificationsOff_Test()
         {
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.Add(RequestOptionNames.ScreenName, testUserName);
-            IUser userFollowed = twitter.TurnDeviceNotificationsOff(requestOptions);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+            statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, testUserName);
+            IUser userFollowed = twitter.TurnDeviceNotificationsOff(statusRequestOptions);
 
             Assert.IsNotNull(userFollowed);
             Assert.AreEqual(testUserName, userFollowed.ScreenName);
@@ -60,9 +60,9 @@ namespace TwitterNET_Tests
         [Test]
         public void TurnDeviceNotificationsOn_WithUserID_Test()
         {
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.Add(RequestOptionNames.UserID, testUserID);
-            IUser userFollowed = twitter.TurnDeviceNotificationsOff(requestOptions);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+            statusRequestOptions.Add(StatusRequestOptionNames.UserID, testUserID);
+            IUser userFollowed = twitter.TurnDeviceNotificationsOff(statusRequestOptions);
 
             Assert.IsNotNull(userFollowed);
             Assert.AreEqual(testUserName, userFollowed.ScreenName);
@@ -71,9 +71,9 @@ namespace TwitterNET_Tests
         [Test]
         public void TurnDeviceNotificationsOff_WithUserID_Test()
         {
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.Add(RequestOptionNames.UserID, testUserID);
-            IUser userFollowed = twitter.TurnDeviceNotificationsOff(requestOptions);
+            StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
+            statusRequestOptions.Add(StatusRequestOptionNames.UserID, testUserID);
+            IUser userFollowed = twitter.TurnDeviceNotificationsOff(statusRequestOptions);
 
             Assert.IsNotNull(userFollowed);
             Assert.AreEqual(testUserName, userFollowed.ScreenName);
