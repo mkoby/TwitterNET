@@ -1,0 +1,882 @@
+<users type="array"> 
+<user> 
+  <id>20536157</id> 
+  <name>A Googler</name> 
+  <screen_name>google</screen_name> 
+  <location>Mountain View, CA</location> 
+  <description>News and updates from Google</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/77186109/favicon_normal.png</profile_image_url> 
+  <url>http://www.google.com/support/</url> 
+  <protected>false</protected> 
+  <followers_count>1739994</followers_count> 
+  <profile_background_color>ffffff</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>0000cc</profile_link_color> 
+  <profile_sidebar_fill_color>ebeff9</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>bbccff</profile_sidebar_border_color> 
+  <friends_count>185</friends_count> 
+  <created_at>Tue Feb 10 19:14:39 +0000 2009</created_at> 
+  <favourites_count>57</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/6219441/bg-google-white-75.gif</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>746</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Sat Oct 10 14:59:29 +0000 2009</created_at> 
+    <id>4761681473</id> 
+    <text>&quot;Sex, conference calls, outdated FCC rules&quot; &amp; our take on Google Voice: http://bit.ly/1MxQFs</text> 
+    <source>&lt;a href=&quot;http://bit.ly&quot; rel=&quot;nofollow&quot;&gt;bit.ly&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>5490392</id> 
+  <name>Ustream</name> 
+  <screen_name>Ustream</screen_name> 
+  <location>Mountain View, CA</location> 
+  <description>Official Tweets about the best live streams, updates and news from Ustream. If you need help, message @ustreamsupport</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/178273102/twitlogo_normal.png</profile_image_url> 
+  <url>http://ustream.tv/</url> 
+  <protected>false</protected> 
+  <followers_count>1277939</followers_count> 
+  <profile_background_color>282B32</profile_background_color> 
+  <profile_text_color>8E8B8B</profile_text_color> 
+  <profile_link_color>1D8CCA</profile_link_color> 
+  <profile_sidebar_fill_color>ffffff</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>BCC6CA</profile_sidebar_border_color> 
+  <friends_count>143</friends_count> 
+  <created_at>Wed Apr 25 07:26:03 +0000 2007</created_at> 
+  <favourites_count>4</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/9795701/ustreambg.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>4849</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 21:34:36 +0000 2009</created_at> 
+    <id>4769400017</id> 
+    <text>Soulja boy and Bow Wow decided to stream 30,000ft in the air http://bit.ly/XyLp</text> 
+    <source>&lt;a href=&quot;http://www.tweetdeck.com/&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>13</id> 
+  <name>Biz Stone</name> 
+  <screen_name>biz</screen_name> 
+  <location>NorCal</location> 
+  <description>Co-founder of Twitter, Inc.</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/58660087/biz_stone_normal.png</profile_image_url> 
+  <url>http://www.bizstone.com</url> 
+  <protected>false</protected> 
+  <followers_count>1390337</followers_count> 
+  <profile_background_color>B2DFDA</profile_background_color> 
+  <profile_text_color>333333</profile_text_color> 
+  <profile_link_color>93A644</profile_link_color> 
+  <profile_sidebar_fill_color>ffffff</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>eeeeee</profile_sidebar_border_color> 
+  <friends_count>285</friends_count> 
+  <created_at>Tue Mar 21 20:51:43 +0000 2006</created_at> 
+  <favourites_count>531</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://s.twimg.com/a/1255039715/images/themes/theme13/bg.gif</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>3590</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Sat Oct 10 18:15:08 +0000 2009</created_at> 
+    <id>4765615935</id> 
+    <text>At my first ever chiropractor appt -- now we find out what kind of spine I have hey-oh!</text> 
+    <source>&lt;a href=&quot;http://www.atebits.com/&quot; rel=&quot;nofollow&quot;&gt;Tweetie&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>734493</id> 
+  <name>woot.com</name> 
+  <screen_name>woot</screen_name> 
+  <location>Dallas, TX</location> 
+  <description>Woot : One Day, One Deal. Also see our other feeds: twitter.com/wootoff twitter.com/wootshirt twitter.com/wootwine twitter.com/wootsellout</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/199275977/www3-touch-icon_normal.png</profile_image_url> 
+  <url>http://www.woot.com</url> 
+  <protected>false</protected> 
+  <followers_count>1400440</followers_count> 
+  <profile_background_color>61861E</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>426600</profile_link_color> 
+  <profile_sidebar_fill_color>84A14F</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>EFC51C</profile_sidebar_border_color> 
+  <friends_count>16472</friends_count> 
+  <created_at>Tue Jan 30 22:14:50 +0000 2007</created_at> 
+  <favourites_count>0</favourites_count> 
+  <utc_offset>-21600</utc_offset> 
+  <time_zone>Central Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://s.twimg.com/a/1255039715/images/themes/theme1/bg.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>2729</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Sat Oct 10 15:01:22 +0000 2009</created_at> 
+    <id>4761719804</id> 
+    <text>$319.99 : Vizio 32&#8221; 720p LCD HDTV : LAST CALL http://www.woot.com</text> 
+    <source>&lt;a href=&quot;http://apiwiki.twitter.com/&quot; rel=&quot;nofollow&quot;&gt;API&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>428333</id> 
+  <name>CNN Breaking News</name> 
+  <screen_name>cnnbrk</screen_name> 
+  <location>Everywhere</location> 
+  <description>CNN.com is among the world's leaders in online news and information delivery.</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/67263363/icon.cnnbrk_normal.png</profile_image_url> 
+  <url>http://cnn.com/</url> 
+  <protected>false</protected> 
+  <followers_count>2781088</followers_count> 
+  <profile_background_color>323232</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>004287</profile_link_color> 
+  <profile_sidebar_fill_color>EEEEEE</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>DADADA</profile_sidebar_border_color> 
+  <friends_count>18</friends_count> 
+  <created_at>Tue Jan 02 01:48:14 +0000 2007</created_at> 
+  <favourites_count>4</favourites_count> 
+  <utc_offset>-18000</utc_offset> 
+  <time_zone>Eastern Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/17349501/CNN_Twitter_Background_05.2009.GIF</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>1135</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Fri Oct 09 18:04:35 +0000 2009</created_at> 
+    <id>4740632578</id> 
+    <text>Obama to donate Nobel prize money to charity - http://bit.ly/2TA0bT</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>20</id> 
+  <name>Evan Williams</name> 
+  <screen_name>ev</screen_name> 
+  <location>San Francisco, CA, US</location> 
+  <description>CEO of Twitter</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/66154838/ev-sky_bigger_normal.jpg</profile_image_url> 
+  <url>http://evhead.com</url> 
+  <protected>false</protected> 
+  <followers_count>1180191</followers_count> 
+  <profile_background_color>022330</profile_background_color> 
+  <profile_text_color>333333</profile_text_color> 
+  <profile_link_color>0084B4</profile_link_color> 
+  <profile_sidebar_fill_color>C0DFEC</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>a8c7f7</profile_sidebar_border_color> 
+  <friends_count>919</friends_count> 
+  <created_at>Tue Mar 21 21:02:31 +0000 2006</created_at> 
+  <favourites_count>1198</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://s.twimg.com/a/1255039715/images/themes/theme15/bg.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>4631</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Thu Oct 08 18:26:41 +0000 2009</created_at> 
+    <id>4713603595</id> 
+    <text>@angus good work.</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id>4712740363</in_reply_to_status_id> 
+    <in_reply_to_user_id>645</in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name>angus</in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>816653</id> 
+  <name>Michael Arrington</name> 
+  <screen_name>TechCrunch</screen_name> 
+  <location>Silicon Valley</location> 
+  <description>Breaking Technology News And Opinions From TechCrunch</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/115466107/techcrunch_bigger_normal.png</profile_image_url> 
+  <url>http://www.techcrunch.com</url> 
+  <protected>false</protected> 
+  <followers_count>1035334</followers_count> 
+  <profile_background_color>9AE4E8</profile_background_color> 
+  <profile_text_color>333333</profile_text_color> 
+  <profile_link_color>0084B4</profile_link_color> 
+  <profile_sidebar_fill_color>DDFFCC</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>BDDCAD</profile_sidebar_border_color> 
+  <friends_count>689</friends_count> 
+  <created_at>Wed Mar 07 01:27:09 +0000 2007</created_at> 
+  <favourites_count>28</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a1.twimg.com/profile_background_images/42796644/techcrunch_twitter_bg_5.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>11652</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Sat Oct 10 22:35:57 +0000 2009</created_at> 
+    <id>4770526886</id> 
+    <text>Internet Archaeology: In Which The Sordid Past Of The Internet Is Preserved And Curated http://bit.ly/18jP2u by Devin Coldewey</text> 
+    <source>&lt;a href=&quot;http://www.seesmic.com/&quot; rel=&quot;nofollow&quot;&gt;Seesmic&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>5741722</id> 
+  <name>NPR Politics</name> 
+  <screen_name>nprpolitics</screen_name> 
+  <location>Washington, DC</location> 
+  <description>Political coverage and conversation from NPR News</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/25968922/npr50_normal.gif</profile_image_url> 
+  <url>http://www.npr.org/templates/topics/topic.php?topicId=1014</url> 
+  <protected>false</protected> 
+  <followers_count>1560679</followers_count> 
+  <profile_background_color>F80000</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>0000ff</profile_link_color> 
+  <profile_sidebar_fill_color>0048FF</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>1C00FF</profile_sidebar_border_color> 
+  <friends_count>116884</friends_count> 
+  <created_at>Thu May 03 14:45:05 +0000 2007</created_at> 
+  <favourites_count>7</favourites_count> 
+  <utc_offset>-18000</utc_offset> 
+  <time_zone>Eastern Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/2402295/logo_npr_125.gif</profile_background_image_url> 
+  <profile_background_tile>true</profile_background_tile> 
+  <statuses_count>10606</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 14:20:25 +0000 2009</created_at> 
+    <id>4760984925</id> 
+    <text>Rep. Frank Says D.C. Gay Rights March Misses Mark http://su.pr/1xT3mw</text> 
+    <source>&lt;a href=&quot;http://su.pr/&quot; rel=&quot;nofollow&quot;&gt;Su.pr&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>6173842</id> 
+  <name>Has Cheezburger?</name> 
+  <screen_name>ICHCheezburger</screen_name> 
+  <location>Seattle, WA</location> 
+  <description>This is the official ICHC TwitFeed. Check out @icanhaschzbgr for moar conversation.</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/208086281/ichc_512x512_normal.png</profile_image_url> 
+  <url>http://icanhascheezburger.com</url> 
+  <protected>false</protected> 
+  <followers_count>1387797</followers_count> 
+  <profile_background_color>9ae4e8</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>0000ff</profile_link_color> 
+  <profile_sidebar_fill_color>e0ff92</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>87bc44</profile_sidebar_border_color> 
+  <friends_count>3314</friends_count> 
+  <created_at>Sun May 20 08:02:15 +0000 2007</created_at> 
+  <favourites_count>4</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a1.twimg.com/profile_background_images/30261844/ICHCTwitterBG.jpg</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>4546</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 22:29:34 +0000 2009</created_at> 
+    <id>4770402931</id> 
+    <text>i maed it fluffy http://bit.ly/JydFC #cheezburger</text> 
+    <source>&lt;a href=&quot;http://twitterfeed.com&quot; rel=&quot;nofollow&quot;&gt;twitterfeed&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>783214</id> 
+  <name>Twitter</name> 
+  <screen_name>twitter</screen_name> 
+  <location>San Francisco, CA</location> 
+  <description>Always wondering what everyone's doing.</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/75075164/twitter_bird_profile_normal.png</profile_image_url> 
+  <url>http://twitter.com</url> 
+  <protected>false</protected> 
+  <followers_count>2496759</followers_count> 
+  <profile_background_color>C0DEED</profile_background_color> 
+  <profile_text_color>333333</profile_text_color> 
+  <profile_link_color>0084B4</profile_link_color> 
+  <profile_sidebar_fill_color>DDEEF6</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>C0DEED</profile_sidebar_border_color> 
+  <friends_count>60</friends_count> 
+  <created_at>Tue Feb 20 14:35:54 +0000 2007</created_at> 
+  <favourites_count>0</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://s.twimg.com/a/1255039715/images/themes/theme1/bg.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>521</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Fri Oct 09 23:43:55 +0000 2009</created_at> 
+    <id>4748111927</id> 
+    <text>TeaTime note: We're officially calling all new Twitter employees 'new peeps.' Also, we need more chairs.</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>7263572</id> 
+  <name>Michael Koby</name> 
+  <screen_name>mkoby</screen_name> 
+  <location>Katy, TX</location> 
+  <description>Technology Enthusiast, Programmer, &amp; Blogger</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/376646406/newer_me_normal.jpg</profile_image_url> 
+  <url>http://www.mkoby.com</url> 
+  <protected>false</protected> 
+  <followers_count>190</followers_count> 
+  <profile_background_color>9AE4E8</profile_background_color> 
+  <profile_text_color>333333</profile_text_color> 
+  <profile_link_color>0084B4</profile_link_color> 
+  <profile_sidebar_fill_color>DDFFCC</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>BDDCAD</profile_sidebar_border_color> 
+  <friends_count>137</friends_count> 
+  <created_at>Thu Jul 05 06:51:53 +0000 2007</created_at> 
+  <favourites_count>45</favourites_count> 
+  <utc_offset>-21600</utc_offset> 
+  <time_zone>Central Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/3399427/twiterbackground.jpg</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>5553</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 23:01:27 +0000 2009</created_at> 
+    <id>4771007893</id> 
+    <text>It seems to me that unit testing on Android is more difficult than it needs to be. Or maybe I'm missing something.</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>7861312</id> 
+  <name>Felicia Day</name> 
+  <screen_name>feliciaday</screen_name> 
+  <location>Los Angeles, CA</location> 
+  <description>Actress, New Media Geek, Gamer, Misanthrope. I like to keep my Tweets real and not waste people's time.</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/115528167/3396557521_52901463ae_normal.jpg</profile_image_url> 
+  <url>http://www.feliciaday.com</url> 
+  <protected>false</protected> 
+  <followers_count>1441058</followers_count> 
+  <profile_background_color>000000</profile_background_color> 
+  <profile_text_color>3D1957</profile_text_color> 
+  <profile_link_color>363636</profile_link_color> 
+  <profile_sidebar_fill_color>e0d48f</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>48002a</profile_sidebar_border_color> 
+  <friends_count>139</friends_count> 
+  <created_at>Tue Jul 31 22:58:08 +0000 2007</created_at> 
+  <favourites_count>392</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a1.twimg.com/profile_background_images/31767790/feliciatwitter1.jpg</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>3278</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 19:53:46 +0000 2009</created_at> 
+    <id>4767502698</id> 
+    <text>@USAFLion76 Haven't had time to play lately :(  After next week I'll get back to levelling my priest, she's 72 now!</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id>4767186331</in_reply_to_status_id> 
+    <in_reply_to_user_id>69791932</in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name>USAFLion76</in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>20333461</id> 
+  <name>David Allen</name> 
+  <screen_name>gtdguy</screen_name> 
+  <location>Ojai, California</location> 
+  <description>Originator of GTD, founder of David Allen Co.</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/76339565/DA_Twitter_normal.jpg</profile_image_url> 
+  <url>http://www.davidco.com</url> 
+  <protected>false</protected> 
+  <followers_count>1155350</followers_count> 
+  <profile_background_color>9ae4e8</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>0000ff</profile_link_color> 
+  <profile_sidebar_fill_color>e0ff92</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>87bc44</profile_sidebar_border_color> 
+  <friends_count>52</friends_count> 
+  <created_at>Sat Feb 07 21:12:30 +0000 2009</created_at> 
+  <favourites_count>3</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://s.twimg.com/a/1255039715/images/themes/theme1/bg.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>1054</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Sat Oct 10 17:23:31 +0000 2009</created_at> 
+    <id>4764593188</id> 
+    <text>@Die_Monkey David, pay attention to the Getting Started &amp; Refresher series on #GTD Connect. Built that in for that purpose.</text> 
+    <source>&lt;a href=&quot;http://www.tweetdeck.com/&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id>4763456949</in_reply_to_status_id> 
+    <in_reply_to_user_id>14974803</in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name>Die_Monkey</in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>807095</id> 
+  <name>The New York Times</name> 
+  <screen_name>nytimes</screen_name> 
+  <location>New York, NY</location> 
+  <description>Where the Conversation Begins.  Home page stories from NYTimes.com, special features and more.</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/57465005/twitter_avatar.nyt_normal.jpg</profile_image_url> 
+  <url>http://www.nytimes.com/</url> 
+  <protected>false</protected> 
+  <followers_count>1963576</followers_count> 
+  <profile_background_color>FFFFFF</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>004276</profile_link_color> 
+  <profile_sidebar_fill_color>E7EFF8</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>323232</profile_sidebar_border_color> 
+  <friends_count>182</friends_count> 
+  <created_at>Fri Mar 02 20:41:42 +0000 2007</created_at> 
+  <favourites_count>0</favourites_count> 
+  <utc_offset>-18000</utc_offset> 
+  <time_zone>Eastern Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/4432187/twitter_post.png</profile_background_image_url> 
+  <profile_background_tile>true</profile_background_tile> 
+  <statuses_count>37195</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 22:24:19 +0000 2009</created_at> 
+    <id>4770307721</id> 
+    <text>Bats: Live Analysis: Dodgers at Cardinals, Game 3 http://bit.ly/kWGjl</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>14740219</id> 
+  <name>Amazon MP3</name> 
+  <screen_name>amazonmp3</screen_name> 
+  <location>Seattle</location> 
+  <description>Daily Deals and special sales on DRM-free, play-anywhere music downloads from Amazon. The official Amazon MP3 twitter feed.</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/340137940/twitteravatar_normal.jpeg</profile_image_url> 
+  <url>http://www.amazonmp3.com</url> 
+  <protected>false</protected> 
+  <followers_count>1205827</followers_count> 
+  <profile_background_color>000000</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>669933</profile_link_color> 
+  <profile_sidebar_fill_color>ebebeb</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>99cc33</profile_sidebar_border_color> 
+  <friends_count>549</friends_count> 
+  <created_at>Mon May 12 04:02:08 +0000 2008</created_at> 
+  <favourites_count>8</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/26478355/twitterbackground.gif</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>780</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Sat Oct 10 15:19:04 +0000 2009</created_at> 
+    <id>4762059805</id> 
+    <text>10/10 Daily Deal: Ella Fitzgerald's 32-song Golden Voices collection. $1.99 today: http://bit.ly/15kEwI</text> 
+    <source>&lt;a href=&quot;http://www.tweetdeck.com/&quot; rel=&quot;nofollow&quot;&gt;TweetDeck&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>972651</id> 
+  <name>Pete Cashmore</name> 
+  <screen_name>mashable</screen_name> 
+  <location>Scotland / SF</location> 
+  <description>The hottest Twitter news, Twitter tips and Twitter help. Plus, the best social media links around!</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/58439629/petepassport_normal.PNG</profile_image_url> 
+  <url>http://mashable.com</url> 
+  <protected>false</protected> 
+  <followers_count>1601139</followers_count> 
+  <profile_background_color>FFFFFF</profile_background_color> 
+  <profile_text_color>414050</profile_text_color> 
+  <profile_link_color>479cdc</profile_link_color> 
+  <profile_sidebar_fill_color>f7fdfd</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>bbdbf2</profile_sidebar_border_color> 
+  <friends_count>1938</friends_count> 
+  <created_at>Mon Mar 12 01:28:01 +0000 2007</created_at> 
+  <favourites_count>0</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a1.twimg.com/profile_background_images/5105174/mashabletwitterbckgmar09.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>18865</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>true</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 22:28:30 +0000 2009</created_at> 
+    <id>4770382819</id> 
+    <text>T-Mobile: All Your Sidekick Data Has Been Lost Forever - http://bit.ly/8mlB5</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>2182641</id> 
+  <name>Steven Johnson</name> 
+  <screen_name>stevenbjohnson</screen_name> 
+  <location>iPhone: 40.662964,-73.980927</location> 
+  <description>Writer. (Six books, most recently Invention of Air.) Web site creator (3 companies, most recently outside.in.) Dad (three boys.)</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/34699972/sbjbeach2005_normal</profile_image_url> 
+  <url>http://www.stevenberlinjohnson.com</url> 
+  <protected>false</protected> 
+  <followers_count>1268310</followers_count> 
+  <profile_background_color>9ae4e8</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>0000ff</profile_link_color> 
+  <profile_sidebar_fill_color>e0ff92</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>87bc44</profile_sidebar_border_color> 
+  <friends_count>40</friends_count> 
+  <created_at>Sun Mar 25 15:42:05 +0000 2007</created_at> 
+  <favourites_count>0</favourites_count> 
+  <utc_offset>-18000</utc_offset> 
+  <time_zone>Eastern Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://s.twimg.com/a/1255039715/images/themes/theme1/bg.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>610</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>true</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 15:15:41 +0000 2009</created_at> 
+    <id>4761994263</id> 
+    <text>Ooh, thanks iTunes Genius: just discovered Chrissie Hynde cover of Everyday Is Like Sunday, only post-Smiths Morrissey song I like. Lovely.</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>8841372</id> 
+  <name>SiliconAlleyInsider</name> 
+  <screen_name>alleyinsider</screen_name> 
+  <location>New York, NY</location> 
+  <description>Digital business news, live from New York</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/49808012/sai-140-3_normal.gif</profile_image_url> 
+  <url>http://www.businessinsider.com/alleyinsider</url> 
+  <protected>false</protected> 
+  <followers_count>1126370</followers_count> 
+  <profile_background_color>9ae4e8</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>0000ff</profile_link_color> 
+  <profile_sidebar_fill_color>e0ff92</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>87bc44</profile_sidebar_border_color> 
+  <friends_count>13</friends_count> 
+  <created_at>Wed Sep 12 21:09:11 +0000 2007</created_at> 
+  <favourites_count>1</favourites_count> 
+  <utc_offset>-18000</utc_offset> 
+  <time_zone>Eastern Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://s.twimg.com/a/1255039715/images/themes/theme1/bg.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>4218</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Sat Oct 10 15:13:02 +0000 2009</created_at> 
+    <id>4761942892</id> 
+    <text>Google Wave's Early Reviews: &quot;Impressive&quot; But &quot;Useless&quot; $GOOG by @nichcarlson http://bit.ly/45U11d</text> 
+    <source>&lt;a href=&quot;http://www.atebits.com/&quot; rel=&quot;nofollow&quot;&gt;Tweetie&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>15666380</id> 
+  <name>Chris Hardwick</name> 
+  <screen_name>nerdist</screen_name> 
+  <location>Los Anglees</location> 
+  <description>I am Chris Hardwick and these are my Tweets!</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/425895363/Twitter_profile_normal.jpg</profile_image_url> 
+  <url>http://www.nerdist.com</url> 
+  <protected>false</protected> 
+  <followers_count>1088569</followers_count> 
+  <profile_background_color>ecdfce</profile_background_color> 
+  <profile_text_color>1f3c4c</profile_text_color> 
+  <profile_link_color>ba494d</profile_link_color> 
+  <profile_sidebar_fill_color>83989d</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>ba494d</profile_sidebar_border_color> 
+  <friends_count>184</friends_count> 
+  <created_at>Wed Jul 30 21:20:18 +0000 2008</created_at> 
+  <favourites_count>7</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a1.twimg.com/profile_background_images/23601674/Nerdist_Twitter_Bkgrnd.jpg</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>2556</statuses_count> 
+  <notifications>false</notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following>false</following> 
+  <status> 
+    <created_at>Sat Oct 10 19:13:23 +0000 2009</created_at> 
+    <id>4766733090</id> 
+    <text>Yaaaaaa! Peter Graves is sitting across the aisle to LAX!!! &quot;Oveur. Unger. Unger. Dunne.&quot; (cue Airplane! theme)</text> 
+    <source>&lt;a href=&quot;http://birdfeedapp.com&quot; rel=&quot;nofollow&quot;&gt;Birdfeed&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>19029137</id> 
+  <name>Brent Spiner</name> 
+  <screen_name>BrentSpiner</screen_name> 
+  <location>Malibu, CA</location> 
+  <description></description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/389775353/DickensMartiniMan_normal.jpg</profile_image_url> 
+  <url>http://www.therealbrentspiner.com/</url> 
+  <protected>false</protected> 
+  <followers_count>1135826</followers_count> 
+  <profile_background_color>9ae4e8</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>0000ff</profile_link_color> 
+  <profile_sidebar_fill_color>e0ff92</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>87bc44</profile_sidebar_border_color> 
+  <friends_count>7</friends_count> 
+  <created_at>Thu Jan 15 17:13:02 +0000 2009</created_at> 
+  <favourites_count>68</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://s.twimg.com/a/1255039715/images/themes/theme1/bg.png</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>2006</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 18:56:42 +0000 2009</created_at> 
+    <id>4766411715</id> 
+    <text>RT @KirstenWalters @BrentSpiner Yogi Berra would totally win by confusing the crap out of Joe Frazier.-I don't know. Ever heard Smokin' Joe?</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>989</id> 
+  <name>Om Malik</name> 
+  <screen_name>om</screen_name> 
+  <location>&#220;T: 37.795917,-122.39966</location> 
+  <description>Founder of GigaOM. Venture Partner at True Ventures</description> 
+  <profile_image_url>http://a3.twimg.com/profile_images/215900093/gigaom_large_copy_normal.gif</profile_image_url> 
+  <url>http://gigaom.com/</url> 
+  <protected>false</protected> 
+  <followers_count>1018105</followers_count> 
+  <profile_background_color>f8f7f5</profile_background_color> 
+  <profile_text_color>706a54</profile_text_color> 
+  <profile_link_color>d37f0d</profile_link_color> 
+  <profile_sidebar_fill_color>d5cfc3</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>d5cfc3</profile_sidebar_border_color> 
+  <friends_count>471</friends_count> 
+  <created_at>Sat Jul 15 05:53:13 +0000 2006</created_at> 
+  <favourites_count>22</favourites_count> 
+  <utc_offset>-28800</utc_offset> 
+  <time_zone>Pacific Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/16090443/OMTWITBACKGROUND.JPG</profile_background_image_url> 
+  <profile_background_tile>false</profile_background_tile> 
+  <statuses_count>7286</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Sat Oct 10 23:03:33 +0000 2009</created_at> 
+    <id>4771049336</id> 
+    <text>When Cloud Fails: T-Mobile, Microsoft Lose Sidekick Customer Data http://om.bit.ly/LB9cS from @gigaom</text> 
+    <source>web</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+<user> 
+  <id>14293310</id> 
+  <name>TIME.com</name> 
+  <screen_name>TIME</screen_name> 
+  <location></location> 
+  <description>Breaking news and current events from around the globe. Hosted by TIME's @danielroger.</description> 
+  <profile_image_url>http://a1.twimg.com/profile_images/57598544/time-75x75_normal.gif</profile_image_url> 
+  <url>http://www.time.com</url> 
+  <protected>false</protected> 
+  <followers_count>1639163</followers_count> 
+  <profile_background_color>CC0000</profile_background_color> 
+  <profile_text_color>000000</profile_text_color> 
+  <profile_link_color>0000ff</profile_link_color> 
+  <profile_sidebar_fill_color>FFFFFF</profile_sidebar_fill_color> 
+  <profile_sidebar_border_color>CC0000</profile_sidebar_border_color> 
+  <friends_count>84</friends_count> 
+  <created_at>Thu Apr 03 13:54:30 +0000 2008</created_at> 
+  <favourites_count>1</favourites_count> 
+  <utc_offset>-18000</utc_offset> 
+  <time_zone>Eastern Time (US &amp; Canada)</time_zone> 
+  <profile_background_image_url>http://a3.twimg.com/profile_background_images/28903453/twitter-siemens.gif</profile_background_image_url> 
+  <profile_background_tile>true</profile_background_tile> 
+  <statuses_count>13602</statuses_count> 
+  <notifications></notifications> 
+  <geo_enabled>false</geo_enabled> 
+  <verified>false</verified> 
+  <following></following> 
+  <status> 
+    <created_at>Fri Oct 09 21:05:45 +0000 2009</created_at> 
+    <id>4744688459</id> 
+    <text>What award with Obama win next? TIME imagines (with the help of Photoshop) | http://su.pr/2lXksR</text> 
+    <source>&lt;a href=&quot;http://su.pr/&quot; rel=&quot;nofollow&quot;&gt;Su.pr&lt;/a&gt;</source> 
+    <truncated>false</truncated> 
+    <in_reply_to_status_id></in_reply_to_status_id> 
+    <in_reply_to_user_id></in_reply_to_user_id> 
+    <favorited>false</favorited> 
+    <in_reply_to_screen_name></in_reply_to_screen_name> 
+    <geo/> 
+  </status> 
+</user> 
+</users> 
