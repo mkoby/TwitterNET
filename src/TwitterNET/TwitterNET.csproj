@@ -51,6 +51,15 @@
     <Compile Include="ResponseParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestHandler.cs" />
+    <Compile Include="REST\AccountMethods.cs" />
+    <Compile Include="REST\DirectMessageMethods.cs" />
+    <Compile Include="REST\FavoritesMethods.cs" />
+    <Compile Include="REST\FriendshipMethods.cs" />
+    <Compile Include="REST\NotificationMethods.cs" />
+    <Compile Include="REST\SocialGraphMethods.cs" />
+    <Compile Include="REST\StatusMethods.cs" />
+    <Compile Include="REST\TimelineMethods.cs" />
+    <Compile Include="REST\UserMethods.cs" />
     <Compile Include="Twitter.cs" />
     <Compile Include="User.cs" />
     <Compile Include="StatusRequestOptions.cs" />
@@ -59,6 +68,9 @@
     <Compile Include="Message.cs" />
     <Compile Include="StatusMessage.cs" />
     <Compile Include="DirectMessage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Search\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
