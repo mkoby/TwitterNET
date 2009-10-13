@@ -60,6 +60,7 @@
     <Compile Include="REST\StatusMethods.cs" />
     <Compile Include="REST\TimelineMethods.cs" />
     <Compile Include="REST\UserMethods.cs" />
+    <Compile Include="SavedSearch.cs" />
     <Compile Include="Twitter.cs" />
     <Compile Include="User.cs" />
     <Compile Include="StatusRequestOptions.cs" />

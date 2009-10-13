@@ -54,6 +54,7 @@
     <Compile Include="TwitterNET_FriendsTimeLine_Tests.cs" />
     <Compile Include="TwitterNET_Mentions_Tests.cs" />
     <Compile Include="TwitterNET_Notifications_Tests.cs" />
+    <Compile Include="TwitterNET_SavedSearches_Tests.cs" />
     <Compile Include="TwitterNET_SocialGraph_Tests.cs" />
     <Compile Include="TwitterNET_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

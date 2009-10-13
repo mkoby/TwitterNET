@@ -157,6 +157,34 @@ namespace TwitterNET
             return Output;
         }
 
+        public static SavedSearch ReturnSingleSavedSearch(string responseText)
+        {
+            if(String.IsNullOrEmpty(responseText))
+                return null;
+
+            XElement _element = XElement.Parse(responseText);
+            SavedSearch Output = ParseSavedSearchXml(_element.ToString());
+
+
+            return Output;
+        }
+
+        public static IList<SavedSearch> ReturnListOfSavedSearches(string responseText)
+        {
+            if(String.IsNullOrEmpty(responseText))
+                return null;
+
+            XElement _element = XElement.Parse(responseText);
+            IList<SavedSearch> Output = new List<SavedSearch>();
+
+            foreach (XElement ss in _element.Descendants("saved_search"))
+            {
+                Output.Add(ParseSavedSearchXml(ss.ToString()));
+            }
+
+            return Output;
+        }
+
         // Internal Methods that handle the actual parsing of the XML
         // using XML to LINQ
 
@@ -282,6 +310,26 @@ namespace TwitterNET
                 string messageText = (string)directMsg.Element("text");
 
                 Output = new DirectMessage(id, timestamp, messageText, null, null);
+            }
+
+            return Output;
+        }
+
+        private static SavedSearch ParseSavedSearchXml(string xmlText)
+        {
+            XElement element = XElement.Parse(xmlText);
+            var savedSearches = from e in element.AncestorsAndSelf() select e;
+            SavedSearch Output = null;
+
+            foreach (var savedSearch in savedSearches)
+            {
+                long id = (long)savedSearch.Element("id");
+                string name = (string)savedSearch.Element("name");
+                string query = (string)savedSearch.Element("query");
+                string position = (string)savedSearch.Element("position");
+                DateTime createdAt = DateTime.ParseExact((string)savedSearch.Element("created_at"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture);
+
+                Output = new SavedSearch(id, name, query, position, createdAt);
             }
 
             return Output;

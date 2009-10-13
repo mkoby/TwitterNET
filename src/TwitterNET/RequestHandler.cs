@@ -107,7 +107,9 @@ namespace TwitterNET
                 strURL.Contains("notifications/leave") ||
                 strURL.Contains("account/update_delivery_device") ||
                 strURL.Contains("account/update_profile_colors") ||
-                strURL.Contains("account/update_profile"))
+                strURL.Contains("account/update_profile") ||
+                strURL.Contains("saved_searches/create") ||
+                strURL.Contains("saved_searches/destroy"))
                 Output = "POST";
 
             return Output;
