@@ -21,18 +21,24 @@ namespace TwitterNET_Tests
             twitter = new Twitter("apitest4769", "testaccount");
             IList<SavedSearch> savedSearchs = twitter.GetSavedSearches();
 
-            var saveds = from s in savedSearchs
-                         where s.Query.Equals(testSaveSearchToDelete)
-                         select s;
+            //Make sure we have the ID of the saved search to test delete
+            //We either have it left over from a failing test or
+            //we will create it from scratch
+            if (savedSearchs != null && savedSearchs.Count > 0)
+            {
+                var saveds = from s in savedSearchs
+                             where s.Query.Equals(testSaveSearchToDelete)
+                             select s;
 
-            if (saveds.Count() > 0)
-            {
-                testId = saveds.First().Id;
-            }
-            else
-            {
-                SavedSearch ss = twitter.CreateSavedSearch(testSaveSearchToDelete);
-                testId = ss.Id;
+                if (saveds.Count() > 0)
+                {
+                    testId = saveds.First().Id;
+                }
+                else
+                {
+                    SavedSearch ss = twitter.CreateSavedSearch(testSaveSearchToDelete);
+                    testId = ss.Id;
+                }
             }
 
             twitter = null;
