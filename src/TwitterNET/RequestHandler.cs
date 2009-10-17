@@ -109,7 +109,9 @@ namespace TwitterNET
                 strURL.Contains("account/update_profile_colors") ||
                 strURL.Contains("account/update_profile") ||
                 strURL.Contains("saved_searches/create") ||
-                strURL.Contains("saved_searches/destroy"))
+                strURL.Contains("saved_searches/destroy") ||
+                strURL.Contains("blocks/create") ||
+                strURL.Contains("blocks/destroy"))
                 Output = "POST";
 
             return Output;
@@ -165,10 +167,18 @@ namespace TwitterNET
 		    {
                 Output = GetTwitterResponse(CreateNewTwitterRequest(strAPIUrl)); 
 		    }
+            catch (TwitterNETWebException twitwebex)
+            {
+                throw twitwebex;
+            }
 		    catch (WebException webex)
 		    {
-                throw new TwitterNetException(webex.Message, webex);
+                throw new TwitterNETWebException(webex.Message, webex);
 		    }
+            catch(Exception ex)
+            {
+                throw new TwitterNetException(ex.Message, ex);
+            }
 			
 			return Output;
 		}

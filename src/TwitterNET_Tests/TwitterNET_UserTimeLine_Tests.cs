@@ -22,6 +22,11 @@ namespace TwitterNET_Tests
             try
             {
                 twitter = new Twitter("apitest4769", "testaccount");
+
+                //Ensure we're following the user we'll need in some tests
+                if (!twitter.CheckFriendship("apitest4769", "mkoby"))
+                    twitter.FollowUser("mkoby", false);
+
                 StatusRequestOptions statusRequestOptions = new StatusRequestOptions();
                 statusRequestOptions.Add(StatusRequestOptionNames.Page, 3);
                 statusRequestOptions.Add(StatusRequestOptionNames.ScreenName, TestUserName);

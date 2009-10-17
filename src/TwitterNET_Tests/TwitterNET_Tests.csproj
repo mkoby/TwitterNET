@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TwitterNET_Account_Tests.cs" />
+    <Compile Include="TwitterNET_Block_Tests.cs" />
     <Compile Include="TwitterNET_Friendship_Tests.cs" />
     <Compile Include="TwitterNET_FriendsTimeLine_Tests.cs" />
     <Compile Include="TwitterNET_Mentions_Tests.cs" />

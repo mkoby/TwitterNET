@@ -46,11 +46,16 @@ namespace TwitterNET_Tests
 		[TestFixtureSetUp]
         public void TwitterNET_Favorites_Tests_Setup()
         {
+            twitter = new Twitter("apitest4769", "testaccount");
+
+            //Ensure we're following the user we're testing favorites on
+            if (!twitter.CheckFriendship("apitest4769", "mkoby"))
+                twitter.FollowUser("mkoby", false);
+
 			try
 			{
 				//Make sure the status we're going to 
 				//test with is NOT currently a favorite.
-				twitter = new Twitter("apitest4769", "testaccount");
                 DeleteFavoriteToTest();
 
 			}

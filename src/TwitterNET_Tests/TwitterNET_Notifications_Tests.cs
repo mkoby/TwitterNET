@@ -16,7 +16,14 @@ namespace TwitterNET_Tests
 
         [TestFixtureSetUp]
         public void TwitterNET_Tests_Setup()
-        { }
+        {
+            twitter = new Twitter("apitest4769", "testaccount");
+
+            //Ensure we're following the user we're testing device
+            //notifications on
+            if (!twitter.CheckFriendship("apitest4769", testUserName))
+                twitter.FollowUser(testUserName, false);
+        }
 
         [TestFixtureTearDown]
         public void TwitterNET_Tests_TearDown()
