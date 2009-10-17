@@ -11,8 +11,8 @@ namespace TwitterNET_Tests
     public class TwitterNET_Block_Tests
     {
         private Twitter twitter = null;
-        private const string TestUserName = "mkoby";
-        private const long TestUserID = 7263572;
+        private const string TestUserName = "twitter";
+        private const long TestUserID = 783214;
         private const long TestUserAlwaysBlocked = 71876190;
 
         [TestFixtureSetUp]
@@ -33,7 +33,13 @@ namespace TwitterNET_Tests
         [TestFixtureTearDown]
         public void TestFixture_TearDown()
         {
+            //Reset the test environment,
+            //Unblock & refollow test user
+
             twitter = new Twitter("apitest4769", "testaccount");
+
+            if (twitter.IsBlocked(TestUserID))
+                twitter.UnblockUser(TestUserID);
 
             if (!twitter.CheckFriendship("apitest4769", TestUserName))
                 twitter.FollowUser(TestUserName, false);

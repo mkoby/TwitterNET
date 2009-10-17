@@ -28,8 +28,6 @@ namespace TwitterNET_Tests
 
                 if(userTimeline != null && userTimeline.Count > 0)
                 {
-					//Random rnd = new Random(DateTime.Now.Millisecond);
-					//int rndNum = rnd.Next(100000, 250000);
                     minTestStatusID = userTimeline.Min(status => status.ID);
 					maxTestStatusID = userTimeline.Max(status => status.ID);
                 }
