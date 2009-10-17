@@ -56,6 +56,12 @@ namespace TwitterNET_Tests
         [TearDown]
         public void Test_TearDown()
         {
+            if (twitter.IsBlocked(TestUserID))
+                twitter.UnblockUser(TestUserID);
+
+            if (!twitter.CheckFriendship("apitest4769", TestUserName))
+                twitter.FollowUser(TestUserName, false);
+
             twitter = null;
         }
 
