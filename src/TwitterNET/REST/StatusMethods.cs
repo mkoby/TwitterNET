@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
@@ -22,8 +23,9 @@ namespace TwitterNET
             string requestOptions = String.Format("{0}.xml", StatusID);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
             requestOptions = null; //Clean up now un-needed objects
+            IList<StatusMessage> statusMessages = ResponseParser.ReturnStatuses(responseText);
 
-            return ResponseParser.ReturnSingleStatus(responseText);
+            return statusMessages[0];
         }
 
         /// <summary>
@@ -44,8 +46,9 @@ namespace TwitterNET
             string requestOptions = String.Format("{0}.xml", StatusID);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
             requestOptions = null; //Clean up now un-needed objects
+            IList<StatusMessage> statusMessages = ResponseParser.ReturnStatuses(responseText);
 
-            return ResponseParser.ReturnSingleStatus(responseText);
+            return statusMessages[0];
         }
 
         /// <summary>
@@ -79,9 +82,9 @@ namespace TwitterNET
 
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiUrl, requestOptions));
             requestOptions = null; //Clean up now un-needed objects
+            IList<StatusMessage> statusMessages = ResponseParser.ReturnStatuses(responseText);
 
-            return ResponseParser.ReturnSingleStatus(responseText);
-
+            return statusMessages[0];
         }
     }
 }

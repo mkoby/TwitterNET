@@ -39,6 +39,13 @@ namespace TwitterNET_Tests
                     SavedSearch ss = twitter.CreateSavedSearch(testSaveSearchToDelete);
                     testId = ss.Id;
                 }
+
+                saveds = from s in savedSearchs
+                             where s.Query.Equals(testSavedSearchQuery)
+                             select s;
+
+                if (saveds.Count() > 0)
+                    twitter.DeleteSavedSearch(saveds.FirstOrDefault().Id);
             }
 
             twitter = null;

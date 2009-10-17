@@ -22,7 +22,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/direct_messages.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListofDirectMsgs(responseText);
+            return ResponseParser.ReturnDirectMsgs(responseText);
         }
 
         public IList<DirectMessage> GetSentDirectMessages(StatusRequestOptions statusRequestOptions)
@@ -30,7 +30,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/direct_messages/sent.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListofDirectMsgs(responseText);
+            return ResponseParser.ReturnDirectMsgs(responseText);
         }
 
         public DirectMessage SendDirectMessage(string screenName, string messageText)
@@ -47,8 +47,9 @@ namespace TwitterNET
             sb.AppendFormat("?screen_name={0}&text={1}", screenName, messageText);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, sb.ToString());
             sb = null; //Clean up un-needed objects
+            IList<DirectMessage> dmList = ResponseParser.ReturnDirectMsgs(responseText);
 
-            return ResponseParser.ReternSingleDirectMsg(responseText);
+            return dmList[0];
         }
 
         public DirectMessage DeleteDirectMessage(long id)
@@ -57,7 +58,8 @@ namespace TwitterNET
                 throw new TwitterNetException("The ID must be a value greater than zero.");
 
             //Check DM to ensure it's owned by the user
-            if (!GetSingleDirectMessage(id).Recipient.ScreenName.ToLower().Equals(_requestHandler.Login.ToLower()))
+            DirectMessage dmTest = GetSingleDirectMessage(id);
+            if (!dmTest.Recipient.ScreenName.ToLower().Equals(_requestHandler.Login.ToLower()))
                 throw new TwitterNetException(
                     "Authenticated user must be the recipient of the Direct Message being deleted");
 
@@ -67,8 +69,9 @@ namespace TwitterNET
             sb.AppendFormat("{0}.xml", id);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, sb.ToString());
             sb = null; //Clean up un-needed objects
+            IList<DirectMessage> dmList = ResponseParser.ReturnDirectMsgs(responseText);
 
-            return ResponseParser.ReternSingleDirectMsg(responseText);
+            return dmList[0];
         }
     }
 

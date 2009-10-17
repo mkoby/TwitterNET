@@ -11,16 +11,18 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/saved_searches/create.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                         String.Format("{0}?query={1}", apiURL, HttpUtility.UrlEncode(searchQuery)));
+            IList<SavedSearch> savedSearches = ResponseParser.ReturnSavedSearches(responseText);
 
-            return ResponseParser.ReturnSingleSavedSearch(responseText);
+            return savedSearches[0];
         }
 
         public SavedSearch DeleteSavedSearch(long id)
         {
             string apiURL = "http://twitter.com/saved_searches/destroy/";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}.xml", apiURL, id));
+            IList<SavedSearch> savedSearches = ResponseParser.ReturnSavedSearches(responseText);
 
-            return ResponseParser.ReturnSingleSavedSearch(responseText);
+            return savedSearches[0];
         }
 
         public IList<SavedSearch> GetSavedSearches()
@@ -28,15 +30,16 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/saved_searches.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 
-            return ResponseParser.ReturnListOfSavedSearches(responseText);
+            return ResponseParser.ReturnSavedSearches(responseText);
         }
 
         public SavedSearch ShowSavedSearch(long id)
         {
             string apiURL = "http://twitter.com/saved_searches/show/";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}.xml", apiURL, id));
+            IList<SavedSearch> savedSearches = ResponseParser.ReturnSavedSearches(responseText);
 
-            return ResponseParser.ReturnSingleSavedSearch(responseText);
+            return savedSearches[0];
         }
     }
 

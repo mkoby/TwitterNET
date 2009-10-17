@@ -10,8 +10,9 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/blocks/create/";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                         String.Format("{0}{1}.xml", apiURL, userId));
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
 
-            return ResponseParser.ReturnSingleUser(responseText);
+            return userList[0];
         }
 
         public IUser UnblockUser(long userId)
@@ -19,8 +20,9 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/blocks/destroy/";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                         String.Format("{0}{1}.xml", apiURL, userId));
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
 
-            return ResponseParser.ReturnSingleUser(responseText);
+            return userList[0];
         }
 
         public bool IsBlocked(long userId)
@@ -40,16 +42,16 @@ namespace TwitterNET
                 //API actually returns a 404 error, so we're catching to
                 //parse and return proper bool value.
                 if (tex.ResponseErrorText.Equals("You are not blocking this user."))
-                    output = false;
+                    return false;
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            IUser testparse = ResponseParser.ReturnSingleUser(responseText);
-
-            if(testparse != null)
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
+            
+            if(userList != null && userList[0] != null)
                 output = true;
 
             return output;
@@ -60,7 +62,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/blocks/blocking.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 
-            return ResponseParser.ReturnListOfUsers(responseText);
+            return ResponseParser.ReturnUsers(responseText);
         }
 
         public IList<long> GetBlockedUsersIds()
@@ -68,7 +70,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/blocks/blocking/ids.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 
-            return ResponseParser.ReturnListOfUserIDs(responseText);
+            return ResponseParser.ReturnUserIDs(responseText);
         }
     }
 }

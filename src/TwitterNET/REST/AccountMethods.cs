@@ -16,8 +16,9 @@ namespace TwitterNET
         {
             string apiURL = "http://twitter.com/account/verify_credentials.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
 
-            return ResponseParser.ReturnSingleUser(responseText);
+            return userList[0];
         }
 
         public IDictionary<string, object> EndTwitterSession()
@@ -42,16 +43,18 @@ namespace TwitterNET
             string requestOptions = String.Format("?device={0}", deviceType.ToString().ToLower());
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                                                                  String.Format("{0}{1}", apiURL, requestOptions));
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
 
-            return ResponseParser.ReturnSingleUser(responseText);
+            return userList[0];
         }
 
         public IUser UpdateProfileColors(AccountRequestOptions requestOptions)
         {
             string apiUrl = "http://twitter.com/account/update_profile_colors.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiUrl));
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
 
-            return ResponseParser.ReturnSingleUser(responseText);
+            return userList[0];
         }
 
         public IUser UpdateProfileImage(string imagefile)
@@ -68,8 +71,9 @@ namespace TwitterNET
         {
             string apiUrl = "http://twitter.com/account/update_profile.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, requestOptions.BuildRequestUri(apiUrl));
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
 
-            return ResponseParser.ReturnSingleUser(responseText);
+            return userList[0];
         }
     }
 

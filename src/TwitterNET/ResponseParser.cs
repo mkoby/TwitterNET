@@ -10,26 +10,7 @@ namespace TwitterNET
     //TODO: This file probably needs a better name
     internal class ResponseParser
     {
-        public static StatusMessage ReturnSingleStatus(string responseText)
-        {
-            if(String.IsNullOrEmpty(responseText))
-                return null;
-
-            XElement _element = XElement.Parse(responseText);
-            StatusMessage Output = ParseStatusXML(_element.ToString());
-
-            //Check for the user element, parse if exists
-            XElement userElement = _element.Element("user");
-            
-            if(userElement != null)
-                Output.Author = ParseUserXml(_element.Element("user").ToString());
-            
-            _element = null;
-
-            return Output;
-        }
-
-        public static IList<StatusMessage> ReturnListOfStatuses(string responseText)
+        public static IList<StatusMessage> ReturnStatuses(string responseText)
         {
             if (String.IsNullOrEmpty(responseText))
                 return null;
@@ -37,31 +18,21 @@ namespace TwitterNET
             XElement _element = XElement.Parse(responseText);
             IList<StatusMessage> Output = new List<StatusMessage>();
 
-            foreach (XElement status in _element.Descendants("status"))
+            foreach (XElement statusElement in _element.DescendantsAndSelf("status"))
             {
-                Output.Add(ReturnSingleStatus(status.ToString()));
+                StatusMessage status = ParseStatusXML(statusElement);
+                XElement userElement = statusElement.Element("user");
+
+                if (userElement != null)
+                    status.Author = ParseUserXml(userElement);
+
+                Output.Add(status);
             }
 
-            _element = null;
-
             return Output;
         }
 
-        public static DirectMessage ReternSingleDirectMsg(string responseText)
-        {
-            if (String.IsNullOrEmpty(responseText))
-                return null;
-
-            XElement _element = XElement.Parse(responseText);
-            DirectMessage Output = ParseDirectMessageXML(_element.ToString());
-            Output.Author = ReturnSingleUser(_element.Element("sender").ToString());
-            Output.Recipient = ReturnSingleUser(_element.Element("recipient").ToString());
-            _element = null;
-
-            return Output;
-        }
-
-        public static IList<DirectMessage> ReturnListofDirectMsgs(string responseText)
+        public static IList<DirectMessage> ReturnDirectMsgs(string responseText)
         {
             if (String.IsNullOrEmpty(responseText))
                 return null;
@@ -69,36 +40,18 @@ namespace TwitterNET
             XElement _element = XElement.Parse(responseText);
             IList<DirectMessage> Output = new List<DirectMessage>();
 
-            foreach (XElement dm in _element.Descendants("direct_message"))
+            foreach (XElement dm in _element.DescendantsAndSelf("direct_message"))
             {
-                Output.Add(ReternSingleDirectMsg(dm.ToString()));
+                DirectMessage directMsg = ParseDirectMessageXML(dm);
+                directMsg.Author = ParseUserXml(dm.Element("sender"));
+                directMsg.Recipient = ParseUserXml(dm.Element("recipient"));
+                Output.Add(directMsg);
             }
 
-            _element = null;
-
             return Output;
         }
 
-        public static IUser ReturnSingleUser(string responseText)
-        {
-            if (String.IsNullOrEmpty(responseText))
-                return null;
-
-            XElement _element = XElement.Parse(responseText);
-            IUser Output = ParseUserXml(_element.ToString());
-            
-            //Check for a Status element and get the element if nescessary
-            XElement statusElement = _element.Element("status");
-
-            if (statusElement != null)
-                Output.UserStatus = ReturnSingleStatus(statusElement.ToString());
-
-            _element = null;
-
-            return Output;
-        }
-
-        public static IList<IUser> ReturnListOfUsers(string responseText)
+        public static IList<IUser> ReturnUsers(string responseText)
         {
             if (String.IsNullOrEmpty(responseText))
                 return null;
@@ -106,17 +59,21 @@ namespace TwitterNET
             XElement _element = XElement.Parse(responseText);
             IList<IUser> Output = new List<IUser>();
 
-            foreach (XElement status in _element.Descendants("user"))
+            foreach (XElement userElement in _element.DescendantsAndSelf("user"))
             {
-                Output.Add(ReturnSingleUser(status.ToString()));
-            }
+                IUser user = ParseUserXml(userElement);
+                XElement statusElement = userElement.Element("status");
 
-            _element = null;
+                if (statusElement != null)
+                    user.UserStatus = ParseStatusXML(statusElement);
+
+                Output.Add(user);
+            }
 
             return Output;
         }
 
-        public static IList<long> ReturnListOfUserIDs(string responseText)
+        public static IList<long> ReturnUserIDs(string responseText)
         {
             if (String.IsNullOrEmpty(responseText))
                 return null;
@@ -157,29 +114,17 @@ namespace TwitterNET
             return Output;
         }
 
-        public static SavedSearch ReturnSingleSavedSearch(string responseText)
+        public static IList<SavedSearch> ReturnSavedSearches(string responseText)
         {
             if(String.IsNullOrEmpty(responseText))
                 return null;
 
-            XElement _element = XElement.Parse(responseText);
-            SavedSearch Output = ParseSavedSearchXml(_element.ToString());
-
-
-            return Output;
-        }
-
-        public static IList<SavedSearch> ReturnListOfSavedSearches(string responseText)
-        {
-            if(String.IsNullOrEmpty(responseText))
-                return null;
-
-            XElement _element = XElement.Parse(responseText);
             IList<SavedSearch> Output = new List<SavedSearch>();
+            XElement element = XElement.Parse(responseText);
 
-            foreach (XElement ss in _element.Descendants("saved_search"))
+            foreach (XElement ss in element.DescendantsAndSelf("saved_search"))
             {
-                Output.Add(ParseSavedSearchXml(ss.ToString()));
+                Output.Add(ParseSavedSearchXml(ss));
             }
 
             return Output;
@@ -188,149 +133,121 @@ namespace TwitterNET
         // Internal Methods that handle the actual parsing of the XML
         // using XML to LINQ
 
-        private static StatusMessage ParseStatusXML(string xmlText)
+        private static StatusMessage ParseStatusXML(XElement element)
         {
-            if (String.IsNullOrEmpty(xmlText))
-                return null; //return NULL status to show it wasn't processed correctly
-
             StatusMessage Output = null;
 
-            XElement statusXml = XElement.Parse(xmlText);
+            var statusQuery = from statusElement in element.AncestorsAndSelf()
+                        select new
+                                   {
+                                       id = statusElement.Element("id").Value,
+                                       timestamp = statusElement.Element("created_at").Value,
+                                       messageText = statusElement.Element("text").Value,
+                                       source = statusElement.Element("source").Value,
+                                       truncated = statusElement.Element("truncated").Value,
+                                       inReplyStatusId = statusElement.Element("in_reply_to_status_id").Value,
+                                       inReplyUserId = statusElement.Element("in_reply_to_user_id").Value
+                                   };
 
-            var query = from c in statusXml.AncestorsAndSelf()
-                    select c;
+            var status = statusQuery.FirstOrDefault();
 
-            foreach (var status in query)
-            {
-                long id = (long)status.Element("id");
-                DateTime timestamp = DateTime.ParseExact((string)status.Element("created_at"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture);
-                string messageText = (string)status.Element("text");
-				
-                string source = (string)status.Element("source");
-                bool truncated = (bool)status.Element("truncated");
-                string inReplyStatusID = (String.IsNullOrEmpty((string)status.Element("in_reply_to_status_id"))) ? long.MinValue.ToString() : (string)status.Element("in_reply_to_status_id");
-                string inReplyUserID = (String.IsNullOrEmpty((string)status.Element("in_reply_to_user_id"))) ? long.MinValue.ToString() : (string)status.Element("in_reply_to_user_id");
-
-                Output = new StatusMessage(id, timestamp, messageText, null, Convert.ToInt64(inReplyStatusID), Convert.ToInt64(inReplyUserID), source, truncated);
-            }
-
-            return Output;
+            return new StatusMessage(Convert.ToInt64(status.id), DateTime.ParseExact(status.timestamp, "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture),
+                                     status.messageText, null, status.inReplyStatusId.Equals(String.Empty) ? long.MinValue : Convert.ToInt64(status.inReplyStatusId),
+                                     status.inReplyUserId.Equals(String.Empty) ? long.MinValue : Convert.ToInt64(status.inReplyUserId), status.source,
+                                     Convert.ToBoolean(status.truncated));
         }
 
-        private static IUser ParseUserXml(string xmlText)
+        private static IUser ParseUserXml(XElement element)
         {
-            if (String.IsNullOrEmpty(xmlText))
-                return null;  //Return NULL user to show it wsan't processed correctly
+            var userQuery = from userElement in element.AncestorsAndSelf()
+                            select new
+                                       {
+                                           id = userElement.Element("id").Value,
+                                           realName = userElement.Element("name").Value,
+                                           screenName = userElement.Element("screen_name").Value,
+                                           description = userElement.Element("description").Value,
+                                           location = userElement.Element("location").Value,
+                                           profileImageUrl = userElement.Element("profile_image_url").Value,
+                                           website = userElement.Element("url").Value,
+                                           protectedUpdates = userElement.Element("protected").Value,
+                                           followerCount = userElement.Element("followers_count").Value,
+                                           createdAt = userElement.Element("created_at").Value,
+                                           favorites_count = userElement.Element("favourites_count").Value,
+                                           utc_offset = userElement.Element("utc_offset").Value,
+                                           time_zone = userElement.Element("time_zone").Value,
+                                           profile_background_image_url = 
+                                userElement.Element("profile_background_image_url").Value,
+                                           profile_background_tile = userElement.Element("profile_background_tile").Value,
+                                           statuses_count = userElement.Element("statuses_count").Value,
+                                           notifications = userElement.Element("notifications").Value,
+                                           following = userElement.Element("following").Value,
+                                           profile_background_color = userElement.Element("profile_background_color").Value,
+                                           profile_text_color = userElement.Element("profile_text_color").Value,
+                                           profile_link_color = userElement.Element("profile_link_color").Value,
+                                           profile_sidebar_fill_color = userElement.Element("profile_sidebar_fill_color").Value,
+                                           profile_sidebar_border_color =
+                                userElement.Element("profile_sidebar_border_color").Value
+                                       };
 
-            IUser Output = null;
-            XElement statusXml = XElement.Parse(xmlText);
+            var user = userQuery.FirstOrDefault();
 
-            var userQuery = from u in statusXml.AncestorsAndSelf()
-                            select u;
+            long id = Convert.ToInt64(user.id);
+            bool protectedUpdates = Convert.ToBoolean(user.protectedUpdates);
+            long followerCount = Convert.ToInt64(user.followerCount);
+            int favoritesCount = Convert.ToInt32(user.favorites_count);
+            bool following = user.following.Equals(String.Empty) ? false : Convert.ToBoolean(user.following);
+            bool notifications = user.notifications.Equals(String.Empty) ? false : Convert.ToBoolean(user.notifications);
+            bool profileBackgroundTile = user.profile_background_tile.Equals(String.Empty) ? false : Convert.ToBoolean(user.profile_background_tile);
+            long statuses_count = Convert.ToInt64(user.statuses_count);
+            int utcOffset = user.utc_offset.Equals(String.Empty) ? 0 : Convert.ToInt32(user.utc_offset);
 
-            foreach (var user in userQuery)
-            {
-                long id = (long)user.Element("id");
-                string realName = (string)user.Element("name");
-                string screenName = (string)user.Element("screen_name");
-                string description = (string)user.Element("description");
-                string location = (string)user.Element("location");
-                string profileImageUrl = (string)user.Element("profile_image_url");
-                string website = (string)user.Element("url");
-                bool protected_updates = (bool)user.Element("protected");
-                long followerCount = (long)user.Element("followers_count");
-                DateTime created_at = DateTime.ParseExact((string)user.Element("created_at"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture);
-                int favorites_count = (int)user.Element("favourites_count");
-                int utc_offset;
-
-                try
-                {
-                    utc_offset = (int)user.Element("utc_offset");
-                }
-                catch { utc_offset = int.MinValue; }
-
-                string time_zone;
-
-                try
-                {
-                    time_zone = (string)user.Element("time_zone");
-                }
-                catch { time_zone = String.Empty; }
-
-                string profile_background_image_url = (string)user.Element("profile_background_image_url");
-                bool profile_background_tile = (bool)user.Element("profile_background_tile");
-                long statuses_count = (int)user.Element("statuses_count");
-                bool notifications;
-
-                try
-                {
-                    notifications = (bool)user.Element("notifications");
-                }
-                catch { notifications = false; }
-
-                bool following;
-
-                try
-                {
-                    following = (bool)user.Element("following");
-                }
-                catch { following = false; }
-
-                string profile_background_color = (string)user.Element("profile_background_color"); ;
-                string profile_text_color = (string)user.Element("profile_text_color");
-                string profile_link_color = (string)user.Element("profile_link_color");
-                string profile_sidebar_fill_color = (string)user.Element("profile_sidebar_fill_color");
-                string profile_sidebar_border_color = (string)user.Element("profile_sidebar_border_color");
-
-                Output = new User(id, realName, screenName, description, location, profileImageUrl, website,
-                                  protected_updates, followerCount, created_at, favorites_count, following,
-                                  notifications, profile_background_image_url, profile_background_tile,
-                                  profile_background_color, profile_link_color, profile_sidebar_fill_color,
-                                  profile_sidebar_border_color, profile_text_color, statuses_count, time_zone,
-                                  utc_offset);
-            }
-
-            return Output;
+            return new User(id, user.realName, user.screenName, user.description, user.location, user.profileImageUrl,
+                            user.website, protectedUpdates, followerCount,
+                            DateTime.ParseExact(user.createdAt, "ddd MMM dd HH:mm:ss zzz yyyy",
+                                                CultureInfo.InvariantCulture), favoritesCount, following, notifications,
+                            user.profile_background_image_url, profileBackgroundTile, user.profile_background_color,
+                            user.profile_link_color, user.profile_sidebar_fill_color, user.profile_sidebar_border_color,
+                            user.profile_text_color, statuses_count, user.time_zone, utcOffset);
         }
 
-        private static DirectMessage ParseDirectMessageXML(string xmlText)
+        private static DirectMessage ParseDirectMessageXML(XElement element)
         {
-            if (String.IsNullOrEmpty(xmlText))
-                return null; //return NULL directMsg to show it wasn't processed correctly
+            var dmQuery = from dm in element.AncestorsAndSelf("direct_message")
+                          select
+                              new
+                                  {
+                                      id = dm.Element("id").Value,
+                                      timestamp = dm.Element("created_at").Value,
+                                      messageText = dm.Element("text").Value
+                                  };
 
-            DirectMessage Output = null;
-            XElement directMsgXml = XElement.Parse(xmlText);
-            var query = from c in directMsgXml.AncestorsAndSelf()
-                        select c;
+            var directMsg = dmQuery.FirstOrDefault();
 
-            foreach (var directMsg in query)
-            {
-                long id = (long)directMsg.Element("id");
-                DateTime timestamp = DateTime.ParseExact((string)directMsg.Element("created_at"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture);
-                string messageText = (string)directMsg.Element("text");
-
-                Output = new DirectMessage(id, timestamp, messageText, null, null);
-            }
-
-            return Output;
+            return new DirectMessage(Convert.ToInt64(directMsg.id),
+                                       DateTime.ParseExact(directMsg.timestamp, "ddd MMM dd HH:mm:ss zzz yyyy",
+                                                           CultureInfo.InvariantCulture), directMsg.messageText, null, null);
         }
 
-        private static SavedSearch ParseSavedSearchXml(string xmlText)
+        private static SavedSearch ParseSavedSearchXml(XElement element)
         {
-            XElement element = XElement.Parse(xmlText);
-            var savedSearches = from e in element.AncestorsAndSelf() select e;
-            SavedSearch Output = null;
+            var savedSearchQuery = from e in element.AncestorsAndSelf("saved_search")
+                              select new
+                                         {
+                                             id = e.Element("id").Value,
+                                             name = e.Element("name").Value,
+                                             query = e.Element("query").Value,
+                                             position = e.Element("position").Value,
+                                             createdAt = e.Element("created_at").Value
+                                         };
 
-            foreach (var savedSearch in savedSearches)
-            {
-                long id = (long)savedSearch.Element("id");
-                string name = (string)savedSearch.Element("name");
-                string query = (string)savedSearch.Element("query");
-                string position = (string)savedSearch.Element("position");
-                DateTime createdAt = DateTime.ParseExact((string)savedSearch.Element("created_at"), "ddd MMM dd HH:mm:ss zzz yyyy", CultureInfo.InvariantCulture);
+            var savedSearch = savedSearchQuery.FirstOrDefault();
 
-                Output = new SavedSearch(id, name, query, position, createdAt);
-            }
+            SavedSearch Output = new SavedSearch(Convert.ToInt64(savedSearch.id),
+                                                 savedSearch.name, savedSearch.query,
+                                                 savedSearch.position,
+                                                 DateTime.ParseExact(savedSearch.createdAt,
+                                                                     "ddd MMM dd HH:mm:ss zzz yyyy",
+                                                                     CultureInfo.InvariantCulture));
 
             return Output;
         }

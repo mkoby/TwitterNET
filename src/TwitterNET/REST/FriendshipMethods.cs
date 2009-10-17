@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TwitterNET
 {
@@ -29,8 +30,9 @@ namespace TwitterNET
             string requestOptions = String.Format("?screen_name={0}&follow={1}", screenName, enableDeviceUpdates);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                                                                  String.Format("{0}{1}", apiURL, requestOptions));
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
 
-            return ResponseParser.ReturnSingleUser(responseText);
+            return userList[0];
         }
 
         public IUser UnfollowUser(string screenName)
@@ -39,8 +41,9 @@ namespace TwitterNET
             string requestOptions = String.Format("?screen_name={0}", screenName);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler,
                                                                  String.Format("{0}{1}", apiURL, requestOptions));
+            IList<IUser> userList = ResponseParser.ReturnUsers(responseText);
 
-            return ResponseParser.ReturnSingleUser(responseText);
+            return userList[0];
         }
     }
 

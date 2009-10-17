@@ -19,7 +19,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/friends.xml";
             string resposneText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListOfUsers(resposneText);
+            return ResponseParser.ReturnUsers(resposneText);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/followers.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListOfUsers(responseText);
+            return ResponseParser.ReturnUsers(responseText);
         }
     }
 

@@ -20,7 +20,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/favorites.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnStatuses(responseText);
         }
 
         /// <summary>
@@ -38,8 +38,9 @@ namespace TwitterNET
             string requestOptions = String.Format("{0}.xml", StatusID);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
             requestOptions = null; //Clean up now un-needed objects
+            IList<StatusMessage> statusMessages = ResponseParser.ReturnStatuses(responseText);
 
-            return ResponseParser.ReturnSingleStatus(responseText);
+            return statusMessages[0];
         }
 
         /// <summary>
@@ -57,8 +58,9 @@ namespace TwitterNET
             string requestOptions = String.Format("{0}.xml", StatusID);
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, String.Format("{0}{1}", apiURL, requestOptions));
             requestOptions = null; //Clean up now un-needed objects
+            IList<StatusMessage> statusMessages = ResponseParser.ReturnStatuses(responseText);
 
-            return ResponseParser.ReturnSingleStatus(responseText);
+            return statusMessages[0];
         }
     }
 }

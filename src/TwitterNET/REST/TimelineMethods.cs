@@ -14,7 +14,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/public_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, apiURL);
 
-            return ResponseParser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnStatuses(responseText);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/friends_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnStatuses(responseText);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/user_timeline.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnStatuses(responseText);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/statuses/mentions.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListOfStatuses(responseText);
+            return ResponseParser.ReturnStatuses(responseText);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/followers/ids.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListOfUserIDs(responseText);
+            return ResponseParser.ReturnUserIDs(responseText);
         }
 
         public IList<long> GetFollowingList(StatusRequestOptions statusRequestOptions)
@@ -17,7 +17,7 @@ namespace TwitterNET
             string apiURL = "http://twitter.com/friends/ids.xml";
             string responseText = _requestHandler.MakeAPIRequest(_requestHandler, statusRequestOptions.BuildRequestUri(apiURL));
 
-            return ResponseParser.ReturnListOfUserIDs(responseText);
+            return ResponseParser.ReturnUserIDs(responseText);
         }
     }
 
