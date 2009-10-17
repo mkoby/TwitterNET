@@ -56,6 +56,7 @@
     <Compile Include="REST\FavoritesMethods.cs" />
     <Compile Include="REST\FriendshipMethods.cs" />
     <Compile Include="REST\NotificationMethods.cs" />
+    <Compile Include="REST\SavedSearchMethods.cs" />
     <Compile Include="REST\SocialGraphMethods.cs" />
     <Compile Include="REST\StatusMethods.cs" />
     <Compile Include="REST\TimelineMethods.cs" />
