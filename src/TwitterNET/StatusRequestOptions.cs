@@ -6,7 +6,7 @@ namespace TwitterNET
 {
 	public enum StatusRequestOptionNames
 	{
-		ID,
+        ID,
 		ScreenName,
 		UserID,
 		SinceID,
@@ -83,7 +83,8 @@ namespace TwitterNET
             {
                 case StatusRequestOptionNames.ScreenName:
                 case StatusRequestOptionNames.UserID:
-                    if (ApiUrl.Contains("user_timeline") || 
+                    if (ApiUrl.Contains("user_timeline") ||
+                        ApiUrl.Contains("users/show") ||
                         ApiUrl.Contains("friends/ids") || 
                         ApiUrl.Contains("followers/ids") ||
                         ApiUrl.Contains("notifications/follow") ||

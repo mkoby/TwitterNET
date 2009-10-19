@@ -83,5 +83,16 @@ namespace TwitterNET_Tests
 			
 			Assert.IsNotNull(deletedStatus);
 		}
+
+        [Test]
+        public void GetSingleUser_Test()
+        {
+            StatusRequestOptions requestOptions = new StatusRequestOptions();
+            requestOptions.Add(StatusRequestOptionNames.ScreenName, "mkoby");
+            IUser user = twitter.GetSingleUser(requestOptions);
+
+            Assert.IsNotNull(user);
+            Assert.AreEqual("mkoby", user.ScreenName);
+        }
     }
 }

@@ -50,25 +50,5 @@ namespace TwitterNET
         {
             _requestHandler = new RequestHandler(UserName, Password);
         }
-
-        /// <summary>
-        /// Returns a single twitter user object
-        /// </summary>
-        /// <param name="screenName">The screen name of the user to request</param>
-        /// <returns></returns>
-        public IUser GetSingleUser(string screenName)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Returns a single twitter user object
-        /// </summary>
-        /// <param name="userID">The ID (numeric) of the user to request</param>
-        /// <returns></returns>
-        public IUser GetSingleUser(long userID)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

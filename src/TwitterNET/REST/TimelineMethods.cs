@@ -20,7 +20,7 @@ namespace TwitterNET
         /// <summary>
         /// Returns the authenticated user's friends timeline
         /// </summary>
-        /// <param name="statusRequestOptions"></param>
+        /// <param name="statusRequestOptions">Accepted options: SinceId, MaxId, Count, & Page</param>
         /// <returns></returns>
         public IList<StatusMessage> GetFriendsTimeline(StatusRequestOptions statusRequestOptions)
         {
@@ -33,8 +33,8 @@ namespace TwitterNET
         /// <summary>
         /// Gets a specific user's timeline
         /// </summary>
-        /// <param name="statusRequestOptions"></param>
-        /// <returns></returns>
+        /// <param name="statusRequestOptions">Accepted options: UserId, ScreenName, SinceId, MaxId, Count, & Page</param>
+        /// <returns>List of StatusMessage objects of the specific user's statuses, matching the supplied StatusRequestOptions</returns>
         public IList<StatusMessage> GetUserTimeline(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/statuses/user_timeline.xml";
@@ -46,8 +46,8 @@ namespace TwitterNET
         /// <summary>
         /// Gets mentions of the authenticated user's screen name
         /// </summary>
-        /// <param name="statusRequestOptions"></param>
-        /// <returns></returns>
+        /// <param name="statusRequestOptions">Accepted options: SinceId, MaxId, Count, & Page</param>
+        /// <returns>List of StatusMessage objects, all @ mentions matching the supplied StatusRequestOptions</returns>
         public IList<StatusMessage> GetMetions(StatusRequestOptions statusRequestOptions)
         {
             string apiURL = "http://twitter.com/statuses/mentions.xml";
