@@ -136,6 +136,9 @@ namespace TwitterNET
         {
             StatusMessage Output = null;
 
+            //TODO: Find a way to find and parse the <retweeted_status> element
+            //  We want to parse it here because really the only difference
+            //  between the a regular message & a retweet is that element
             var statusQuery = from statusElement in element.AncestorsAndSelf()
                         select new
                                    {
