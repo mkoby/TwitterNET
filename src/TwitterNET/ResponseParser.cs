@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace TwitterNET
@@ -146,7 +145,7 @@ namespace TwitterNET
                                        source = statusElement.Element("source").Value,
                                        truncated = statusElement.Element("truncated").Value,
                                        inReplyStatusId = statusElement.Element("in_reply_to_status_id").Value,
-                                       inReplyUserId = statusElement.Element("in_reply_to_user_id").Value
+                                       inReplyUserId = statusElement.Element("in_reply_to_user_id").Value,
                                    };
 
             var status = statusQuery.FirstOrDefault();

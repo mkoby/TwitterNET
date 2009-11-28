@@ -98,5 +98,12 @@ namespace TwitterNET
 
             return output;
         }
+
+        public RetweetedMessage RetweetStatus(long StatusId)
+        {
+            RetweetedMessage output = null;
+
+            return output;
+        }
     }
 }

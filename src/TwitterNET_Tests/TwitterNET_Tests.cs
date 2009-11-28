@@ -11,10 +11,17 @@ namespace TwitterNET_Tests
     {
         private Twitter twitter = null;
         private long TestStatusID = 1460203541;
+        private long retweetStatusId = long.MinValue;
 
         [TestFixtureSetUp]
         public void TwitterNET_Tests_Setup()
-        {}
+        {
+            twitter = new Twitter();
+            IList<StatusMessage> publicTimeline = twitter.GetPublicTimeline();
+
+            if (publicTimeline != null && publicTimeline.Count > 0)
+                retweetStatusId = publicTimeline[0].ID;
+        }
 
         [TestFixtureTearDown]
         public void TwitterNET_Tests_TearDown()
@@ -93,6 +100,14 @@ namespace TwitterNET_Tests
 
             Assert.IsNotNull(user);
             Assert.AreEqual("mkoby", user.ScreenName);
+        }
+
+        [Test]
+        public void RetweetStatus_Test()
+        {
+            StatusMessage retweetedStatus = twitter.RetweetStatus(retweetStatusId);
+
+            Assert.IsNotNull(retweetedStatus);
         }
     }
 }

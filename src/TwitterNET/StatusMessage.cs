@@ -9,6 +9,8 @@ namespace TwitterNET
 		private long _replyToUserID;
 		private string _source;
 		private bool _truncated;
+        private bool _isRetweet;
+	    private StatusMessage _retweetedStatus;
 
 		public StatusMessage(long ID, DateTime Timestamp, string MessageText, IUser Author, long ReplyToStatusID, long ReplyToUserID, string Source, bool Truncated)
 			: base(ID, Timestamp, MessageText, Author)
